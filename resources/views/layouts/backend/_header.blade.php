@@ -201,3 +201,19 @@
     <!--notification menu end -->
 
 </div>
+
+<div class="page-heading">
+    <h3>
+        {{isset($title)?$title:config('app.name')}}
+    </h3>
+    {{--<ul class="breadcrumb">
+        <li>
+            <a href="#">Dashboard</a>
+        </li>
+        <li>
+            <a href="#">Data Table</a>
+        </li>
+        <li class="active"> Editable Table </li>
+    </ul>--}}
+</div>
+<!-- page heading end-->

@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data['title'] = 'Category List';
+        return view('admin.category.index',$data);
     }
 
     /**
@@ -24,7 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = 'Create new Category';
+        return view('admin.category.create',$data);
     }
 
     /**

@@ -1,6 +1,7 @@
 @extends('layouts.backend.master')
 
-@section('content')<div class="wrapper">
+@section('content')
+    <div class="wrapper">
     <div class="row states-info">
         <div class="col-md-3">
             <div class="panel red-bg">
