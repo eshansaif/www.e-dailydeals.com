@@ -94,7 +94,7 @@ class CategoryController extends Controller
         $category_data= $request->except('_token','_method');
         $category_data['updated_by'] = 1;
         $category->update($category_data);
-        session()->flash('message','Category updated successfully');
+        session()->flash('message','Category is updated successfully');
         return redirect()->route('category.index');
     }
 
