@@ -23,6 +23,8 @@
 
 
         <!--body wrapper start-->
+        @include('layouts.backend._messages')
+
         @yield('content')
         <!--body wrapper end-->
 

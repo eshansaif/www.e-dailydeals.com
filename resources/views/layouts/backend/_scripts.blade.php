@@ -27,6 +27,8 @@
 <script src="{{asset('assets/backend/js/flot-chart/jquery.flot.stack.js')}}"></script>
 <script src="{{asset('assets/backend/js/flot-chart/jquery.flot.time.js')}}"></script>
 <script src="{{asset('assets/backend/js/main-chart.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/backend/js/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/backend/js/validation-init.js') }}"></script>
 
 <!--common scripts for all pages-->
 <script src="{{asset('assets/backend/js/scripts.js')}}"></script>

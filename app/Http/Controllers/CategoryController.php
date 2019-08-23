@@ -37,7 +37,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'status' => 'required',
+        ]);
+
+        $category= $request->except('_token');
+        $category['created_by'] = 1;
+        Category::create($category);
+        session()->flash('message','Category is created successfully');
+        return redirect()->route('category.index');
     }
 
     /**
