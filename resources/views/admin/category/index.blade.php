@@ -22,6 +22,7 @@
                                         <a class="btn btn-primary" href="{{ route('category.create') }}">Add New <i class="fa fa-plus"></i></a>
 
                                 </div>
+
                                 <div class="btn-group pull-right">
                                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
@@ -36,32 +37,28 @@
                             <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                 <thead>
                                 <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Points</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
                                     <th>Status</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="">
-                                    <td>Jonathan</td>
-                                    <td>Smith</td>
-                                    <td>3455</td>
-                                    <td class="center">Lorem ipsume</td>
-                                    <td><a class="edit" href="javascript:;">Edit</a></td>
-                                    <td><a class="delete" href="javascript:;">Delete</a></td>
-                                </tr>
+                                @foreach($categories as $category)
 
                                 <tr class="">
-                                    <td>Waren</td>
-                                    <td>gufet</td>
-                                    <td>622</td>
-                                    <td class="center">author</td>
-                                    <td><a class="edit" href="javascript:;">Edit</a></td>
-                                    <td><a class="delete" href="javascript:;">Delete</a></td>
+                                    <td>{{ $category->id }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td><span class="label {{ ($category->status == 'Active')?'label-info':'label-danger'}}">{{ $category->status }}</span></td>
+                                    <td>
+                                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                    </td>
+
+
                                 </tr>
+                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>
