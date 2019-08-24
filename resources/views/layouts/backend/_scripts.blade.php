@@ -18,6 +18,13 @@
 <script src="{{asset('assets/backend/js/iCheck/jquery.icheck.js')}}"></script>
 <script src="{{asset('assets/backend/js/icheck-init.js')}}"></script>
 
+<!--data table-->
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="{{ asset('assets/backend/js/advanced-datatable/js/jquery.dataTables.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/backend/js/data-tables/DT_bootstrap.js') }}"></script>
+<!--dynamic table initialization -->
+<script src="{{ asset('assets/backend/js/dynamic_table_init.js') }}"></script>
+
 <!-- jQuery Flot Chart-->
 <script src="{{asset('assets/backend/js/flot-chart/jquery.flot.js')}}"></script>
 <script src="{{asset('assets/backend/js/flot-chart/jquery.flot.tooltip.js')}}"></script>

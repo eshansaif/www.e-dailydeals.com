@@ -53,6 +53,24 @@
                                     <td><span class="label {{ ($category->status == 'Active')?'label-info':'label-danger'}}">{{ $category->status }}</span></td>
                                     <td>
                                         <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        @if($category->deleted_at == null)
+                                        <form action="{{ route('category.destroy', $category->id) }}" method="post" style="display: inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this category')">Delete</button>
+                                        </form>
+                                        @else
+                                        <form action="{{ route('category.restore', $category->id) }}" method="post" style="display: inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this category')">Restore</button>
+                                        </form>
+
+                                            <form action="{{ route('category.permanent_delete', $category->id) }}" method="post" style="display: inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this category')">Permanent Delete</button>
+                                            </form>
+                                            @endif
                                     </td>
 
 
@@ -62,10 +80,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{ $categories->render() }}
                     </div>
+
                 </section>
             </div>
         </div>
     </div>
     <!--body wrapper end-->
+
+
+
 @endsection

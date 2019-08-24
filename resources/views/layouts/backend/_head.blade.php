@@ -16,6 +16,11 @@
 <!--dashboard calendar-->
 <link href="{{asset('assets/backend/css/clndr.css')}}" rel="stylesheet">
 
+<!--data table-->
+<link href="{{ asset('assets/backend/js/advanced-datatable/css/demo_page.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/backend/js/advanced-datatable/css/demo_table.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('assets/backend/js/data-tables/DT_bootstrap.css') }}" />
+
 
 <!--common-->
 <link href="{{asset('assets/backend/css/style.css')}}" rel="stylesheet">
