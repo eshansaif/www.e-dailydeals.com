@@ -5,25 +5,40 @@
     <!--body wrapper start-->
     <div class="wrapper">
         <div class="row">
-            <div class="col-sm-12">
+            <header class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Categories
+                        <a class="btn btn-primary" href="{{ route('category.create') }}">Add New <i class="fa fa-plus"></i></a>
                         <span class="tools pull-right">
                         <a href="javascript:;" class="fa fa-chevron-down"></a>
-                        <a href="javascript:;" class="fa fa-times"></a>
+                        {{--<a href="javascript:;" class="fa fa-times"></a>--}}
                      </span>
                     </header>
+
+
                     <div class="panel-body">
                         <div class="adv-table editable-table ">
                             <div class="clearfix">
-                                <div class="btn-group">
 
-                                        <a class="btn btn-primary" href="{{ route('category.create') }}">Add New <i class="fa fa-plus"></i></a>
+                                <div class="btn-group pull-right">
+
+                                    <form class="btn-group" >
+
+                                            <select name="status" id="" class="">
+                                                <option  value="">Select status</option>
+                                                <option @if(request()->status == 'Active') selected @endif  value="Active">Active</option>
+                                                <option @if(request()->status == 'Inactive') selected @endif value="Inactive">Incative</option>
+                                            </select>
+
+                                            <input type="text" placeholder="Search.." name="search" value="{{ request()->search }}">
+                                            <button type="submit"><i class="fa fa-search"></i></button>
+
+
+                                    </form>
 
                                 </div>
 
-                                <div class="btn-group pull-right">
+                                <div class="btn-group pull-left">
                                     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">

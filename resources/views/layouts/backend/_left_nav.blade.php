@@ -41,7 +41,7 @@
 
             <li class="menu-list"><a href="#"><i class="fa fa-list-alt"></i> <span>Categories</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="blank_page.html"> Add Categories</a></li>
+                    <li><a href="{{ route('category.create') }}"> Add Categories</a></li>
                     <li><a href="{{ route('category.index') }}"> List Categories</a></li>
 
                 </ul>

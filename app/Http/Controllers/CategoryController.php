@@ -12,11 +12,19 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data['title'] = 'Category List';
-        $data['categories'] = Category::withTrashed()->orderBy('id','DESC')->paginate(3);
-        //dd($data['categories']);
+        $category = new Category();
+        $category = $category->withTrashed();
+        if ($request->has('search') && $request->search != null){
+            $category = $category->where('name','like','%'.$request->search.'%');
+        }
+        if ($request->has('status') && $request->status != null) {
+            $category = $category->where('status',$request->status );
+        }
+        $category = $category->orderBy('id','DESC')->paginate(3);
+        $data['categories'] = $category;
         return view('admin.category.index',$data);
 
 
