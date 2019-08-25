@@ -17,5 +17,12 @@ Route::get('/', function () {
 
 Route::get('dashboard','DashboardController@index')->name('admin.dashboard');
 Route::resource('category','CategoryController');
-ROute::post('category/{id}/restore','CategoryController@restore')->name('category.restore');
-ROute::delete('category/{id}/permanent_delete','CategoryController@permanent_delete')->name('category.permanent_delete');
+Route::post('category/{id}/restore','CategoryController@restore')->name('category.restore');
+Route::delete('category/{id}/permanent_delete','CategoryController@permanent_delete')->name('category.permanent_delete');
+
+Route::resource('brand','BrandController');
+Route::post('brand/{id}/restore','BrandController@restore')->name('brand.restore');
+Route::delete('brand/{id}/permanent_delete','BrandController@permanent_delete')->name('brand.permanent_delete');
+
+
+

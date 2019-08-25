@@ -8,7 +8,7 @@
             <header class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <a class="btn btn-primary" href="{{ route('category.create') }}">Add New <i class="fa fa-plus"></i></a>
+                        <a class="btn btn-primary" href="{{ route('brand.create') }}">Add New <i class="fa fa-plus"></i></a>
                         <span class="tools pull-right">
                         <a href="javascript:;" class="fa fa-chevron-down"></a>
                         {{--<a href="javascript:;" class="fa fa-times"></a>--}}
@@ -54,37 +54,39 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Details</th>
                                     <th>Status</th>
                                     <th>Action</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($categories as $category)
+                                @foreach($brands as $brand)
 
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
-                                    <td>{{ $category->name }}</td>
-                                    <td><span class="label {{ ($category->status == 'Active')?'label-info':'label-danger'}}">{{ $category->status }}</span></td>
+                                    <td>{{ $brand->name }}</td>
+                                    <td>{{ $brand->details }}</td>
+                                    <td><span class="label {{ ($brand->status == 'active')?'label-info':'label-danger'}}">{{ $brand->status }}</span></td>
                                     <td>
+                                        @if($brand->deleted_at == null)
 
-                                        @if($category->deleted_at == null)
-                                         <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                       <form action="{{ route('category.destroy', $category->id) }}" method="post" style="display: inline">
+                                        <a href="{{ route('brand.edit', $brand->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                        <form action="{{ route('brand.destroy', $brand->id) }}" method="post" style="display: inline">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this category')">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this Brand')">Delete</button>
                                         </form>
                                         @else
-                                        <form action="{{ route('category.restore', $category->id) }}" method="post" style="display: inline">
+                                        <form action="{{ route('brand.restore', $brand->id) }}" method="post" style="display: inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this category')">Restore</button>
+                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this Brand')">Restore</button>
                                         </form>
 
-                                            <form action="{{ route('category.permanent_delete', $category->id) }}" method="post" style="display: inline">
+                                            <form action="{{ route('brand.permanent_delete', $brand->id) }}" method="post" style="display: inline">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this category')">Permanent Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this Brand')">Permanent Delete</button>
                                             </form>
                                             @endif
                                     </td>
@@ -96,7 +98,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ $categories->render() }}
+                        {{ $brands->render() }}
                     </div>
 
                 </section>

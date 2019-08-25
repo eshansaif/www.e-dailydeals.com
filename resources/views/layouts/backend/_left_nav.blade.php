@@ -42,7 +42,15 @@
             <li class="menu-list"><a href="#"><i class="fa fa-list-alt"></i> <span>Categories</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('category.create') }}"> Add Categories</a></li>
-                    <li><a href="{{ route('category.index') }}"> List Categories</a></li>
+                    <li><a href="{{ route('category.index') }}"> View Category List</a></li>
+
+                </ul>
+            </li>
+
+            <li class="menu-list"><a href="#"><i class="fa fa fa-bitbucket"></i> <span>Brands</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{{ route('brand.create') }}"> Add Brands</a></li>
+                    <li><a href="{{ route('brand.index') }}"> View Brand List</a></li>
 
                 </ul>
             </li>
