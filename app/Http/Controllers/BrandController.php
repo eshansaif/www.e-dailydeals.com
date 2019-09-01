@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class BrandController extends Controller
 {
@@ -59,12 +60,22 @@ class BrandController extends Controller
             'name' => 'required',
             'details' => 'required',
             'status' => 'required',
+            'file' => 'image',
         ]);
 
         $brand= $request->except('_token');
+
+        //file upload
+        if ($request->hasFile('file')){
+            $file = $request->file('file');
+            $file->move('images/brands/',$file->getClientOriginalName());
+            $brand['file'] = 'images/brands/'.$file->getClientOriginalName();
+        }
+
+
         $brand['created_by'] = 1;
         Brand::create($brand);
-        session()->flash('message','Brand is created successfully');
+        session()->flash('message','Brand is Created Successfully');
         return redirect()->route('brand.index');
     }
 
@@ -108,6 +119,15 @@ class BrandController extends Controller
         ]);
 
         $brand_data= $request->except('_token','_method');
+
+        //file upload
+        if ($request->hasFile('file')){
+            $file = $request->file('file');
+            $file->move('images/brands/',$file->getClientOriginalName());
+            File::delete($brand->file);
+            $brand_data['file'] = 'images/brands/'.$file->getClientOriginalName();
+        }
+
         $brand_data['updated_by'] = 1;
         $brand->update($brand_data);
         session()->flash('message','Brand is updated successfully');

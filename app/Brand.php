@@ -16,5 +16,6 @@ class Brand extends Model
         'status',
         'created_by',
         'updated_by',
+        'file',
     ];
 }

@@ -1,7 +1,7 @@
 @csrf
 
 <div class="form-group">
-    <label for="name" class="col-lg-2 col-sm-2 control-label">Brand Name</label>
+    <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>Brand Name</strong></label>
     <div class="col-lg-10">
         <input name="name" value="{{ old('name', isset($brand)?$brand->name:null) }}" type="text" class="form-control form-control-line @error('name') is-invalid @enderror" id="name" placeholder="Brand Name">
         @error('name')
@@ -13,12 +13,24 @@
 </div>
 
 <div class="form-group">
-    <label for="details" class="col-lg-2 col-sm-2 control-label">Brand Details</label>
+    <label for="details" class="col-lg-2 col-sm-2 control-label"><strong>Brand Details</strong></label>
     <div class="col-lg-10">
         <textarea rows="5" name="details"   class="form-control form-control-line @error('details') is-invalid @enderror" id="details" placeholder="Brand Details">{{ old('details', isset($brand)?$brand->details:null) }}</textarea>
 
         @error('details')
         <div class="pl-1 text-danger ">{{ $message }}</div>
+        @enderror
+    </div>
+
+
+</div>
+
+<div class="form-group">
+    <label for="file" class="col-lg-2 col-sm-2 control-label"><strong>Upload Brand Image</strong></label>
+    <div class="col-lg-10">
+        <input name="file"  type="file" class="form-control form-control-line @error('file') is-invalid @enderror" id="file" placeholder="Upload File">
+        @error('file')
+        <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
     </div>
 
@@ -35,7 +47,7 @@
             $status = null;
         }
     @endphp
-    <label for="status" class="col-lg-2 col-sm-2 control-label">Brand Status</label>
+    <label for="status" class="col-lg-2 col-sm-2 control-label"><strong>Brand Status</strong></label>
 
     <div class="col-lg-10">
     <label class="radio-inline"><input type="radio" name="status" value="active" id="active" @if($status =='active') checked @endif>Active</label>
