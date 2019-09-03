@@ -1,17 +1,32 @@
 @csrf
 
 <div class="form-group">
+    <label for="parent_id" class="col-lg-2 col-sm-2 control-label">Category Levels</label>
+    <div class="col-lg-10">
+        <select name="parent_id" id="parent_id" class="form-control">
+            <option value="0">Main Category</option>
+            @foreach($levels as $value)
+                <option value="{{ $value->id  }}">{{ $value->name }}</option>
+            @endforeach
+        </select>
+
+    </div>
+
+    @error('parent_id')
+    <div class="pl-1 text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
+<div class="form-group">
     <label for="name" class="col-lg-2 col-sm-2 control-label">Category Name</label>
     <div class="col-lg-10">
         <input name="name" value="{{ old('name', isset($category)?$category->name:null) }}" type="text" class="form-control form-control-line @error('name') is-invalid @enderror" id="name" placeholder="Category Name">
-        @error('name')
-        <div class="pl-1 text-danger">{{ $message }}</div>
-        @enderror
     </div>
 
-
+    @error('name')
+    <div class="pl-1 text-danger">{{ $message }}</div>
+    @enderror
 </div>
-
 
 
 <div class="form-group">
@@ -29,9 +44,8 @@
     <div class="col-lg-10">
     <label class="radio-inline"><input type="radio" name="status" value="active" id="active" @if($status =='Active') checked @endif>Active</label>
     <label class="radio-inline"><input type="radio" name="status" value="inactive" id="inactive" @if($status =='Inactive') checked @endif >Inactive</label>
-        @error('status')
-        <div class="pl-1 text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-
+        </div>
+    @error('status')
+    <div class="pl-1 text-danger">{{ $message }}</div>
+    @enderror
 </div>

@@ -46,7 +46,7 @@ class CategoryController extends Controller
     public function create()
     {
         $data['title'] = 'Create new Category';
-        return view('admin.category.create',$data);
+         return view('admin.category.create',$data);
     }
 
     /**
@@ -66,6 +66,8 @@ class CategoryController extends Controller
         $category['created_by'] = 1;
         Category::create($category);
         session()->flash('message','Category is created successfully');
+
+
         return redirect()->route('category.index');
     }
 

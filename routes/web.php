@@ -20,9 +20,14 @@ Route::post('login','LoginController@login')->name('admin.login');
 
 Route::middleware('auth')->group(function (){
     Route::get('dashboard','DashboardController@index')->name('admin.dashboard')->middleware('auth');
+
     Route::resource('category','CategoryController');
     Route::post('category/{id}/restore','CategoryController@restore')->name('category.restore');
     Route::delete('category/{id}/permanent_delete','CategoryController@permanent_delete')->name('category.permanent_delete');
+
+    Route::resource('sub_category','SubCategoryController');
+    Route::post('sub_category/{id}/restore','SubCategoryController@restore')->name('sub_category.restore');
+    Route::delete('sub_category/{id}/permanent_delete','SubCategoryController@permanent_delete')->name('sub_category.permanent_delete');
 
     Route::resource('brand','BrandController');
     Route::post('brand/{id}/restore','BrandController@restore')->name('brand.restore');
