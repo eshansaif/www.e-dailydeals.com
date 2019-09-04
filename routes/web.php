@@ -33,6 +33,11 @@ Route::middleware('auth')->group(function (){
     Route::post('brand/{id}/restore','BrandController@restore')->name('brand.restore');
     Route::delete('brand/{id}/permanent_delete','BrandController@permanent_delete')->name('brand.permanent_delete');
 
+    Route::resource('product','ProductController');
+    Route::post('product/{id}/restore','ProductController@restore')->name('product.restore');
+    Route::delete('product/{id}/permanent_delete','ProductController@permanent_delete')->name('product.permanent_delete');
+
+
 });
 
 Route::get('emergency-logout',function (){
