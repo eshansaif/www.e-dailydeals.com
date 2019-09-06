@@ -108,7 +108,7 @@
 <div class="form-group">
     <label for="price" class="col-lg-2 col-sm-2 control-label">Product Price</label>
     <div class="col-lg-10">
-        <input name="price" value="{{ old('price', isset($product)?$product->price:null) }}" type="number" step=".01" class="form-control form-control-line @error('price') is-invalid @enderror" id="price" placeholder="Product rice">
+        <input name="price" value="{{ old('price', isset($product)?$product->price:null) }}" type="number" step=".01" class="form-control form-control-line @error('price') is-invalid @enderror" id="price" placeholder="Product rice" min="1">
         @error('price')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror

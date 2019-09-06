@@ -61,6 +61,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'name'=>'required',
             'code'=>'required',
@@ -72,7 +73,7 @@ class ProductController extends Controller
         ]);
 
         $product = $request->except('_token');
-        $product['created_by'] = 1;
+        $product['created_by'] = auth();
         $product=Product::create($product);
         session()->flash('message','Product is Created Successfully!');
         return redirect()->route('product.index');
@@ -140,6 +141,26 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        session()->flash('message','Product is Deleted Successfully!');
+        return redirect()->route('product.index');
+    }
+
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id);
+        $product->restore();
+        session()->flash('message','Product is Restored Successfully!');
+        return redirect()->route('product.index');
+    }
+
+
+
+    public function permanent_delete($id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id);
+        $product->forceDelete();
+        session()->flash('message','Product is Permanently Deleted');
+        return redirect()->route('product.index');
     }
 }

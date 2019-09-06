@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('login','LoginController@login_form')->name('admin.login.form');
 Route::post('login','LoginController@login')->name('admin.login');
 
-Route::middleware('auth')->group(function (){
+Route::middleware('auth')->prefix('admin')->group(function (){
     Route::get('dashboard','DashboardController@index')->name('admin.dashboard')->middleware('auth');
 
     Route::resource('category','CategoryController');
