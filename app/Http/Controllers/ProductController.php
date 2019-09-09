@@ -25,7 +25,7 @@ class ProductController extends Controller
         if ($request->has('status') && $request->status != null) {
             $product = $product->where('status',$request->status );
         }
-        $product = $product->orderBy('id','DESC')->paginate(3);
+        $product = $product->with('category','brand')->orderBy('id','DESC')->paginate(3);
         $data['products'] = $product;
 
         if (isset($request->status) || $request->search) {
@@ -61,7 +61,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         $request->validate([
             'name'=>'required',
             'code'=>'required',
@@ -73,7 +73,7 @@ class ProductController extends Controller
         ]);
 
         $product = $request->except('_token');
-        $product['created_by'] = auth();
+        $product['created_by'] = 1;
         $product=Product::create($product);
         session()->flash('message','Product is Created Successfully!');
         return redirect()->route('product.index');
@@ -87,7 +87,15 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        {
+            $data['title'] = 'Product Details';
+            $data['product'] = $product;
+            $data['categories'] = Category::orderBy('name')->get();
+            $data['brands'] = Brand::orderBy('name')->get();
+            //$data['categories'] = Category::orderBy('name')->pluck('name','id');
+            //$data['brands'] = Brand::orderBy('name')->pluck('name','id');
+            return view('admin.product.show',$data);
+        }
     }
 
     /**

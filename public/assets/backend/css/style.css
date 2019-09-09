@@ -28,7 +28,7 @@ input, select, textarea {
 }
 
 a {
-    color: #65CEA7;
+    color:  #65CEA7;
 }
 
 a:focus, a:active, a:hover {
@@ -2321,7 +2321,7 @@ table.display tr.even.gradeX, table.display tr.gradeX, tr.even.gradeU td.sorting
 }
 
 .editable-table table td a {
-    color: #49586E;
+    color: #ffffff !important; /*#49586E;*/
 }
 
 .editable-table table td a:hover {

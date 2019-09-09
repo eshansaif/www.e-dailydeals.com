@@ -54,6 +54,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Beand Name</th>
+                                    <th>Category Name</th>
+                                    <th style="width: 30%;">Description</th>
                                     <th>Status</th>
                                     <th>Action</th>
 
@@ -65,26 +68,30 @@
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
                                     <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ $product->brand->name }}</td>
+                                    <td>{{ str_limit($product->description,100)  }}</td>
                                     <td><span class="label {{ ($product->status == 'Active')?'label-info':'label-danger'}}">{{ $product->status }}</span></td>
                                     <td>
 
                                         @if($product->deleted_at == null)
-                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                         <a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-default"><strong>Details</strong></a>
+                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm  btn-info"><strong>Edit</strong></a>
                                        <form action="{{ route('product.destroy', $product->id) }}" method="post" style="display: inline">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this product')">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this product')"><strong>Delete</strong></button>
                                         </form>
                                         @else
                                         <form action="{{ route('product.restore', $product->id) }}" method="post" style="display: inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this product')">Restore</button>
+                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this product')"><strong>Restore/strong></button>
                                         </form>
 
                                             <form action="{{ route('product.permanent_delete', $product->id) }}" method="post" style="display: inline">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this product')">Permanent Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this product')"><strong>Permanent Delete</strong></button>
                                             </form>
                                             @endif
                                     </td>

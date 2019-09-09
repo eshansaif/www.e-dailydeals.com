@@ -20,6 +20,11 @@ class Category extends Model
     {
         return $this->hasMany('App\SubCategory', 'category_id', 'id');
     }
+
+    public function Product()
+    {
+        return $this->hasMany('App\Product', 'category_id', 'id');
+    }
 }
 
 
