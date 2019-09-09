@@ -75,8 +75,8 @@
                                     <td>
 
                                         @if($product->deleted_at == null)
-                                         <a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-default"><strong>Details</strong></a>
-                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm  btn-info"><strong>Edit</strong></a>
+                                         <a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-info"><strong>Details</strong></a>
+                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm  btn-warning"><strong>Edit</strong></a>
                                        <form action="{{ route('product.destroy', $product->id) }}" method="post" style="display: inline">
                                             @csrf
                                             @method('delete')
