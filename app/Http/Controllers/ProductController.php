@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Brand;
 use App\Category;
 use App\Product;
+use App\ProductAttribute;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -140,12 +141,35 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-    public function addAttributes(Request $request,$id=null){
+    public function addAttributes(Request $request,$id=null)
+        {
 
         $data['title'] = 'Product Attributes';
         $productDetails = Product::where(['id'=>$id])->first();
-        //dd($product->name);
+        if($request->isMethod('post')){
+            $pa_data = $request->all();
+
+            foreach ($pa_data['sku'] as  $key => $val){
+                if (!empty($val)){
+                    $attribute = new ProductAttribute();
+                    $attribute->product_id = $id;
+                    $attribute->created_by = 1;
+                    $attribute->sku = $val;
+                    $attribute->size = $pa_data['size'][$key];
+                    $attribute->price = $pa_data['price'][$key];
+                    $attribute->stock = $pa_data['stock'][$key];
+                    $attribute->save();
+
+
+                }
+
+            }
+
+            return redirect('admin/product/add-attributes/'.$id)->with(session()->flash('message','Product is Created Successfully!'));
+        }
+        //dd($productDetails);
         return view('admin.product.add_attributes',$data)->with(compact('productDetails'));
+
 
     }
 

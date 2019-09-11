@@ -10,10 +10,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        var maxField = 10; //Input fields increment limitation
+        var maxField = 5; //Input fields increment limitation
         var addButton = $('.add_button'); //Add button selector
         var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div><input type="text" name="sku[]" id="sku" style="width: 120px" placeholder="SKU"/><a href="javascript:void(0);" class="remove_button">Remove</a></div>'; //New input field html
+        var fieldHTML = '<div class="field_wrapper" style="margin-left: 116px;: ">' +
+            '<div>' +
+            '<input type="text" name="sku[]" id="sku" style="width: 120px; margin-right: 4px; margin-top: 2px;" placeholder="SKU" s/>' +
+            '<input type="text" name="size[]" id="size" style="width: 120px; margin-right: 4px; margin-top: 2px;" placeholder="Size"/>' +
+            '<input type="text" name="price[]" id="price" style="width: 120px; margin-right: 4px; margin-top: 2px;" placeholder="Price"/>' +
+            '<input type="text" name="stock[]" id="stock" style="width: 120px; margin-right: 4px; margin-top: 2px;" placeholder="Stock"/>' +
+            '<a href="javascript:void(0);" class="remove_button">Remove</a>' +
+            '</div>' +
+            '</div>'; //New input field html
         var x = 1; //Initial field counter is 1
 
         //Once add button is clicked

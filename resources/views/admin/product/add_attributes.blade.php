@@ -11,10 +11,10 @@
                             Add Product Attributes
                         </header>
                         <div class="panel-body">
-                            {{--<form action="{{ url('product/add-attributes/'.$productDetails->id) }}" method="post" class="form-horizontal">--}}
-                            <form action="{{ route('attribute.add', $productDetails->id) }}" method="post" class="form-horizontal">
+                            <form action="{{ url('admin/product/add-attributes/'.$productDetails->id) }}" method="post" class="form-horizontal">
+                            {{--<form action="{{ route('attribute.add', $productDetails->id) }}" method="post" class="form-horizontal">--}}
                                 @csrf
-                                @method('put')
+                                <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
                                 <div class="form-group">
                                     <label for="name" class="col-lg-2 col-sm-2 control-label">Product Name</label>
 
