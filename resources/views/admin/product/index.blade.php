@@ -54,7 +54,6 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Beand Name</th>
                                     <th>Category Name</th>
                                     <th style="width: 30%;">Description</th>
                                     <th>Status</th>
@@ -69,13 +68,13 @@
                                     <td>{{ $serial++ }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
-                                    <td>{{ $product->brand->name }}</td>
                                     <td>{{ str_limit($product->description,100)  }}</td>
                                     <td><span class="label {{ ($product->status == 'Active')?'label-info':'label-danger'}}">{{ $product->status }}</span></td>
-                                    <td>
+                                    <td class="display">
 
                                         @if($product->deleted_at == null)
-                                         <a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-info"><strong>Details</strong></a>
+                                         <a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-info "><strong>Details</strong></a>
+                                         <a href="{{ route('attribute.add', $product->id) }}" class="btn btn-sm btn-success"><strong>Add</strong></a>
                                          <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm  btn-warning"><strong>Edit</strong></a>
                                        <form action="{{ route('product.destroy', $product->id) }}" method="post" style="display: inline">
                                             @csrf
@@ -85,7 +84,7 @@
                                         @else
                                         <form action="{{ route('product.restore', $product->id) }}" method="post" style="display: inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this product')"><strong>Restore/strong></button>
+                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this product')"><strong>Restore</strong></button>
                                         </form>
 
                                             <form action="{{ route('product.permanent_delete', $product->id) }}" method="post" style="display: inline">
@@ -115,3 +114,4 @@
 
 
 @endsection
+

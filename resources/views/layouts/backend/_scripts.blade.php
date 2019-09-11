@@ -39,3 +39,4 @@
 
 <!--common scripts for all pages-->
 <script src="{{asset('assets/backend/js/scripts.js')}}"></script>
+

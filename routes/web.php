@@ -37,6 +37,9 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::post('product/{id}/restore','ProductController@restore')->name('product.restore');
     Route::delete('product/{id}/permanent_delete','ProductController@permanent_delete')->name('product.permanent_delete');
 
+    Route::match(['get','post'],'product/{id}/add-attributes','ProductController@addAttributes')->name('attribute.add');
+    Route::post('product_attribute/{id}/restore','ProductAttributeController@restore')->name('product_attribute.restore');
+    Route::delete('product_attribute/{id}/permanent_delete','ProductAttributeController@permanent_delete')->name('product_attribute.permanent_delete');
 
 });
 
