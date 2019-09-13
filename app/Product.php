@@ -34,9 +34,9 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function productAttributes()
+    public function product_attributes()
     {
-        return $this->hasMany('App\Product', 'product_id', 'id');
+        return $this->hasMany('App\ProductAttribute', 'product_id', 'id');
     }
 }
 

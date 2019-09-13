@@ -64,9 +64,13 @@
 <!-- font-awesome CDN -->
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
+<!--SweetAlert CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+
 <script src="{{asset('assets/backend/js/custom.js')}}"></script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
+
 <script src="{{asset('assets/backend/js/html5shiv.js')}}"></script>
 <script src="{{asset('assets/backend/js/respond.min.js')}}"></script>
 

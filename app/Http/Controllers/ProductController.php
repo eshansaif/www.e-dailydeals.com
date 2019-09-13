@@ -10,11 +10,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $data['title'] = 'Product List';
@@ -145,7 +141,9 @@ class ProductController extends Controller
         {
 
         $data['title'] = 'Product Attributes';
-        $productDetails = Product::where(['id'=>$id])->first();
+        $productDetails = Product::with('product_attributes')->where(['id'=>$id])->first();
+        //$productDetails = json_decode(json_encode($productDetails));
+        //dd($productDetails);
         if($request->isMethod('post')){
             $pa_data = $request->all();
 
@@ -165,12 +163,21 @@ class ProductController extends Controller
 
             }
 
-            return redirect('admin/product/add-attributes/'.$id)->with(session()->flash('message','Product is Created Successfully!'));
+            return redirect('admin/product/add-attributes/'.$id)->with(session()->flash('message','Product Attributes is Added Successfully!'));
         }
         //dd($productDetails);
         return view('admin.product.add_attributes',$data)->with(compact('productDetails'));
 
 
     }
+
+    public function destroyAttributes(ProductAttribute $productAttribute)
+    {
+        $productAttribute->delete();
+        session()->flash('message','Product Attribute is Deleted successfully!');
+        return redirect()->back();
+    }
+
+
 
 }

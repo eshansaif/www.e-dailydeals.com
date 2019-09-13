@@ -72,6 +72,95 @@
         </div>
 
 
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                <header class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <label  class="btn btn-primary" ><i class="fa fa-list">Attribute List </i></label>
+                            <span class="tools pull-right">
+                        <a href="javascript:;" class="fa fa-chevron-down"></a>
+                        {{--<a href="javascript:;" class="fa fa-times"></a>--}}
+                     </span>
+                        </header>
+
+
+                        <div class="panel-body">
+                            <div class="adv-table editable-table ">
+                                <div class="clearfix">
+
+                                    <div class="btn-group pull-right">
+
+                                        <form class="btn-group" >
+
+                                            <select name="status" id="" class="">
+                                                <option  value="">Select status</option>
+                                                <option @if(request()->status == 'Active') selected @endif  value="Active">Active</option>
+                                                <option @if(request()->status == 'Inactive') selected @endif value="Inactive">Incative</option>
+                                            </select>
+
+                                            <input type="text" placeholder="Search.." name="search" value="{{ request()->search }}">
+                                            <button type="submit"><i class="fa fa-search"></i></button>
+
+
+                                        </form>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="space15"></div>
+                                <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                                    <thead>
+                                    <tr>
+                                        <th>Attribute ID</th>
+                                        <th>SKU</th>
+                                        <th>Size</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($productDetails['product_attributes'] as $attribute)
+
+                                        <tr class="">
+                                            <td>{{ $attribute->id }}</td>
+                                            <td>{{ $attribute->sku }}</td>
+                                            <td>{{ $attribute->size }}</td>
+                                            <td>{{ $attribute->price }}</td>
+                                            <td>{{ $attribute->stock }}</td>
+                                            <td>
+                                                <form method="post" action="{{ route('attribute.destroy',$attribute->id) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button onclick="return confirm('Are you confirm to delete this Attributes?')">Delete</button>
+                                                </form>
+                                            </td>
+
+
+
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{--{{ $attributes->render() }}--}}
+                        </div>
+
+                    </section>
+            </div>
+        </div>
+
+        <!--body wrapper end-->
+
+
     </section>
+
+
+
 @endsection
 

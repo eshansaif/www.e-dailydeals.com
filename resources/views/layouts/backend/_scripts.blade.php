@@ -18,6 +18,9 @@
 <script src="{{asset('assets/backend/js/iCheck/jquery.icheck.js')}}"></script>
 <script src="{{asset('assets/backend/js/icheck-init.js')}}"></script>
 
+<!--SweetAlert CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 <!--data table-->
 <!--dynamic table-->
 <script type="text/javascript" language="javascript" src="{{ asset('assets/backend/js/advanced-datatable/js/jquery.dataTables.js') }}"></script>

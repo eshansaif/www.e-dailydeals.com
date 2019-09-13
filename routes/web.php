@@ -1,5 +1,9 @@
 <?php
 
+if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +42,9 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::delete('product/{id}/permanent_delete','ProductController@permanent_delete')->name('product.permanent_delete');
 
     Route::match(['get','post'],'product/add-attributes/{id}','ProductController@addAttributes');
-    //Route::post('product_attribute/{id}/restore','ProductAttributeController@restore')->name('product_attribute.restore');
-    //Route::delete('product_attribute/{id}/permanent_delete','ProductAttributeController@permanent_delete')->name('product_attribute.permanent_delete');
+    Route::delete('product/delete-attributes/{id}','ProductController@destroyAttributes')->name('attribute.destroy');
 
+    Route::get('product/delete-attributes/{id}','ProductController@addAttributes');
 });
 
 Route::get('emergency-logout',function (){

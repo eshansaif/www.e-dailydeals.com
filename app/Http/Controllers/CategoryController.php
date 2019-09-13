@@ -59,6 +59,7 @@ class CategoryController extends Controller
 
         $category= $request->except('_token');
         $category['created_by'] = 1;
+        $category['parent_id'] = 1;
         Category::create($category);
         session()->flash('message','Category is created successfully');
 

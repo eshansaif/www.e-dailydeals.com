@@ -14,8 +14,8 @@ class ModifyCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->integer('parent_id')->after('id');
-            $table->string('url')->after('name');
+            $table->integer('parent_id')->after('id')->nullable();
+            $table->string('url')->after('name')->nullable();
         });
     }
 

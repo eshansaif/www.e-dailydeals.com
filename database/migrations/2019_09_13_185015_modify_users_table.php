@@ -14,8 +14,8 @@ class ModifyUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->softDeletes();
-
+            $table->enum('type',['Admin','Operator'])->after('name')->default('Admin');
+            $table->string('phone')->after('email');
         });
     }
 
