@@ -8,6 +8,7 @@ use App\Product;
 use App\ProductAttribute;
 use App\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -121,12 +122,29 @@ class ProductController extends Controller
             'brand_id'=>'required',
             'price'=>'required|numeric',
             'stock'=>'required|numeric',
-            'status'=>'required'
+            'status'=>'required',
+            'images.*' =>'image'
         ]);
 
         $product_data = $request->except('_token');
         $product_data['updated_by'] = 1;
         $product->update($product_data);
+
+        //image upload
+
+        if (count($request->images))
+        {
+            foreach ($request->images as $image){
+                $product_image['product_id'] = $product->id;
+                $file_name = $product->id.'_'.time().'_'.rand(0000,9999);
+                //dd($file_name);
+                $image->move('images/products/', $file_name.'_'.$image->getClientOriginalName());
+                $product_image['file_path'] = 'images/products/'.$file_name.'_'.$image->getClientOriginalName();
+                ProductImage::create($product_image);
+            }
+
+        }
+
         session()->flash('message','Product is Updated Successfully');
         return redirect()->route('product.index');
     }
@@ -151,7 +169,15 @@ class ProductController extends Controller
 
     public function permanent_delete($id)
     {
-        $product = Product::onlyTrashed()->findOrFail($id);
+        $product = Product::onlyTrashed()->with('product_image')->findOrFail($id);
+
+        if(count($product->product_image)) {
+            foreach ($product->product_image as $image) {
+                File::delete($image->file_path);
+                $image->delete();
+            }
+        }
+
         $product->forceDelete();
         session()->flash('message','Product is Permanently Deleted');
         return redirect()->route('product.index');
@@ -195,6 +221,16 @@ class ProductController extends Controller
     {
         $productAttribute->delete();
         session()->flash('message','Product Attribute is Deleted successfully!');
+        return redirect()->back();
+    }
+
+
+    public function delete_image($image_id)
+    {
+        $image = ProductImage::findOrFail($image_id);
+        File::delete($image->file_path);
+        $image->delete();
+        session()->flash('message','Product image has been permanently deleted.');
         return redirect()->back();
     }
 

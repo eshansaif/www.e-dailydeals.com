@@ -13,7 +13,7 @@
                         </header>
                         <div class="panel-body">
 
-                            <form action="{{ route('product.update', $product->id) }}" method="post" class="form-horizontal">
+                            <form action="{{ route('product.update', $product->id) }}" method="post" class="form-horizontal" enctype="multipart/form-data">
                                 @include('admin.product._form')
                                 @method('put')
 

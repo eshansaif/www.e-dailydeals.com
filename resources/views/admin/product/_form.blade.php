@@ -148,11 +148,30 @@
 
 </div>
 
+
+<div class="form-group">
+    <label for="existing_images" class="col-lg-2 col-sm-2 control-label"><strong>Existing Images</strong></label>
+
+    <div class="col-lg-10">
+        @if(count($product->product_image))
+            @foreach($product->product_image as $image)
+                <img style="width: 20%" src="{{ asset($image->file_path) }}" alt="">
+                <a href="{{ route('product.delete.image',$image->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you confirm to delete this image?')">Delete</a>
+            @endforeach
+        @endif
+    </div>
+
+
+</div>
+
 <div class="form-group">
     <label for="images" class="col-lg-2 col-sm-2 control-label"><strong>Product Images</strong></label>
 
     <div class="col-lg-10">
         <input type="file" name="images[]" id="images" multiple>
+        @error('images.*')
+        <div class="pl-1 text-danger">{{ $message }}</div>
+        @enderror
         
     </div>
 </div>

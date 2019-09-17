@@ -40,6 +40,7 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::resource('product','ProductController');
     Route::post('product/{id}/restore','ProductController@restore')->name('product.restore');
     Route::delete('product/{id}/permanent_delete','ProductController@permanent_delete')->name('product.permanent_delete');
+    Route::get('product/{image_id}/delete/image','ProductController@delete_image')->name('product.delete.image');
 
     Route::match(['get','post'],'product/add-attributes/{id}','ProductController@addAttributes');
     Route::delete('product/delete-attributes/{id}','ProductController@destroyAttributes')->name('attribute.destroy');

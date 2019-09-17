@@ -76,7 +76,7 @@
 
                                         @if($product->deleted_at == null)
                                          <a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-info "><strong>Details</strong></a>
-                                         <a href="{{ url('admin/product/add-attributes/'.$product->id) }}" class="btn btn-sm btn-success"><strong>Add</strong></a>
+                                         <a href="{{ url('admin/product/add-attributes/'.$product->id) }}" class="btn btn-sm btn-success"><strong>Add Attributes</strong></a>
                                          <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm  btn-warning"><strong>Edit</strong></a>
                                        <form action="{{ route('product.destroy', $product->id) }}" method="post" style="display: inline">
                                             @csrf
