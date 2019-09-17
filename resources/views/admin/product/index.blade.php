@@ -55,7 +55,8 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Category Name</th>
-                                    <th style="width: 30%;">Description</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
                                     <th>Status</th>
                                     <th>Action</th>
 
@@ -68,7 +69,8 @@
                                     <td>{{ $serial++ }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
-                                    <td>{{ str_limit($product->description,100)  }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->stock }}</td>
                                     <td><span class="label {{ ($product->status == 'Active')?'label-info':'label-danger'}}">{{ $product->status }}</span></td>
                                     <td class="display">
 

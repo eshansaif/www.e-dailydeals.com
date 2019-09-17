@@ -65,6 +65,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            <a class="btn btn-block btn-info back-btn" href="{{ URL::previous() }}">Go Back</a>
 
 
                         </div>

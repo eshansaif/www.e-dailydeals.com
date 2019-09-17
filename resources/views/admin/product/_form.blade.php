@@ -10,7 +10,7 @@
             $category_id = null;
         }
     @endphp
-    <label for="category_id" class="col-lg-2 col-sm-2 control-label">Category</label>
+    <label for="category_id" class="col-lg-2 col-sm-2 control-label"><strong>Category</strong></label>
     <div class="col-lg-10">
         <select name="category_id" id="category_id" class="form-control form-control-line @error('category_id') is-invalid @enderror">
                 <option value="">Select Category</option>
@@ -37,7 +37,7 @@
             $brand_id = null;
         }
     @endphp
-    <label for="brand_id" class="col-lg-2 col-sm-2 control-label">Brand</label>
+    <label for="brand_id" class="col-lg-2 col-sm-2 control-label"><strong>Brand</strong></label>
     <div class="col-lg-10">
         <select  name="brand_id" id="brand_id" class="form-control form-control-line @error('brand_id') is-invalid @enderror">
             <option  value="">Select Brand</option>
@@ -56,7 +56,7 @@
 
 
 <div class="form-group">
-    <label for="name" class="col-lg-2 col-sm-2 control-label">Product Name</label>
+    <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>Product Name</strong></label>
     <div class="col-lg-10">
         <input name="name" value="{{ old('name', isset($product)?$product->name:null) }}" type="text" class="form-control form-control-line @error('name') is-invalid @enderror" id="name" placeholder="Product Name">
         @error('name')
@@ -66,7 +66,7 @@
 </div>
 
 <div class="form-group">
-    <label for="code" class="col-lg-2 col-sm-2 control-label">Product code</label>
+    <label for="code" class="col-lg-2 col-sm-2 control-label"><strong>Product code</strong></label>
     <div class="col-lg-10">
         <input name="code" value="{{ old('code', isset($product)?$product->code:null) }}" type="text" class="form-control form-control-line @error('code') is-invalid @enderror" id="code" placeholder="Product code">
         @error('code')
@@ -76,7 +76,7 @@
 </div>
 
 <div class="form-group">
-    <label for="color" class="col-lg-2 col-sm-2 control-label">Product Color</label>
+    <label for="color" class="col-lg-2 col-sm-2 control-label"><strong>Product Color</strong></label>
     <div class="col-lg-10">
         <input name="color" value="{{ old('color', isset($product)?$product->color:null) }}" type="text" class="form-control form-control-line @error('color') is-invalid @enderror" id="color" placeholder="Product color">
         @error('color')
@@ -86,7 +86,7 @@
 </div>
 
 <div class="form-group">
-    <label for="size" class="col-lg-2 col-sm-2 control-label">Product size</label>
+    <label for="size" class="col-lg-2 col-sm-2 control-label"><strong>Product size</strong></label>
     <div class="col-lg-10">
         <input name="size" value="{{ old('size', isset($product)?$product->size:null) }}" type="text" class="form-control form-control-line @error('size') is-invalid @enderror" id="size" placeholder="Product size">
         @error('size')
@@ -96,7 +96,7 @@
 </div>
 
 <div class="form-group">
-    <label for="description" class="col-lg-2 col-sm-2 control-label">Product Description</label>
+    <label for="description" class="col-lg-2 col-sm-2 control-label"><strong>Product Description</strong></label>
     <div class="col-lg-10">
     <textarea placeholder="Enter Product Short Description" name="description"  class="tinymce form-control" rows="9">{{ old('description', isset($product)?$product->description:null) }}</textarea>
         @error('description')
@@ -106,7 +106,7 @@
 </div>
 
 <div class="form-group">
-    <label for="price" class="col-lg-2 col-sm-2 control-label">Product Price</label>
+    <label for="price" class="col-lg-2 col-sm-2 control-label"><strong>Product Price</strong></label>
     <div class="col-lg-10">
         <input name="price" value="{{ old('price', isset($product)?$product->price:null) }}" type="number" step=".01" class="form-control form-control-line @error('price') is-invalid @enderror" id="price" placeholder="Product rice" min="1">
         @error('price')
@@ -116,7 +116,7 @@
 </div>
 
 <div class="form-group">
-    <label for="stock" class="col-lg-2 col-sm-2 control-label">Product Stock</label>
+    <label for="stock" class="col-lg-2 col-sm-2 control-label"><strong>Product Stock</strong></label>
     <div class="col-lg-10">
         <input name="stock" value="{{ old('stock', isset($product)?$product->stock:null) }}" type="number" class="form-control form-control-line @error('stock') is-invalid @enderror" id="stock" placeholder="Product stock" min="1" max="1000">
         @error('stock')
@@ -146,3 +146,13 @@
         @enderror
     </div>
 
+</div>
+
+<div class="form-group">
+    <label for="images" class="col-lg-2 col-sm-2 control-label"><strong>Product Images</strong></label>
+
+    <div class="col-lg-10">
+        <input type="file" name="images[]" id="images" multiple>
+        
+    </div>
+</div>

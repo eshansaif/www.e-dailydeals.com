@@ -6,6 +6,7 @@ use App\Brand;
 use App\Category;
 use App\Product;
 use App\ProductAttribute;
+use App\ProductImage;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -49,6 +50,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         $request->validate([
             'name'=>'required',
             'code'=>'required',
@@ -56,21 +58,39 @@ class ProductController extends Controller
             'brand_id'=>'required',
             'price'=>'required|numeric',
             'stock'=>'required|numeric',
-            'status'=>'required'
+            'status'=>'required',
+            'images.*'=>'image',
         ]);
 
-        $product = $request->except('_token');
+        $product = $request->except('_token','images');
         $product['created_by'] = 1;
-        $product=Product::create($product);
+        $product = Product::create($product);
+
+        if (count($request->images))
+        {
+            foreach ($request->images as $image){
+                $product_image['product_id'] = $product->id;
+                $file_name = $product->id.'_'.time().'_'.rand(0000,9999);
+                //dd($file_name);
+                $image->move('images/products/', $file_name.'_'.$image->getClientOriginalName());
+                $product_image['file_path'] = 'images/products/'.$file_name.'_'.$image->getClientOriginalName();
+                ProductImage::create($product_image);
+            }
+
+        }
+
+        //dd($product);
+
         session()->flash('message','Product is Created Successfully!');
         return redirect()->route('product.index');
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
         {
             $data['title'] = 'Product Details';
-            $data['product'] = $product;
+            $data['product'] = Product::with(['category','brand','product_image'])->findOrFail($id);
+            //dd($data['product']);
             $data['categories'] = Category::orderBy('name')->get();
             $data['brands'] = Brand::orderBy('name')->get();
             //$data['categories'] = Category::orderBy('name')->pluck('name','id');
