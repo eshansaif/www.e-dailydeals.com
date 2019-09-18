@@ -16,6 +16,8 @@ class ModifyUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum('type',['Admin','Operator'])->after('name')->default('Admin');
             $table->string('phone')->after('email');
+            $table->enum('status',['Active','Inactive']);
+            $table->softDeletes();
         });
     }
 

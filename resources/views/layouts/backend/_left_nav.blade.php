@@ -39,6 +39,14 @@
                 </ul>--}}
             </li>
 
+            <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Users</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{{ route('user.create') }}"> Add User</a></li>
+                    <li><a href="{{ route('user.index') }}"> View Users</a></li>
+
+                </ul>
+            </li>
+
             <li class="menu-list"><a href="#"><i class="fa fa-list-alt"></i> <span>Categories</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('category.create') }}"> Add Categories</a></li>

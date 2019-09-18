@@ -46,6 +46,12 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::delete('product/delete-attributes/{id}','ProductController@destroyAttributes')->name('attribute.destroy');
 
     Route::get('product/delete-attributes/{id}','ProductController@addAttributes');
+
+    Route::resource('user','UserController');
+    Route::post('user/{id}/restore','UserController@restore')->name('user.restore');
+    Route::delete('user/{id}/permanent_delete','UserController@permanent_delete')->name('user.permanent_delete');
+
+
 });
 
 Route::get('emergency-logout',function (){

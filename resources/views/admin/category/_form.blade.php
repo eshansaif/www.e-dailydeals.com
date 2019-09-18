@@ -27,8 +27,8 @@
     <label for="status" class="col-lg-2 col-sm-2 control-label">Category Status</label>
 
     <div class="col-lg-10">
-    <label class="radio-inline"><input type="radio" name="status" value="active" id="active" @if($status =='Active') checked @endif>Active</label>
-    <label class="radio-inline"><input type="radio" name="status" value="inactive" id="inactive" @if($status =='Inactive') checked @endif >Inactive</label>
+    <label class="radio-inline"><input type="radio" name="status" value="Active" id="Active" @if($status =='Active') checked @endif>Active</label>
+    <label class="radio-inline"><input type="radio" name="status" value="Inactive" id="Inactive" @if($status =='Inactive') checked @endif >Inactive</label>
         @error('status')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
