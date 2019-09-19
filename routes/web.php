@@ -14,8 +14,9 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Front Routes
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('product/{id}','Front/ProductController@index')->name('product.details');
 
 Route::get('login','LoginController@login_form')->name('admin.login.form');
 Route::post('login','LoginController@login')->name('admin.login');
