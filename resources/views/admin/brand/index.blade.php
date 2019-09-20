@@ -67,9 +67,9 @@
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
                                     <td>{{ $brand->name }}</td>
-                                    <td>{{ $brand->details }}</td>
+                                    <td width="50%" >{{ $brand->details }}</td>
                                     <td><img style="height: 100px; width: 100px" src="{{ asset($brand->file) }}" alt=""></td>
-                                    <td><span class="label {{ ($brand->status == 'active')?'label-info':'label-danger'}}">{{ $brand->status }}</span></td>
+                                    <td><span class="label {{ ($brand->status == 'active')?'label-info':'label-danger'}}">{{ ucfirst($brand->status) }}</span></td>
                                     <td>
                                         @if($brand->deleted_at == null)
 

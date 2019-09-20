@@ -127,6 +127,10 @@ class ProductController extends Controller
         ]);
 
         $product_data = $request->except('_token');
+        if(!$request->has('is_featured'))
+        {
+            $product_data['is_featured'] = 0;
+        }
         $product_data['updated_by'] = 1;
         $product->update($product_data);
 

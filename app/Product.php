@@ -19,6 +19,7 @@ class Product extends Model
         'price',
         'stock',
         'status',
+        'is_featured',
         'created_by',
         'updated_by',
 

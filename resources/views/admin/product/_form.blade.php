@@ -126,6 +126,25 @@
 </div>
 
 <div class="form-group">
+    <label for="default" class="col-lg-2 col-sm-2 control-label"><strong>Is Featured</strong></label>
+    <br>
+    @php
+        if(old("is_featured")){
+            $is_featured = old('is_featured');
+        }elseif(isset($product)){
+            $is_featured = $product->is_featured;
+        }else{
+            $is_featured = null;
+        }
+    @endphp
+
+    <div class="col-lg-10">
+    <input name="is_featured" type="checkbox" value="1" id="active" @if($is_featured == 1) checked @endif >
+    <label for="active">Yes</label>
+    </div>
+</div>
+
+<div class="form-group">
     @php
         if(old("status")){
             $status = old('status');

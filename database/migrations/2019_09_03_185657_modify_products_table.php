@@ -26,6 +26,7 @@ class ModifyProductsTable extends Migration
             $table->float('price',10,3);
             $table->unsignedInteger('stock');
             $table->enum('status',['Active','Inactive']);
+            $table->tinyInteger('is_featured')->default('0')->after('status');
             $table->softDeletes();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
