@@ -17,7 +17,7 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 //Front Routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('product/{id}','Front\ProductController@index')->name('product.details');
-/*Route::get('/get-product-price','Front\ProductController@getProductPrice');*/
+Route::get('{id}/get-product-price','Front\ProductControlle@getProductPrice')->name('get-product-price');
 
 Route::get('login','LoginController@login_form')->name('admin.login.form');
 Route::post('login','LoginController@login')->name('admin.login');
@@ -44,7 +44,7 @@ Route::middleware('auth')->prefix('admin')->group(function (){
 
     Route::match(['get','post'],'product/add-attributes/{id}','ProductController@addAttributes');
     Route::delete('product/delete-attributes/{id}','ProductController@destroyAttributes')->name('attribute.destroy');
-
+    Route::get('product/{id}/delete/add-attributes','ProductController@destroyAttributes')->name('product_attribute.delete');
     Route::get('product/delete-attributes/{id}','ProductController@addAttributes');
 
     Route::resource('user','UserController');

@@ -199,6 +199,20 @@ class ProductController extends Controller
 
             foreach ($pa_data['sku'] as  $key => $val){
                 if (!empty($val)){
+
+                    //prevent duplicate SKU check
+                    $attrCountSKU = ProductAttribute::where('sku',$val)->count();
+                    if ($attrCountSKU > 0){
+                        return redirect('admin/product/add-attributes/'.$id)->with(session()->flash('error_message','This SKU is already exists! Please Add another SKU!'));
+                    }
+
+                    //prevent duplicate size check
+
+                    $attrCountSizes = ProductAttribute::where(['product_id'=>$id, 'size'=>$pa_data['size'][$key]])->count();
+                    if ($attrCountSizes > 0){
+                        return redirect('admin/product/add-attributes/'.$id)->with(session()->flash('error_message','"'.$pa_data['size'][$key].'" size is already exists for this product! Please Add another Size!'));
+                    }
+
                     $attribute = new ProductAttribute();
                     $attribute->product_id = $id;
                     $attribute->created_by = 1;
@@ -221,10 +235,11 @@ class ProductController extends Controller
 
     }
 
-    public function destroyAttributes(ProductAttribute $productAttribute)
+    public function destroyAttributes($id)
     {
-        $productAttribute->delete();
-        session()->flash('message','Product Attribute is Deleted successfully!');
+        $product_attribute = ProductAttribute::findOrFail($id);
+        $product_attribute->delete();
+        session()->flash('message','Product Attribute has been permanently deleted!');
         return redirect()->back();
     }
 

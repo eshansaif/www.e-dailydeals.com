@@ -23,15 +23,7 @@
                                             <img style="width: 470.04px; height: 470.04px;" class="product-single-image" src="{{ asset($image->file_path) }}" data-zoom-image="{{ asset($image->file_path) }}"/>
                                         </div>
                                     @endforeach
-                                    {{--<div class="product-item">
-                                        <img class="product-single-image" src="{{ asset('assets/frontend/assets/images/products/zoom/product-2.jpg') }}" data-zoom-image="{{ asset('assets/frontend/assets/images/products/zoom/product-2-big.jpg') }}"/>
-                                    </div>
-                                    <div class="product-item">
-                                        <img class="product-single-image" src="{{ asset('assets/frontend/assets/images/products/zoom/product-3.jpg') }}" data-zoom-image="{{ asset('assets/frontend/assets/images/products/zoom/product-3-big.jpg') }}"/>
-                                    </div>
-                                    <div class="product-item">
-                                        <img class="product-single-image" src="{{ asset('assets/frontend/assets/images/products/zoom/product-4.jpg') }}" data-zoom-image="{{ asset('assets/frontend/assets/images/products/zoom/product-4-big.jpg') }}"/>
-                                    </div>--}}
+
                                 </div>
                                 <!-- End .product-single-carousel -->
                                 <span class="prod-full-screen">
@@ -44,15 +36,7 @@
                                         <img style="width: 110px; height: 110px;" src="{{ asset($image->file_path) }}"/>
                                     </div>
                                 @endforeach
-                                {{--<div class="col-3 owl-dot">
-                                    <img src="{{ asset('assets/frontend/assets/images/products/zoom/product-2.jpg') }}"/>
-                                </div>
-                                <div class="col-3 owl-dot">
-                                    <img src="{{ asset('assets/frontend/assets/images/products/zoom/product-3.jpg') }}"/>
-                                </div>
-                                <div class="col-3 owl-dot">
-                                    <img src="{{ asset('assets/frontend/assets/images/products/zoom/product-4.jpg') }}"/>
-                                </div>--}}
+
                             </div>
                         </div><!-- End .col-lg-7 -->
 
@@ -61,7 +45,7 @@
                                 <h1 class="product-title">{{ $product->name }}</h1>
                                 <p>Code: {{ $product->code }}</p>
                                 <p>
-                                    <select name="size" id="selSize" style="width: 100px">
+                                    <select id="selSize" name="size"  style="width: 100px">
                                             <option value="">Sizes</option>
                                         @foreach($product->product_attributes as $sizes)
                                             <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>

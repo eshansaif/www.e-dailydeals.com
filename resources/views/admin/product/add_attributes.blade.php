@@ -47,10 +47,10 @@
 
                                     <div class="field_wrapper">
                                         <div>
-                                            <input type="text" name="sku[]" id="sku" style="width: 120px" placeholder="SKU"/>
-                                            <input type="text" name="size[]" id="size" style="width: 120px" placeholder="Size"/>
-                                            <input type="text" name="price[]" id="price" style="width: 120px" placeholder="Price"/>
-                                            <input type="text" name="stock[]" id="stock" style="width: 120px" placeholder="Stock"/>
+                                            <input type="text" name="sku[]" id="sku" style="width: 120px" placeholder="SKU" required/>
+                                            <input type="text" name="size[]" id="size" style="width: 120px" placeholder="Size" required/>
+                                            <input type="text" name="price[]" id="price" style="width: 120px" placeholder="Price" required/>
+                                            <input type="text" name="stock[]" id="stock" style="width: 120px" placeholder="Stock" required/>
                                             <a href="javascript:void(0);" class="add_button" title="Add field">Add</a>
                                         </div>
                                     </div>
@@ -133,11 +133,7 @@
                                             <td>{{ $attribute->price }}</td>
                                             <td>{{ $attribute->stock }}</td>
                                             <td>
-                                                <form method="post" action="{{ route('attribute.destroy',$attribute->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button onclick="return confirm('Are you confirm to delete this Attributes?')">Delete</button>
-                                                </form>
+                                                <a href="{{ route('product_attribute.delete',$attribute->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you confirm to delete this Attribute?')">Delete</a>
                                             </td>
 
 
