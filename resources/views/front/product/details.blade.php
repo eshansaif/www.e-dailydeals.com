@@ -43,15 +43,20 @@
                         <div class="col-lg-5 col-md-6">
                             <div class="product-single-details">
                                 <h1 class="product-title">{{ $product->name }}</h1>
-                                <p>Code: {{ $product->code }}</p>
-                                <p>
-                                    <select id="selSize" name="size"  style="width: 100px">
-                                            <option value="">Sizes</option>
-                                        @foreach($product->product_attributes as $sizes)
-                                            <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
-                                        @endforeach
-                                    </select>
-                                </p>
+
+                                        <ul>
+                                            <li>Brand: <a href="#" class="rating-link">{{ $product->brand->name}}</a></li>
+                                            <li>Code: {{ $product->code }}</li>
+                                            <li>
+                                                <select id="selSize" name="size"  style="width: 100px">
+                                                    <option value="">Sizes</option>
+                                                    @foreach($product->product_attributes as $sizes)
+                                                        <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </li>
+                                        </ul>
+
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
@@ -67,8 +72,9 @@
                                 </div><!-- End .price-box -->
 
                                 <div class="product-desc">
-                                    <p>{{ $product->description }}</p>
+                                    <p>{{ str_limit($product->description,100) }}</p>
                                 </div><!-- End .product-desc -->
+
 
                                 <div class="product-filters-container">
                                     <div class="product-single-filter">
@@ -131,11 +137,13 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
                             <div class="product-desc-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
+                                <p>{{ $product->description }}</p>
                                 <ul>
-                                    <li><i class="icon-ok"></i>Any Product types that You want - Simple, Configurable</li>
-                                    <li><i class="icon-ok"></i>Downloadable/Digital Products, Virtual Products</li>
-                                    <li><i class="icon-ok"></i>Inventory Management with Backordered items</li>
+                                    <li  class="fas fa-align-justify">List of Available sizes:</li>
+                                    @foreach($product->product_attributes as $size)
+                                        <li><i class="icon-ok"></i>{{ $size->size }}</li>
+                                    @endforeach
+
                                 </ul>
                                 <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <br>quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
                             </div><!-- End .product-desc-content -->
@@ -264,7 +272,7 @@
                 <div class="sidebar-wrapper">
                     <div class="widget widget-brand">
                         <a href="#">
-                            <img src="{{ asset('assets/frontend/assets/images/product-brand.png') }}" alt="brand name">
+                            <img src="{{ asset($product->brand->file) }}" alt="brand name">
                         </a>
                     </div><!-- End .widget -->
 
@@ -299,15 +307,18 @@
                         <div class="widget-body">
                             <div class="owl-carousel widget-featured-products">
                                 <div class="featured-col">
+
+                                    @foreach($featured_products as $index=>$product)
+                                        @if($index <= 2)
                                     <div class="product product-sm">
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('assets/frontend/assets/images/products/small/product-1.jpg') }}" alt="product">
+                                            <a href="{{ route('product.details', $product->id) }}" class="product-image">
+                                                <img style="height: 80px; width: 70px" src="{{ asset(isset($product->product_image[0])?$product->product_image[0]->file_path:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
                                             </a>
                                         </figure>
                                         <div class="product-details">
                                             <h2 class="product-title">
-                                                <a href="product.html">Ring</a>
+                                                <a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a>
                                             </h2>
                                             <div class="ratings-container">
                                                 <div class="product-ratings">
@@ -315,65 +326,27 @@
                                                 </div><!-- End .product-ratings -->
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
-                                                <span class="product-price">$45.00</span>
+                                                <span class="product-price">$product->price</span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
+                                        @endif
+                                    @endforeach
 
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('assets/frontend/assets/images/products/small/product-2.jpg') }}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Headphone</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:20%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="old-price">$60.00</span>
-                                                <span class="product-price">$45.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
-
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('assets/frontend/assets/images/products/small/product-3.jpg') }}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Shoes</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="product-price">$50.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
                                 </div><!-- End .featured-col -->
 
                                 <div class="featured-col">
+                                    @foreach($featured_products as $index=>$product)
+                                        @if($index >= 3)
                                     <div class="product product-sm">
                                         <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('assets/frontend/assets/images/products/small/product-4.jpg') }}" alt="product">
+                                            <a href="{{ route('product.details', $product->id) }}" class="product-image">
+                                                <img style="height: 80px; width: 70px" src="{{ asset(isset($product->product_image[0])?$product->product_image[0]->file_path:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
                                             </a>
                                         </figure>
                                         <div class="product-details">
                                             <h2 class="product-title">
-                                                <a href="product.html">Watch-Black</a>
+                                                <a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a>
                                             </h2>
                                             <div class="ratings-container">
                                                 <div class="product-ratings">
@@ -381,53 +354,14 @@
                                                 </div><!-- End .product-ratings -->
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
-                                                <span class="old-price">$50.00</span>
-                                                <span class="product-price">$35.00</span>
+                                                {{--<span class="old-price">$50.00</span>--}}
+                                                <span class="product-price">{{ $product->price }}</span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
+                                        @endif
+                                    @endforeach
 
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('assets/frontend/assets/images/products/small/product-5.jpg') }}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Watch-Gray</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:60%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="product-price">$29.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
-
-                                    <div class="product product-sm">
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="{{ asset('assets/frontend/assets/images/products/small/product-6.jpg') }}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <div class="product-details">
-                                            <h2 class="product-title">
-                                                <a href="product.html">Hat</a>
-                                            </h2>
-                                            <div class="ratings-container">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:20%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
-                                            <div class="price-box">
-                                                <span class="product-price">$40.00</span>
-                                            </div><!-- End .price-box -->
-                                        </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
                                 </div><!-- End .featured-col -->
                             </div><!-- End .widget-featured-slider -->
                         </div><!-- End .widget-body -->
@@ -439,13 +373,16 @@
 
     <div class="featured-section">
         <div class="container">
-            <h2 class="carousel-title">Featured Products</h2>
+            <h2 class="carousel-title">Latest Products</h2>
 
             <div class="featured-products owl-carousel owl-theme owl-dots-top">
-                <div class="product">
+                @if(isset($latest_products))
+                    @foreach($latest_products as $product)
+                        @include('front.product._list')
+                {{--<div class="product">
                     <figure class="product-image-container">
                         <a href="product.html" class="product-image">
-                            <img src="{{ asset('assets/frontend/assets/images/products/product-1.jpg') }}" alt="product">
+                            <img style="height: 225.2px; width: 225.2px" src="{{ asset(isset($product->product_image[0])?$product->product_image[0]->file_path:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
                         </a>
                         <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
                     </figure>
@@ -476,151 +413,10 @@
                             </a>
                         </div><!-- End .product-action -->
                     </div><!-- End .product-details -->
-                </div><!-- End .product -->
+                </div><!-- End .product -->--}}
+                 @endforeach
+                @endif
 
-                <div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="{{ asset('assets/frontend/assets/images/products/product-2.jpg') }}" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Zippered Jacket</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$55.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div><!-- End .product -->
-
-                <div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="{{ asset('assets/frontend/assets/images/products/product-3.jpg') }}" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:40%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Brown Slippers</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$12.90</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div><!-- End .product -->
-
-                <div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="{{ asset('assets/frontend/assets/images/products/product-4.jpg') }}" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:0%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Black Slippers</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$17.90</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div><!-- End .product -->
-
-                <div class="product">
-                    <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                            <img src="{{ asset('assets/frontend/assets/images/products/product-5.jpg') }}" alt="product">
-                        </a>
-                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                    </figure>
-                    <div class="product-details">
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:50%"></span><!-- End .ratings -->
-                            </div><!-- End .product-ratings -->
-                        </div><!-- End .product-container -->
-                        <h2 class="product-title">
-                            <a href="product.html">Dean Cap Grey</a>
-                        </h2>
-                        <div class="price-box">
-                            <span class="product-price">$79.00</span>
-                        </div><!-- End .price-box -->
-
-                        <div class="product-action">
-                            <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                <span>Add to Wishlist</span>
-                            </a>
-
-                            <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                <span>Add to Cart</span>
-                            </a>
-
-                            <a href="#" class="paction add-compare" title="Add to Compare">
-                                <span>Add to Compare</span>
-                            </a>
-                        </div><!-- End .product-action -->
-                    </div><!-- End .product-details -->
-                </div><!-- End .product -->
             </div><!-- End .featured-proucts -->
         </div><!-- End .container -->
     </div><!-- End .featured-section -->

@@ -1,7 +1,7 @@
 <div class="container">
     <nav class="main-nav">
         <ul class="menu sf-arrows">
-            <li class="active"><a href="index-2.html">Home</a></li>
+            <li class="active"><a href="{{ route('home') }}">Home</a></li>
             <li>
                 <a href="category.html" class="sf-with-ul">Categories</a>
                 <div class="megamenu megamenu-fixed-width">
@@ -10,17 +10,12 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="menu-title">
-                                        <a href="#">Variations 1<span class="tip tip-new">New!</span></a>
+                                        <a href="{{ route('front.product.index') }}">All CategoriesWise<span class="tip tip-new">Product!</span></a>
                                     </div>
                                     <ul>
-                                        <li><a href="category.html">Fullwidth Banner<span class="tip tip-hot">Hot!</span></a></li>
-                                        <li><a href="category-banner-boxed-slider.html">Boxed Slider Banner</a></li>
-                                        <li><a href="category-banner-boxed-image.html">Boxed Image Banner</a></li>
-                                        <li><a href="category.html">Left Sidebar</a></li>
-                                        <li><a href="category-sidebar-right.html">Right Sidebar</a></li>
-                                        <li><a href="category-flex-grid.html">Product Flex Grid</a></li>
-                                        <li><a href="category-horizontal-filter1.html">Horizontal Filter1</a></li>
-                                        <li><a href="category-horizontal-filter2.html">Horizontal Filter2</a></li>
+                                        @foreach($categories as $id=>$category)
+                                        <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}{{--<span class="tip tip-hot">Hot!</span>--}}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div><!-- End .col-lg-6 -->
                                 <div class="col-lg-6">

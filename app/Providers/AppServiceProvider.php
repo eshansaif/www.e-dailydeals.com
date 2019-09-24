@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -25,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        view()->composer('layouts/frontend/_header_bottom',function ($view){
+            $view->with('categories',Category::where('status','Active')->orderBy('name','ASC')->pluck('name','id'));
+        });
     }
 }
