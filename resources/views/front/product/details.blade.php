@@ -61,7 +61,7 @@
                                                     <ul class="config-size-list">
 
                                                         @foreach($product->product_attributes as $sizes)
-                                                            <li class=""><a href="#">{{ $sizes->size }}</a></li>
+                                                            <li  class=""><a  href="#"><strong>{{ $sizes->size }}</strong></a></li>
                                                         @endforeach
                                                     </ul>
                                                 </div>
