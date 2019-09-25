@@ -113,7 +113,7 @@
                 <div class="sidebar-wrapper">
                     <div class="widget">
                         <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1">electronics</a>
+                            <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1">{{ $product->category->name }}</a>
                         </h3>
 
                         <div class="collapse show" id="widget-body-1">

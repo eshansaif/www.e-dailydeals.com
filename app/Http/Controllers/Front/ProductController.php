@@ -11,10 +11,11 @@ class ProductController extends Controller
 {
     public function index($category_id = false)
     {
+        $data['featured_products'] = Product::where(['status'=>'Active','is_featured'=>1])->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
         $products = new Product();
         $products = $products->with(['brand','category','product_image','product_attributes']);
         if($category_id != false){
-            $products = $products->where('category_id',$category_id);
+            $data['product'] = $products->where('category_id',$category_id);
         }
         $products = $products->where('status','Active');
         $products = $products->orderBy('id','DESC')->paginate(6);
@@ -28,7 +29,9 @@ class ProductController extends Controller
         //$data['categories'] = Category::where('status','Active')->orderBy('name','ASC')->pluck('name','id');
         $data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
         $data['latest_products'] = Product::where('status','Active')->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
-        $data['featured_products'] = Product::where(['status'=>'Active','is_featured'=>1])->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
+        $data['featured_products'] = Product::where('id','!=',$id)->where(['status'=>'Active','is_featured'=>1])->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
+        $data['related_products'] = Product::where('id','!=',$id)->where(['category_id'=>$data['product']->category_id])->orderBy('id','DESC')->limit(6)->get();
+        //dd($data['related_products']);
         //$data['product'] = json_decode(json_encode($data['product']));
         ///dd($data);
         return view('front.product.details', $data);

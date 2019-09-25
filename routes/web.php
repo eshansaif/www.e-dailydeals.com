@@ -16,7 +16,7 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 */
 //Front Routes
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('products/category/{id?}','Front\ProductController@index')->name('front.product.index');
+Route::get('products/{id?}','Front\ProductController@index')->name('front.product.index');
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
 Route::get('{id}/get-product-price','Front\ProductControlle@getProductPrice')->name('get-product-price');
 

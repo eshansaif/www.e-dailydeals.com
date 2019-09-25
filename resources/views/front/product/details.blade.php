@@ -47,15 +47,28 @@
                                         <ul>
                                             <li>Brand: <a href="#" class="rating-link">{{ $product->brand->name}}</a></li>
                                             <li>Code: {{ $product->code }}</li>
-                                            <li>
+                                            {{--<li>
                                                 <select id="selSize" name="size"  style="width: 100px">
                                                     <option value="">Sizes</option>
                                                     @foreach($product->product_attributes as $sizes)
                                                         <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
                                                     @endforeach
                                                 </select>
+                                            </li>--}}
+                                            <li>Available Sizes:</li>
+                                            <li>
+                                                <div class="widget-body">
+                                                    <ul class="config-size-list">
+
+                                                        @foreach($product->product_attributes as $sizes)
+                                                            <li class=""><a href="#">{{ $sizes->size }}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+
                                             </li>
                                         </ul>
+
 
 
                                 <div class="ratings-container">
@@ -302,13 +315,13 @@
                     </div><!-- End .widget -->
 
                     <div class="widget widget-featured">
-                        <h3 class="widget-title">Featured Products</h3>
+                        <h3 class="widget-title">Related Products</h3>
 
                         <div class="widget-body">
                             <div class="owl-carousel widget-featured-products">
                                 <div class="featured-col">
 
-                                    @foreach($featured_products as $index=>$product)
+                                    @foreach($related_products as $index=>$product)
                                         @if($index <= 2)
                                     <div class="product product-sm">
                                         <figure class="product-image-container">
@@ -326,7 +339,7 @@
                                                 </div><!-- End .product-ratings -->
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
-                                                <span class="product-price">$product->price</span>
+                                                <span class="product-price">৳ {{ $product->price }}/-</span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
@@ -336,7 +349,7 @@
                                 </div><!-- End .featured-col -->
 
                                 <div class="featured-col">
-                                    @foreach($featured_products as $index=>$product)
+                                    @foreach($related_products as $index=>$product)
                                         @if($index >= 3)
                                     <div class="product product-sm">
                                         <figure class="product-image-container">
@@ -355,7 +368,7 @@
                                             </div><!-- End .product-container -->
                                             <div class="price-box">
                                                 {{--<span class="old-price">$50.00</span>--}}
-                                                <span class="product-price">{{ $product->price }}</span>
+                                                <span class="product-price">৳ {{ $product->price }}/-</span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div><!-- End .product -->
@@ -373,11 +386,11 @@
 
     <div class="featured-section">
         <div class="container">
-            <h2 class="carousel-title">Latest Products</h2>
+            <h2 class="carousel-title">Featured Products</h2>
 
             <div class="featured-products owl-carousel owl-theme owl-dots-top">
-                @if(isset($latest_products))
-                    @foreach($latest_products as $product)
+                @if(isset($featured_products))
+                    @foreach($featured_products as $product)
                         @include('front.product._list')
                 {{--<div class="product">
                     <figure class="product-image-container">
