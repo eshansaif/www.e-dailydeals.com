@@ -18,7 +18,7 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('products/{id?}','Front\ProductController@index')->name('front.product.index');
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
-Route::get('{id}/get-product-price','Front\ProductControlle@getProductPrice')->name('get-product-price');
+Route::get('/get-product-price','Front\ProductController@getProductPrice');
 
 Route::get('login','LoginController@login_form')->name('admin.login.form');
 Route::post('login','LoginController@login')->name('admin.login');

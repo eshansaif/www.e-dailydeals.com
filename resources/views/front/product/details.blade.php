@@ -47,15 +47,15 @@
                                         <ul>
                                             <li>Brand: <a href="#" class="rating-link">{{ $product->brand->name}}</a></li>
                                             <li>Code: {{ $product->code }}</li>
-                                            {{--<li>
+                                            <li>
                                                 <select id="selSize" name="size"  style="width: 100px">
                                                     <option value="">Sizes</option>
-                                                    @foreach($product->product_attributes as $sizes)
-                                                        <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
+                                                    @foreach($product_details->product_attributes as $sizes)
+                                                        <option value="{{ $product_details->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
                                                     @endforeach
                                                 </select>
-                                            </li>--}}
-                                            <li>Available Sizes:</li>
+                                            </li>
+                                            {{--<li>Available Sizes:</li>
                                             <li>
                                                 <div class="widget-body">
                                                     <ul class="config-size-list">
@@ -66,7 +66,8 @@
                                                     </ul>
                                                 </div>
 
-                                            </li>
+                                            </li>--}}
+                                            <li><strong>Availability:</strong>@if($total_stock > 0) In Stock @else Out of Stock @endif</li>
                                         </ul>
 
 
@@ -81,12 +82,12 @@
 
                                 <div class="price-box">
                                     <span class="old-price">৳ 81.00/-</span>
-                                    <span class="product-price">৳ {{ $product->price }}/-</span>
+                                    <span id="getPrice" class="product-price">৳ {{ $product->price }}/-</span>
                                 </div><!-- End .price-box -->
 
-                                <div class="product-desc">
+                                {{--<div class="product-desc">
                                     <p>{{ str_limit($product->description,100) }}</p>
-                                </div><!-- End .product-desc -->
+                                </div><!-- End .product-desc -->--}}
 
 
                                 <div class="product-filters-container">
@@ -109,13 +110,14 @@
                                     </div><!-- End .product-single-filter -->
                                 </div><!-- End .product-filters-container -->
 
+                                @if($total_stock > 0)
                                 <div class="product-action product-all-icons">
                                     <div class="product-single-qty">
                                         <input class="horizontal-quantity form-control" type="text">
                                     </div><!-- End .product-single-qty -->
 
                                     <a href="cart.html" class="paction add-cart" title="Add to Cart">
-                                        <span>Add to Cart</span>
+                                        <span class="">Add to Cart</span>
                                     </a>
                                     <a href="#" class="paction add-wishlist" title="Add to Wishlist">
                                         <span>Add to Wishlist</span>
@@ -124,6 +126,7 @@
                                         <span>Add to Compare</span>
                                     </a>
                                 </div><!-- End .product-action -->
+                                @endif
 
                                 <div class="product-single-share">
                                     <label>Share:</label>
@@ -134,6 +137,8 @@
                         </div><!-- End .col-lg-5 -->
                     </div><!-- End .row -->
                 </div><!-- End .product-single-container -->
+
+
 
                 <div class="product-single-tabs">
                     <ul class="nav nav-tabs" role="tablist">

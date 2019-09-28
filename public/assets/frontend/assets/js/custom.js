@@ -1,3 +1,4 @@
+/*
 $(document).ready(function () {
     $("#selSize").change(function () {
         var idSize = $(this).val();
@@ -20,6 +21,7 @@ $(document).ready(function () {
         });
     });
 });
+*/
 
 /*$(document).ready(function () {
     $("#selSize").change(function () {
@@ -30,22 +32,22 @@ $(document).ready(function () {
 
 
 
-/*$(document).ready(function () {
+$(document).ready(function () {
     $("#selSize").change(function (){
        var idSize = $(this).val();
        $.ajax({
-          type: 'get',
+          type: 'post',
            url: '/get-product-price',
            data:{idSize:idSize},
            success:function (resp) {
-               /!*alert(resp);*!/
+               alert(resp);
            },error:function () {
                alert("Error");
            }
 
        });
     });
-});*/
+});
 
 
 
