@@ -47,26 +47,27 @@
                                         <ul>
                                             <li>Brand: <a href="#" class="rating-link">{{ $product->brand->name}}</a></li>
                                             <li>Code: {{ $product->code }}</li>
-                                            <li>
+                                            {{--<li>
                                                 <select id="selSize" name="size"  style="width: 100px">
                                                     <option value="">Sizes</option>
-                                                    @foreach($product_details->product_attributes as $sizes)
-                                                        <option value="{{ $product_details->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
+                                                    @foreach($product->product_attributes as $sizes)
+                                                        <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
                                                     @endforeach
                                                 </select>
-                                            </li>
-                                            {{--<li>Available Sizes:</li>
+                                            </li>--}}
+                                            <li>Available Sizes:</li>
                                             <li>
                                                 <div class="widget-body">
                                                     <ul class="config-size-list">
 
                                                         @foreach($product->product_attributes as $sizes)
                                                             <li  class=""><a  href="#"><strong>{{ $sizes->size }}</strong></a></li>
+
                                                         @endforeach
                                                     </ul>
                                                 </div>
 
-                                            </li>--}}
+                                            </li>
                                             <li><strong>Availability:</strong>@if($total_stock > 0) In Stock @else Out of Stock @endif</li>
                                         </ul>
 
@@ -110,23 +111,37 @@
                                     </div><!-- End .product-single-filter -->
                                 </div><!-- End .product-filters-container -->
 
+
+                                <form name="addToCartFrom" id="addToCartForm" method="post" action="{{ route('add-cart') }}">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <input type="hidden" name="name" value="{{ $product->name }}">
+                                    <input type="hidden" name="code" value="{{ $product->code }}">
+                                    <input type="hidden" name="color" value="{{ $product->color }}">
+                                    <input type="hidden" name="price" value="{{ $product->price }}">
+                                    <input type="hidden" name="size" value="{{ $product->size }}">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+
+
                                 @if($total_stock > 0)
                                 <div class="product-action product-all-icons">
                                     <div class="product-single-qty">
-                                        <input class="horizontal-quantity form-control" type="text">
+                                        <input name="quantity" class="horizontal-quantity form-control" type="text">
                                     </div><!-- End .product-single-qty -->
 
-                                    <a href="cart.html" class="paction add-cart" title="Add to Cart">
+                                    <button href="cart.html" class="paction add-cart" title="Add to Cart">
                                         <span class="">Add to Cart</span>
-                                    </a>
+                                    </button>
                                     <a href="#" class="paction add-wishlist" title="Add to Wishlist">
                                         <span>Add to Wishlist</span>
                                     </a>
-                                    <a href="#" class="paction add-compare" title="Add to Compare">
+                                    <a type="submit" href="#" class="paction add-compare" title="Add to Compare">
                                         <span>Add to Compare</span>
                                     </a>
                                 </div><!-- End .product-action -->
                                 @endif
+                                </form>
 
                                 <div class="product-single-share">
                                     <label>Share:</label>
@@ -137,7 +152,6 @@
                         </div><!-- End .col-lg-5 -->
                     </div><!-- End .row -->
                 </div><!-- End .product-single-container -->
-
 
 
                 <div class="product-single-tabs">

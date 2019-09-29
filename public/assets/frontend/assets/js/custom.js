@@ -37,7 +37,7 @@ $(document).ready(function () {
        var idSize = $(this).val();
        $.ajax({
           type: 'post',
-           url: '/get-product-price',
+           url: '/{id}/get-product-price',
            data:{idSize:idSize},
            success:function (resp) {
                alert(resp);

@@ -7,6 +7,7 @@ use App\Product;
 use App\ProductAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -29,8 +30,8 @@ class ProductController extends Controller
     {
 
         $data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
-        $product_details = Product::with('product_attributes')->where('id',$id)->first();
-        $data['product_details'] = json_decode(json_encode($product_details));
+        /*$product_details = Product::with('product_attributes')->where('id',$id)->first();
+        $data['product_details'] = json_decode(json_encode($product_details));*/
         //dd($data['product_details']);
         $data['latest_products'] = Product::where('status','Active')->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
         $data['featured_products'] = Product::where('id','!=',$id)->where(['status'=>'Active','is_featured'=>1])->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
@@ -55,5 +56,22 @@ class ProductController extends Controller
         echo "#";
         echo $proAttr->size;
 
+    }
+
+    public function addToCart(Request $request)
+    {
+        $data = $request->all();
+        if (empty($data['user_email'])){
+            $data['user_email'] = '';
+        }
+        if (empty($data['session_id'])){
+            $data['session_id'] = '';
+        }
+
+        DB::table('cart')->insert(['id'=>$data['id'],'name'=>$data[name], 'code'=>$data['code'],
+            'color'=>$data['color'], 'price'=>$data['price'], 'size'=>$data['size'],
+            'quantity'=>$data['quantity'], 'user_email'=>$data['user_email'],'session_id'=>$data['session_id']
+        ]);
+        die;
     }
 }
