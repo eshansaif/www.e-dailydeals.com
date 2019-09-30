@@ -21,6 +21,7 @@
         </div><!-- End .header-bottom -->
     </header><!-- End .header -->
 
+    @include('layouts.frontend._messages')
     <main class="main">
         @yield('content')
     </main><!-- End .main -->

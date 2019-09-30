@@ -11,7 +11,7 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
 
-            url: "{{ url('/get-product-price') }}",
+            url: "{{ url('get-product-price') }}",
             data:{idSize:idSize},
             success:function (resp) {
                 alert(resp);
@@ -36,8 +36,9 @@ $(document).ready(function () {
     $("#selSize").change(function (){
        var idSize = $(this).val();
        $.ajax({
-          type: 'post',
-           url: '/{id}/get-product-price',
+          type: 'get',
+           dataType: 'JSON',
+           url: 'get-product-price',
            data:{idSize:idSize},
            success:function (resp) {
                alert(resp);

@@ -47,14 +47,14 @@
                                         <ul>
                                             <li>Brand: <a href="#" class="rating-link">{{ $product->brand->name}}</a></li>
                                             <li>Code: {{ $product->code }}</li>
-                                            {{--<li>
+                                            <li>
                                                 <select id="selSize" name="size"  style="width: 100px">
                                                     <option value="">Sizes</option>
-                                                    @foreach($product->product_attributes as $sizes)
+                                                    @foreach($product_details->product_attributes as $sizes)
                                                         <option value="{{ $product->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
                                                     @endforeach
                                                 </select>
-                                            </li>--}}
+                                            </li>
                                             <li>Available Sizes:</li>
                                             <li>
                                                 <div class="widget-body">
@@ -114,13 +114,12 @@
 
                                 <form name="addToCartFrom" id="addToCartForm" method="post" action="{{ route('add-cart') }}">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="name" value="{{ $product->name }}">
                                     <input type="hidden" name="code" value="{{ $product->code }}">
                                     <input type="hidden" name="color" value="{{ $product->color }}">
                                     <input type="hidden" name="price" value="{{ $product->price }}">
                                     <input type="hidden" name="size" value="{{ $product->size }}">
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
 
 
 

@@ -18,9 +18,11 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('products/{id?}','Front\ProductController@index')->name('front.product.index');
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
-Route::get('/{id}/get-product-price','Front\ProductController@getProductPrice');
+Route::get('get-product-price','Front\ProductController@getProductPrice');
 
 Route::match(['get', 'post'], 'add-to-cart', 'Front\ProductController@addToCart' )->name('add-cart');
+
+Route::match(['get', 'post'], 'cart','Front\ProductController@cart')->name('cart');
 
 Route::get('login','LoginController@login_form')->name('admin.login.form');
 Route::post('login','LoginController@login')->name('admin.login');
