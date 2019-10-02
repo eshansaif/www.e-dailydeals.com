@@ -249,7 +249,7 @@ class ProductController extends Controller
         $image = ProductImage::findOrFail($image_id);
         File::delete($image->file_path);
         $image->delete();
-        session()->flash('message','Product image has been permanently deleted.');
+        session()->flash('message','Product image has been permanently deleted!');
         return redirect()->back();
     }
 

@@ -29,7 +29,7 @@
                             <td class="product-col">
                                 <figure class="product-image-container">
                                     <a href="product.html" class="product-image">
-                                        <img src="{{ asset(isset($cart->file)?$cart->file:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
+                                        <img style="width: 178px; height: 178px;" src="{{ asset(isset($cart->file)?$cart->file:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
                                     </a>
                                 </figure>
                                 <h2 class="product-title">
@@ -53,7 +53,7 @@
 
                                 <div class="float-right">
                                     <a href="#" title="Edit product" class="btn-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>
-                                    <a href="#" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
+                                    <a href="{{ route('cart.delete',$cart->id) }}" onclick="return confirm('Are you confirm to remove this Product from Cart?')" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
                                 </div><!-- End .float-right -->
                             </td>
                         </tr>

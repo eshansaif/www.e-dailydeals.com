@@ -24,6 +24,9 @@ Route::match(['get', 'post'], 'add-to-cart', 'Front\ProductController@addToCart'
 
 Route::match(['get', 'post'], 'cart','Front\ProductController@cart')->name('cart');
 
+//delete product from cart item
+Route::get('cart/delete-product/{id}','Front\ProductController@deleteCartProduct')->name('cart.delete');
+
 Route::get('login','LoginController@login_form')->name('admin.login.form');
 Route::post('login','LoginController@login')->name('admin.login');
 

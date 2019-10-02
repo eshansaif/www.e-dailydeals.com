@@ -82,19 +82,25 @@ class ProductController extends Controller
         return redirect('cart')->with(session()->flash('message','Product is added to Cart Successfully!'));
     }
 
-    public function cart($id)
+    public function cart()
     {
-        $data['title'] = "Cart";
+        $data['title'] = "Shopping Cart";
         $data['session_id'] = Session::get('session_id');
         $data['user_cart'] = DB::table('cart')->where(['session_id'=>$data['session_id']])->get();
         //$data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
 
         foreach ($data['user_cart'] as $key => $product){
-            $productDetails = Product::with('product_image')->where('id',$product->product_id)->first($id);
+            $productDetails = Product::with('product_image')->where('id',$product->product_id)->first();
             //dd($productDetails);
             $data['user_cart'][$key]->file = $productDetails->product_image[0]->file_path;
         }
         //dd($data['user_cart']);
         return view('front.product.cart', $data);
+    }
+
+    public function deleteCartProduct($id)
+    {
+        DB::table('cart')->where('id',$id)->delete();
+        return redirect('cart')->with(session()->flash('error_message','The Product has been removed from Cart!'));
     }
 }
