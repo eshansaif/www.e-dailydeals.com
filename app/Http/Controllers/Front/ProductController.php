@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Cart;
 use App\Category;
 use App\Product;
 use App\ProductAttribute;
@@ -73,11 +74,19 @@ class ProductController extends Controller
             Session::put('session_id',$session_id);
         }
 
+        $countProducts = DB::table('cart')->where(['product_id'=>$data['product_id'],
+            'color'=>$data['color'], 'size'=>$data['size'], 'session_id'=>$session_id ])->count();
 
-        DB::table('cart')->insert(['product_id'=>$data['product_id'],'name'=>$data[name], 'code'=>$data['code'],
-            'color'=>$data['color'], 'price'=>$data['price'], 'size'=>$data['size'],
-            'quantity'=>$data['quantity'], 'user_email'=>$data['user_email'],'session_id'=>$session_id
-        ]);
+        if ($countProducts > 0) {
+            return redirect()->back()->with(session()->flash('error_message','This Product is already exist in cart!'));
+        }else{
+            DB::table('cart')->insert(['product_id'=>$data['product_id'],'name'=>$data[name], 'code'=>$data['code'],
+                'color'=>$data['color'], 'price'=>$data['price'], 'size'=>$data['size'],
+                'quantity'=>$data['quantity'], 'user_email'=>$data['user_email'],'session_id'=>$session_id
+            ]);
+        }
+
+
 
         return redirect('cart')->with(session()->flash('message','Product is added to Cart Successfully!'));
     }
@@ -103,4 +112,6 @@ class ProductController extends Controller
         DB::table('cart')->where('id',$id)->delete();
         return redirect('cart')->with(session()->flash('error_message','The Product has been removed from Cart!'));
     }
+
+
 }

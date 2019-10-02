@@ -37,9 +37,9 @@
                                     <p>{{ $cart->code}} | {{ $cart->size }}</p>
                                 </h2>
                             </td>
-                            <td>{{ $cart->price }}</td>
+                            <td>৳ {{ $cart->price }}/-</td>
                             <td>
-                                <input class="vertical-quantity form-control" type="text" value="{{ $cart->quantity }}">
+                                <input class="vertical-quantity form-control" type="text" value=" {{ $cart->quantity }}" disabled>
                             </td>
                             <td></td>
                         </tr>
