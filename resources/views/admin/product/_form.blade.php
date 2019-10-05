@@ -118,7 +118,7 @@
 <div class="form-group">
     <label for="stock" class="col-lg-2 col-sm-2 control-label"><strong>Product Stock</strong></label>
     <div class="col-lg-10">
-        <input name="stock" value="{{ old('stock', isset($product)?$product->stock:null) }}" type="number" class="form-control form-control-line @error('stock') is-invalid @enderror" id="stock" placeholder="Product stock" min="1" max="1000">
+        <input name="stock" value="{{ old('stock', isset($product)?$product->stock:null) }}" type="number" class="form-control form-control-line @error('stock') is-invalid @enderror" id="stock" placeholder="Product stock" min="0" max="1000">
         @error('stock')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror

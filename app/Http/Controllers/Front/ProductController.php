@@ -33,31 +33,37 @@ class ProductController extends Controller
     {
 
         $data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
+
+
         $product_details = Product::with('product_attributes')->where('id',$id)->first();
-        $data['product_details'] = json_decode(json_encode($product_details));
+        $product_details = json_decode(json_encode($product_details));
+        //dd($product_details);
         //dd($data['product_details']);
+
+
         $data['latest_products'] = Product::where('status','Active')->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
         $data['featured_products'] = Product::where('id','!=',$id)->where(['status'=>'Active','is_featured'=>1])->with(['category','brand'])->orderBy('id','DESC')->limit(6)->get();
         $data['related_products'] = Product::where('id','!=',$id)->where(['category_id'=>$data['product']->category_id])->orderBy('id','DESC')->limit(6)->get();
 
-        $data['total_stock'] = ProductAttribute::where('product_id',$id)->sum('stock');
+        //Checking product stocks
+        //$data['total_stock'] = ProductAttribute::where('product_id',$id)->sum('stock');
+        $data['total_stock'] = Product::where('id',$id)->sum('stock');
+        //dd($data['total_stock']);
         $data['title'] = "".$data['product']->name."";
         //dd($data['total_stock']);
         //dd($data['related_products']);
         //$data['product'] = json_decode(json_encode($data['product']));
         ///dd($data);
-        return view('front.product.details', $data);
+        return view('front.product.details', $data)->with(compact('product_details'));
     }
 
     public function getProductPrice(Request $request)
     {
+
         $data = $request->all();
-        dd($data);
-        $proArr = explode("-",$data['idSize']);
-        $proAttr = ProductAttribute::where(['product_id' => $proArr[0],'size' => $proArr[1]])->first();
-        echo $proAttr->price;
-        /*echo "#";
-        echo $proAttr->size;*/
+        echo $data;
+
+
 
     }
 
@@ -96,6 +102,8 @@ class ProductController extends Controller
         $data['title'] = "Shopping Cart";
         $data['session_id'] = Session::get('session_id');
         $data['user_cart'] = DB::table('cart')->where(['session_id'=>$data['session_id']])->get();
+
+        //dd($data['user_cart']);
         //$data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
 
         foreach ($data['user_cart'] as $key => $product){
@@ -111,6 +119,22 @@ class ProductController extends Controller
     {
         DB::table('cart')->where('id',$id)->delete();
         return redirect('cart')->with(session()->flash('error_message','The Product has been removed from Cart!'));
+    }
+
+    public function updateCartQuantity($id=null, $quantity=null)
+    {
+        $getCartDetails = DB::table('cart')->where('id',$id)->first();
+        //dd($getCartDetails);
+        $getStock = Product::where('code',$getCartDetails->code)->first();
+        echo $getStock->stock; echo "--";
+        $updated_quantity = $getCartDetails->quantity+$quantity;
+
+        if ($getStock->stock >= $updated_quantity){
+            DB::table('cart')->where('id',$id)->increment('quantity',$quantity);
+            return redirect('cart')->with(session()->flash('message','The Product Quantity is updated Successfully!'));
+        }else
+            return redirect('cart')->with(session()->flash('error_message','Sorry!Required quantity is not available!'));
+
     }
 
 

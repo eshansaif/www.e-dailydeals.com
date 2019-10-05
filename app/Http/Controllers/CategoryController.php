@@ -67,23 +67,13 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Category $category)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Category $category)
     {
         $data['title'] = 'Edit Category';
@@ -91,13 +81,7 @@ class CategoryController extends Controller
         return view('admin.category.edit',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Category $category)
     {
         $request->validate([
@@ -112,12 +96,7 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Category $category)
     {
         $category->delete();

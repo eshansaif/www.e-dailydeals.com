@@ -1,3 +1,6 @@
+
+
+
 /*
 $(document).ready(function () {
     $("#selSize").change(function () {
@@ -32,24 +35,44 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function () {
+/*$(document).ready(function () {
     $("#selSize").change(function (){
-       var idSize = $(this).val();
-       $.ajax({
-          type: 'get',
-           dataType: 'JSON',
-           url: 'get-product-price',
-           data:{idSize:idSize},
-           success:function (resp) {
-               alert(resp);
-           },error:function () {
-               alert("Error");
-           }
+        var idSize = $(this).val();
+        $.ajax({
+            type: 'get',
+            dataType: 'JSON',
+            url: 'get-product-price',
+            data:{idSize:idSize},
+            success:function (resp) {
+                alert(resp);
+            },error:function () {
+                alert("Error");
+            }
 
-       });
+        });
     });
-});
+});*/
 
+$(document).ready(function () {
+    $("#selSize").change(function () {
+        var idSize = $(this).val();
+        //alert(idSize);
+        $.ajax({
+           type:'get',
+            url: 'get-product-price',
+            /*url: '{{ URL::action('/get-product-price/') }}',*/
+            /*url: "{{ url('get-product-price')}}"+'/'+idSize,*/
+            data:{idSize:idSize},
+            success:function (resp) {
+                alert(resp);
+            },error:function () {
+                //alert(xhr.status);
+                alert("Error");
+            }
+        });
+    });
+
+});
 
 
 

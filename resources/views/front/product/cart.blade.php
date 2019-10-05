@@ -19,11 +19,15 @@
                         <tr>
                             <th class="product-col">Product</th>
                             <th class="price-col">Price</th>
-                            <th class="qty-col">Qty</th>
+                            {{--<th class="qty-col">Qty</th>--}}
+                            <th class="qty-col">Quantity</th>
                             <th>Subtotal</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @php
+                            $total_amount = 0;
+                        @endphp
                         @foreach($user_cart as $cart)
                         <tr class="product-row">
                             <td class="product-col">
@@ -38,10 +42,29 @@
                                 </h2>
                             </td>
                             <td>৳ {{ $cart->price }}/-</td>
-                            <td>
+                            {{--<td>
                                 <input class="vertical-quantity form-control" type="text" value=" {{ $cart->quantity }}" disabled>
+                            </td>--}}
+                            <td>
+
+                                <div class="qty mt-5">
+
+                                        <a class="plus bg-dark" href="{{ url('cart/update-quantity/'.$cart->id.'/1') }}">+</a>
+                                    <input type="number" class="count" name="qty" value="{{ $cart->quantity }}" min="0" autocomplete="off">
+                                    @if($cart->quantity > 1)
+                                        <a class="minus bg-dark" href="{{ url('cart/update-quantity/'.$cart->id.'/-1') }}">-</a>
+                                    @endif
+                                </div>
+                                {{--<div class="input-group">
+                                    @if($cart->quantuty > 1)
+                                    <a  href="{{ url('cart/update-quantity/'.$cart->id.'/-1') }}"><input type="button" value="-" class="button-minus" data-field="quantity"></a>
+                                    @endif
+                                        <input type="number" step="1" max="" value="1" name="quantity" class="quantity-field">
+                                    <a  href="{{ url('cart/update-quantity/'.$cart->id.'/1') }}"><input type="button" value="+" class="button-plus" data-field="quantity"></a>
+                                </div>--}}
                             </td>
-                            <td></td>
+                            <td>৳ {{ $cart->price * $cart->quantity }}/-</td>
+
                         </tr>
 
 
@@ -57,7 +80,9 @@
                                 </div><!-- End .float-right -->
                             </td>
                         </tr>
-
+                         @php
+                             $total_amount = $total_amount + ($cart->price * $cart->quantity);
+                         @endphp
                         @endforeach
 
 
@@ -72,7 +97,7 @@
 
                                 <div class="float-right">
                                     <a href="#" class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
-                                    <a href="#" class="btn btn-outline-secondary btn-update-cart">Update Shopping Cart</a>
+                                    <a href="" class="btn btn-outline-secondary btn-update-cart">Update Shopping Cart</a>
                                 </div><!-- End .float-right -->
                             </td>
                         </tr>
@@ -152,7 +177,7 @@
                         <tbody>
                         <tr>
                             <td>Subtotal</td>
-                            <td>$17.90</td>
+                            <td>৳ @php echo $total_amount;  @endphp/-</td>
                         </tr>
 
                         <tr>
@@ -163,7 +188,7 @@
                         <tfoot>
                         <tr>
                             <td>Order Total</td>
-                            <td>$17.90</td>
+                            <td>৳ @php echo $total_amount;  @endphp/-</td>
                         </tr>
                         </tfoot>
                     </table>
@@ -179,3 +204,197 @@
 
     <div class="mb-6"></div><!-- margin -->
 @endsection
+@push('cart_css')
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        .qty .count {
+            color: #000;
+            display: inline-block;
+            vertical-align: top;
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 30px;
+            padding: 0 2px
+        ;min-width: 35px;
+            text-align: center;
+        }
+        .qty .plus {
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: top;
+            color: white;
+            width: 30px;
+            height: 30px;
+            font: 30px/1 Arial,sans-serif;
+            text-align: center;
+            border-radius: 50%;
+        }
+        .qty .minus {
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: top;
+            color: white;
+            width: 30px;
+            height: 30px;
+            font: 30px/1 Arial,sans-serif;
+            text-align: center;
+            border-radius: 50%;
+            background-clip: padding-box;
+        }
+        div {
+            text-align: center;
+        }
+        .minus:hover{
+            background-color: #717fe0 !important;
+        }
+        .plus:hover{
+            background-color: #717fe0 !important;
+        }
+        /*Prevent text selection*/
+        span{
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        input{
+            border: 0;
+            width: 2%;
+        }
+        nput::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input:disabled{
+            background-color:white;
+        }
+
+    </style>
+@endpush
+
+@push('cart_js')
+    <script>
+        $(document).ready(function(){
+            $('.count').prop('disabled', true);
+            $(document).on('click','.plus',function(){
+                $('.count').val(parseInt($('.count').val()) + 1 );
+            });
+            $(document).on('click','.minus',function(){
+                $('.count').val(parseInt($('.count').val()) - 1 );
+                if ($('.count').val() == 0) {
+                    $('.count').val(1);
+                }
+            });
+        });
+    </script>
+@endpush
+
+
+{{--@push('cart_css')
+    <style>
+        input,
+        textarea {
+            border: 1px solid #eeeeee;
+            box-sizing: border-box;
+            margin: 0;
+            outline: none;
+            padding: 10px;
+        }
+
+        input[type="button"] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .input-group {
+            clear: both;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .input-group input[type='button'] {
+            background-color: #eeeeee;
+            min-width: 38px;
+            width: auto;
+            transition: all 300ms ease;
+        }
+
+        .input-group .button-minus,
+        .input-group .button-plus {
+            font-weight: bold;
+            height: 38px;
+            padding: 0;
+            width: 38px;
+            position: relative;
+        }
+
+        .input-group .quantity-field {
+            position: relative;
+            height: 38px;
+            left: -6px;
+            text-align: center;
+            width: 62px;
+            display: inline-block;
+            font-size: 13px;
+            margin: 0 0 5px;
+            resize: vertical;
+        }
+
+        .button-plus {
+            left: -13px;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            -webkit-appearance: none;
+        }
+    </style>
+
+@endpush--}}
+{{--@push('cart_js')
+    <script>
+        function incrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal)) {
+                parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+            } else {
+                parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        function decrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal) && currentVal > 0) {
+                parent.find('input[name=' + fieldName + ']').val(currentVal - 1);
+            } else {
+                parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        $('.input-group').on('click', '.button-plus', function(e) {
+            incrementValue(e);
+        });
+
+        $('.input-group').on('click', '.button-minus', function(e) {
+            decrementValue(e);
+        });
+
+    </script>
+
+@endpush--}}
