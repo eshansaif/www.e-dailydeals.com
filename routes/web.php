@@ -14,6 +14,12 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//customer login-registration
+Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
+
+Route::match(['GET','POST'],'check-email','Front\CustomerController@checkEmail');
+
 //Front Routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('products/{id?}','Front\ProductController@index')->name('front.product.index');

@@ -1,4 +1,6 @@
 
+
+<script src="{{ asset('assets/frontend/assets/js/jquery.js') }}"></script>
 <script src="{{ asset('assets/frontend/assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/assets/js/plugins.min.js') }}"></script>
@@ -17,4 +19,5 @@
 {{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>--}}
 
 <script src="{{ asset('assets/frontend/assets/js/custom.js') }}"></script>
+<script src="{{ asset('assets/frontend/assets/js/jquery.validate.js') }}"></script>
 

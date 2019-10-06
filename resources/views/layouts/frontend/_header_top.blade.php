@@ -60,6 +60,7 @@
                     <li><a href="blog.html">BLOG</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="#" class="login-link">LOG IN</a></li>
+                    <li><a href="{{ route('customer.register') }}" class="">Register</a></li>
                 </ul>
             </div><!-- End .header-menu -->
         </div><!-- End .header-dropown -->
