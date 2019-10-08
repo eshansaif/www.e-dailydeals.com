@@ -15,16 +15,17 @@
             <div class="col-md-6 order-lg-last dashboard-content">
                 <h2>Customer Login</h2>
 
-                <form action="" method="post">
+                <form action="{{ route('customer.login') }}" method="post" id="loginForm" name="loginForm" >
 
+                    @csrf
                     <div class="form-group required-field col-md-12" >
-                        <label for="acc-email"><strong> Email</strong></label>
-                        <input type="email" class="form-control" id="acc-email" name="email" autocomplete="none" required>
+                        <label for="email"><strong> Email</strong></label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="none" >
                     </div><!-- End .form-group -->
 
                     <div class="form-group required-field col-md-12">
-                        <label for="acc-password"><strong> Password</strong></label>
-                        <input type="password" class="form-control" id="acc-password" name="password" autocomplete="none" required>
+                        <label for="password"><strong> Password</strong></label>
+                        <input type="password" class="form-control" id="password" name="password" autocomplete="none" >
                     </div><!-- End .form-group -->
 
 
@@ -41,7 +42,7 @@
                     <div class="required text-right">* Required Field</div>
                     <div class="form-footer form-footer-right">
                         <div class="form-footer-right">
-                            <button name="try_login" type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </div><!-- End .form-footer -->
 

@@ -62,7 +62,7 @@
                     <li><a href="{{ route('customer.register_form') }}" class="">Register</a></li>
                     @if(empty(Auth::check()))
 
-                        <li><a href="#" class="login-link">LOG IN</a></li>
+                        <li><a href="{{ route('customer.login_form') }}" class="">LOG IN</a></li>
                     @else
                     <li><a href="my-account.html">MY ACCOUNT </a></li>
                     <li><a href="{{ route('customer.logout') }}">Logout </a></li>

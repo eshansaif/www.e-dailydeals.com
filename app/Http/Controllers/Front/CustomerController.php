@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
 {
@@ -40,6 +41,30 @@ class CustomerController extends Controller
                 }
             }
         }
+    }
+
+    public function view_login()
+    {
+
+        $data['title'] = 'Customer Login';
+        return view('front.customer.login', $data);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+         if (Auth::attempt($credentials)) {
+            return redirect()->intended('/');
+        }
+
+
+        Session::flash('error_message', 'Invalid Email or Password');
+        return redirect()->back()->withInput(['email' => $request->email]);
     }
 
     public function logout()

@@ -15,10 +15,15 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 |
 */
 
-//customer login-registration
+//customer registration
 Route::get('register','Front\CustomerController@view_register')->name('customer.register_form');
 Route::post('customer_register','Front\CustomerController@register')->name('customer.register');
 
+//customer login
+Route::get('login','Front\CustomerController@view_login')->name('customer.login_form');
+Route::post('customer-login','Front\CustomerController@login')->name('customer.login');
+
+//customer logout
 Route::get('customer-logout','Front\CustomerController@logout')->name('customer.logout');
 
 //Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
@@ -47,9 +52,12 @@ Route::get('cart/update-quantity/{id}/{quantity}','Front\ProductController@updat
 // user login/registration
 
 
+Route::prefix('admin')->group(function () {
+    Route::get('login','LoginController@login_form')->name('admin.login.form');
+    Route::post('login','LoginController@login')->name('admin.login');
+});
 
-Route::get('login','LoginController@login_form')->name('admin.login.form');
-Route::post('login','LoginController@login')->name('admin.login');
+
 
 Route::middleware('auth')->prefix('admin')->group(function (){
     Route::get('dashboard','DashboardController@index')->name('admin.dashboard')->middleware('auth');

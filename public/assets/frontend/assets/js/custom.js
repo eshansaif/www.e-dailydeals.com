@@ -47,7 +47,32 @@ $().ready(function () {
             }
         }
     });
+
+    // Validate Login form on keyup and submit
+    $("#loginForm").validate({
+        rules:{
+            email:{
+                required:true,
+                email:true
+            },
+            password:{
+                required:true
+            }
+        },
+        messages:{
+            email:{
+                required: "Please enter your Email",
+                email: "Please enter valid Email"
+            },
+            password:{
+                required:"Please provide your Password"
+            }
+        }
+    });
+
 });
+
+
 
 /*
 $(document).ready(function () {
