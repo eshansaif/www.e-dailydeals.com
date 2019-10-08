@@ -16,6 +16,12 @@ $().ready(function () {
                 required:true,
                 email:true,
                 remote:"check-email"
+            },
+            phone:{
+                required:true,
+                matches: "[0-9]+",
+                minlength:11,
+                maxlength:14
             }
         },
         messages:{
@@ -32,6 +38,12 @@ $().ready(function () {
                 required: "Please enter your Email",
                 email: "Please enter valid Email",
                 remote: "Email already exists!"
+            },
+            phone: {
+                required: "Please provide your Phone Number",
+                matches: "You must use a valid phone number",
+                minlength: "Please provide a valid Phone no, It can't be less than 11",
+                maxlength: "Please provide a valid Phone no, It can't be more than 14"
             }
         }
     });

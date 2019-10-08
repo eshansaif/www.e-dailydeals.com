@@ -54,13 +54,22 @@
             <a href="#">Links</a>
             <div class="header-menu">
                 <ul>
-                    <li><a href="my-account.html">MY ACCOUNT </a></li>
+
                     <li><a href="#">DAILY DEAL</a></li>
                     <li><a href="#">MY WISHLIST </a></li>
                     <li><a href="blog.html">BLOG</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="#" class="login-link">LOG IN</a></li>
-                    <li><a href="{{ route('customer.register') }}" class="">Register</a></li>
+                    <li><a href="{{ route('customer.register_form') }}" class="">Register</a></li>
+                    @if(empty(Auth::check()))
+
+                        <li><a href="#" class="login-link">LOG IN</a></li>
+                    @else
+                    <li><a href="my-account.html">MY ACCOUNT </a></li>
+                    <li><a href="{{ route('customer.logout') }}">Logout </a></li>
+
+                    @endif
+
+
                 </ul>
             </div><!-- End .header-menu -->
         </div><!-- End .header-dropown -->

@@ -19,10 +19,17 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        /*$credentials = $request->only('email', 'password');
          if (Auth::attempt($credentials)) {
             return redirect()->intended('admin/dashboard');
-        }
+        }*/
+
+            $credentials = $request->input();
+            if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'],'admin' => '1'])){
+                return redirect()->intended('admin/dashboard');
+            }
+
+
 
          Session::flash('message','Invalid Email or Password');
         return redirect()->back()->withInput(['email'=>$request->email]);

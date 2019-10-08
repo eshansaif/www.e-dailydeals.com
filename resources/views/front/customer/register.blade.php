@@ -4,8 +4,8 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">Register</li>
             </ol>
         </div><!-- End .container -->
     </nav>
@@ -51,10 +51,10 @@
                             <input type="password" class="form-control" id="password" name="password" >
                         </div><!-- End .form-group -->
 
-                        {{--<div class="form-group required-field col-md-12">
+                        <div class="form-group required-field col-md-12">
                             <label for="phone"><strong> Phone Number</strong></label>
-                            <input type="text" class="form-control" id="phone" name="phone_number" >
-                        </div><!-- End .form-group -->--}}
+                            <input type="tel" class="form-control" id="phone" name="phone" >
+                        </div><!-- End .form-group -->
 
                         {{--<div class="form-group col-md-12">
                             <label for="" class=" required-field"><strong>Gender </strong> </label> <br/>
@@ -64,9 +64,12 @@
                         </div><!-- End .form-group -->--}}
 
                         <div class="form-footer">
+                            <div class="form-footer-left">
+                                <p> Already Registered? <a href="">Login</a></p>
+                            </div>
 
                             <div class="form-footer-right">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Register</button>
                             </div>
                         </div><!-- End .form-footer -->
                     </form>

@@ -16,7 +16,12 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 */
 
 //customer login-registration
-Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
+Route::get('register','Front\CustomerController@view_register')->name('customer.register_form');
+Route::post('customer_register','Front\CustomerController@register')->name('customer.register');
+
+Route::get('customer-logout','Front\CustomerController@logout')->name('customer.logout');
+
+//Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
 
 Route::match(['GET','POST'],'check-email','Front\CustomerController@checkEmail');
 
