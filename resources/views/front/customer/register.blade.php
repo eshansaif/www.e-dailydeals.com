@@ -38,22 +38,34 @@
                         @csrf
                         <div class="form-group required-field col-md-12">
                             <label for="name"><strong>Full Name </strong></label>
-                            <input  type="name" class="form-control" id="name" name="name" >
+                            <input value="{{ old('name') }}"  type="name" class="form-control" id="name" name="name" >
+                            @error('name')
+                            <div class="pl-1 text-danger">{{ $message }}</div>
+                            @enderror
                         </div><!-- End .form-group -->
 
                         <div class="form-group required-field col-md-12">
                             <label for="email"><strong> Email</strong></label>
-                            <input type="email" class="form-control" id="email" name="email" >
+                            <input value="{{ old('email') }}" type="email" class="form-control" id="email" name="email" >
+                            @error('email')
+                            <div class="pl-1 text-danger">{{ $message }}</div>
+                            @enderror
                         </div><!-- End .form-group -->
 
                         <div class="form-group required-field col-md-12">
                             <label for="password"><strong> Password</strong></label>
-                            <input type="password" class="form-control" id="password" name="password" >
+                            <input  type="password" class="form-control" id="password" name="password" >
+                            @error('password')
+                            <div class="pl-1 text-danger">{{ $message }}</div>
+                            @enderror
                         </div><!-- End .form-group -->
 
                         <div class="form-group required-field col-md-12">
                             <label for="phone"><strong> Phone Number</strong></label>
-                            <input type="tel" class="form-control" id="phone" name="phone" >
+                            <input value="{{ old('email') }}" type="tel" class="form-control" id="phone" name="phone" >
+                            @error('phone')
+                            <div class="pl-1 text-danger">{{ $message }}</div>
+                            @enderror
                         </div><!-- End .form-group -->
 
                         {{--<div class="form-group col-md-12">
@@ -63,9 +75,10 @@
                             <label class="radio-inline"><input type="radio" name="gender" value="Other">Other</label>
                         </div><!-- End .form-group -->--}}
 
-                        <div class="form-footer">
-                            <div class="form-footer-left">
-                                <p> Already Registered? <a href="">Login</a></p>
+                        <div class="required text-right">* Required Field</div>
+                        <div class="form-footer form-footer-right">
+                            <div class="form-footer-left ">
+                                <p> Already Registered? <a href="{{ route('customer.login_form') }}"><strong>Click to Login</strong></a></p>
                             </div>
 
                             <div class="form-footer-right">

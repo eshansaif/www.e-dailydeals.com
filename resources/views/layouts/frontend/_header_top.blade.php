@@ -64,7 +64,7 @@
 
                         <li><a href="{{ route('customer.login_form') }}" class="">LOG IN</a></li>
                     @else
-                    <li><a href="my-account.html">MY ACCOUNT </a></li>
+                    <li><a href="{{ route('customer.account') }}">MY ACCOUNT </a></li>
                     <li><a href="{{ route('customer.logout') }}">Logout </a></li>
 
                     @endif

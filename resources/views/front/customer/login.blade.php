@@ -21,11 +21,17 @@
                     <div class="form-group required-field col-md-12" >
                         <label for="email"><strong> Email</strong></label>
                         <input type="email" class="form-control" id="email" name="email" autocomplete="none" >
+                        @error('email')
+                        <div class="pl-1 text-danger">{{ $message }}</div>
+                        @enderror
                     </div><!-- End .form-group -->
 
                     <div class="form-group required-field col-md-12">
                         <label for="password"><strong> Password</strong></label>
                         <input type="password" class="form-control" id="password" name="password" autocomplete="none" >
+                        @error('password')
+                        <div class="pl-1 text-danger">{{ $message }}</div>
+                        @enderror
                     </div><!-- End .form-group -->
 
 
@@ -41,6 +47,9 @@
 
                     <div class="required text-right">* Required Field</div>
                     <div class="form-footer form-footer-right">
+                        <div class="form-footer-left">
+                            <p>Don't have any Account? <a href="{{ route('customer.register_form') }}"><strong>Click to Register</strong></a></p>
+                        </div>
                         <div class="form-footer-right">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>

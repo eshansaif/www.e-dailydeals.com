@@ -26,6 +26,13 @@ Route::post('customer-login','Front\CustomerController@login')->name('customer.l
 //customer logout
 Route::get('customer-logout','Front\CustomerController@logout')->name('customer.logout');
 
+//middleware(Routes after customer login)
+Route::group(['middleware'=>['frontlogin']],function (){
+    //Customer account
+    Route::match(['get','post'],'account','Front\CustomerController@account')->name('customer.account');
+
+});
+
 //Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
 
 Route::match(['GET','POST'],'check-email','Front\CustomerController@checkEmail');

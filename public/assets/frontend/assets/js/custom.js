@@ -70,6 +70,14 @@ $().ready(function () {
         }
     });
 
+    // Password Strength Script
+    $('#password').passtrength({
+        minChars: 4,
+        passwordToggle: true,
+        tooltip: true,
+        eyeImg : "assets/frontend/assets/images/eye.svg"
+    });
+
 });
 
 
