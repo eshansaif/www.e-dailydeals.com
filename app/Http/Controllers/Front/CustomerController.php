@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 //use App\Country;
+use App\Country;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 
@@ -22,7 +24,7 @@ class CustomerController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|email',
+            'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'phone' => 'required',
@@ -74,7 +76,8 @@ class CustomerController extends Controller
         }*/
 
         $credentials = $request->input();
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'],'admin' => 'null'])){
+        //dd($credentials);
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'],'admin' => null])){
             Session::put('frontSession',$credentials['email']);
             return redirect()->intended('/');
         }
@@ -84,55 +87,71 @@ class CustomerController extends Controller
     }
 
     public function account(Request $request){
+
         $user_id = Auth::user()->id;
         $userDetails = User::find($user_id);
-        //$countries = Country::get();
+        //dd($userDetails);
+        $countries = Country::get();
 
         if($request->isMethod('post')){
             $data = $request->all();
+            //dd($data);
             /*echo "<pre>"; print_r($data); die;*/
 
             if(empty($data['name'])){
-                return redirect()->back()->with('flash_message_error','Please enter your Name to update your account details!');
+                return redirect()->back()->with('message','Please enter your Name to update your account details!');
             }
 
             if(empty($data['address'])){
                 $data['address'] = '';
             }
 
+            if(empty($data['zip'])){
+                $data['zip'] = '';
+            }
+
             if(empty($data['city'])){
                 $data['city'] = '';
             }
 
-            if(empty($data['state'])){
-                $data['state'] = '';
+            if(empty($data['district'])){
+                $data['district'] = '';
             }
 
             if(empty($data['country'])){
                 $data['country'] = '';
             }
 
-            if(empty($data['pincode'])){
-                $data['pincode'] = '';
-            }
-
-            if(empty($data['mobile'])){
-                $data['mobile'] = '';
+            if(empty($data['phone'])){
+                $data['phone'] = '';
             }
 
             $user = User::find($user_id);
             $user->name = $data['name'];
             $user->address = $data['address'];
+            $user->zip = $data['zip'];
             $user->city = $data['city'];
-            $user->state = $data['state'];
+            $user->district = $data['district'];
             $user->country = $data['country'];
-            $user->pincode = $data['pincode'];
-            $user->mobile = $data['mobile'];
+            $user->phone = $data['phone'];
             $user->save();
-            return redirect()->back()->with('flash_message_success','Your account details has been successfully updated!');
+            return redirect()->back()->with(session()->flash('message','Your Account details updated Successfully!'));
         }
 
         return view('front.customer.account')->with(compact('countries','userDetails'));
+    }
+
+    public function chkUserPassword(Request $request){
+        $data = $request->all();
+        /*echo "<pre>"; print_r($data); die;*/
+        $current_password = $data['current_pwd'];
+        $user_id = Auth::User()->id;
+        $check_password = User::where('id',$user_id)->first();
+        if(Hash::check($current_password,$check_password->password)){
+            echo "true"; die;
+        }else{
+            echo "false"; die;
+        }
     }
 
     public function logout()

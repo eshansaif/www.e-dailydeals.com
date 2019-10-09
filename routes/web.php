@@ -28,8 +28,15 @@ Route::get('customer-logout','Front\CustomerController@logout')->name('customer.
 
 //middleware(Routes after customer login)
 Route::group(['middleware'=>['frontlogin']],function (){
+
     //Customer account
     Route::match(['get','post'],'account','Front\CustomerController@account')->name('customer.account');
+
+    // Check User Current Password
+    Route::post('check-user-pwd','Front\CustomerController@chkUserPassword');
+
+    // Update User Password
+    Route::post('update-user-pwd','Front\CustomerController@updatePassword');
 
 });
 

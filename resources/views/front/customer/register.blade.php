@@ -62,7 +62,7 @@
 
                         <div class="form-group required-field col-md-12">
                             <label for="phone"><strong> Phone Number</strong></label>
-                            <input value="{{ old('email') }}" type="tel" class="form-control" id="phone" name="phone" >
+                            <input value="{{ old('phone') }}" type="tel" class="form-control" id="phone" name="phone" >
                             @error('phone')
                             <div class="pl-1 text-danger">{{ $message }}</div>
                             @enderror

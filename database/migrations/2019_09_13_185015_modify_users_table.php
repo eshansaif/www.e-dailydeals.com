@@ -16,6 +16,11 @@ class ModifyUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum('type',['Admin','Operator'])->after('name')->default('Admin');
             $table->string('phone')->after('email');
+            $table->text('address')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('city')->nullable();
+            $table->string('district')->nullable();
+            $table->string('country')->nullable();
             $table->tinyInteger('admin')->nullable();
             $table->enum('status',['Active','Inactive']);
             $table->softDeletes();

@@ -48,7 +48,7 @@
     </div><!-- End .header-left -->
 
     <div class="header-right">
-        <p class="welcome-msg">Default welcome msg! </p>
+        <p class="welcome-msg">Welcome to Dailydeals! </p>
 
         <div class="header-dropdown dropdown-expanded">
             <a href="#">Links</a>
@@ -59,9 +59,9 @@
                     <li><a href="#">MY WISHLIST </a></li>
                     <li><a href="blog.html">BLOG</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="{{ route('customer.register_form') }}" class="">Register</a></li>
-                    @if(empty(Auth::check()))
 
+                    @if(empty(Auth::check()))
+                        <li><a href="{{ route('customer.register_form') }}" class="">Register</a></li>
                         <li><a href="{{ route('customer.login_form') }}" class="">LOG IN</a></li>
                     @else
                     <li><a href="{{ route('customer.account') }}">MY ACCOUNT </a></li>

@@ -13,45 +13,64 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9 order-lg-last dashboard-content">
-                <h2>Edit Account Information</h2>
+                <h2>Update Your Account Information</h2>
 
-                <form action="#">
-                    <div class="row">
-                        <div class="col-sm-11">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group required-field">
-                                        <label for="acc-name">First Name</label>
-                                        <input type="text" class="form-control" id="acc-name" name="acc-name" required>
-                                    </div><!-- End .form-group -->
-                                </div><!-- End .col-md-4 -->
+                <form id="accountForm" name="accountForm" action="{{ route('customer.account') }}" method="post">
+                    @csrf
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="acc-mname">First Name</label>
-                                        <input type="text" class="form-control" id="acc-mname" name="acc-mname">
-                                    </div><!-- End .form-group -->
-                                </div><!-- End .col-md-4 -->
+                    <div class="form-group required-field col-lg-8">
+                        <label for="name">Name</label>
+                        <input value="{{ $userDetails->name }}" type="text" class="form-control" id="name" name="name" >
+                    </div><!-- End .form-group -->
 
-                                <div class="col-md-4">
-                                    <div class="form-group required-field">
-                                        <label for="acc-lastname">Last Name</label>
-                                        <input type="text" class="form-control" id="acc-lastname" name="acc-lastname" required>
-                                    </div><!-- End .form-group -->
-                                </div><!-- End .col-md-4 -->
-                            </div><!-- End .row -->
-                        </div><!-- End .col-sm-11 -->
-                    </div><!-- End .row -->
-
-                    <div class="form-group required-field">
+                    <div class="form-group col-lg-8">
                         <label for="acc-email">Email</label>
-                        <input type="email" class="form-control" id="acc-email" name="acc-email" required>
+                        <input value="{{ $userDetails->email }}" type="email" class="form-control" id="acc-email" name="acc-email"  disabled>
+
                     </div><!-- End .form-group -->
 
-                    <div class="form-group required-field">
-                        <label for="acc-password">Password</label>
-                        <input type="password" class="form-control" id="acc-password" name="acc-password" required>
+                    <div class="form-group required-field col-lg-8">
+                        <label for="address">Address</label>
+                        <textarea class="form-control" name="address" id="address" cols="15" rows="5">{{ $userDetails->address }}</textarea>
+
                     </div><!-- End .form-group -->
+
+                    <div class="form-group required-field col-lg-8">
+                        <label for="zip">Zip Code</label>
+                        <input value="{{ $userDetails->zip }}" type="number" class="form-control" id="zip" name="zip" min="1" >
+
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group required-field col-lg-8">
+                        <label for="city">City</label>
+                        <input value="{{ $userDetails->city }}" type="text" class="form-control" id="city" name="city" >
+
+                    </div><!-- End .form-group -->
+                    <div class="form-group required-field col-lg-8">
+                        <label for="district">District</label>
+                        <input value="{{ $userDetails->district }}" type="text" class="form-control" id="district" name="district" >
+
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group required-field col-lg-8">
+                        <label for="country">District</label>
+                        <select name="country" id="country" class="form-control">
+                            <option value="">Select Country</option>
+                        @foreach($countries as $country)
+                            <option value="{{ $country->name }}">@if($country->name == $userDetails->country) selected @endif{{ $country->name }}</option>
+                            @endforeach
+                        </select>
+
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group required-field col-lg-8">
+                        <label for="phone">Mobile</label>
+                        <input value="{{ $userDetails->phone }}" type="text" class="form-control" id="phone" name="phone" >
+
+                    </div><!-- End .form-group -->
+
+
+                    
 
                     <div class="mb-2"></div><!-- margin -->
 
@@ -62,21 +81,31 @@
 
                     <div id="account-chage-pass">
                         <h3 class="mb-2">Change Password</h3>
-                        <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group required-field">
+                                <label for="current_pwd">Current Password</label>
+                                <input type="password" class="form-control" id="current_pwd" name="current_pwd">
+
+                            </div><!-- End .form-group -->
+                            <span id="chkPwd"></span>
+                        </div><!-- End .col-md-6 -->
+
+
+
                             <div class="col-md-6">
                                 <div class="form-group required-field">
-                                    <label for="acc-pass2">Password</label>
-                                    <input type="password" class="form-control" id="acc-pass2" name="acc-pass2">
+                                    <label for="acc-new_pwd">New Password</label>
+                                    <input type="password" class="form-control" id="new_pwd" name="new_pwd">
                                 </div><!-- End .form-group -->
                             </div><!-- End .col-md-6 -->
 
                             <div class="col-md-6">
                                 <div class="form-group required-field">
-                                    <label for="acc-pass3">Confirm Password</label>
-                                    <input type="password" class="form-control" id="acc-pass3" name="acc-pass3">
+                                    <label for="confirm_pwd">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirm_pwd" name="confirm_pwd">
                                 </div><!-- End .form-group -->
                             </div><!-- End .col-md-6 -->
-                        </div><!-- End .row -->
+
                     </div><!-- End #account-chage-pass -->
 
                     <div class="required text-right">* Required Field</div>
@@ -84,7 +113,7 @@
                         <a href="#"><i class="icon-angle-double-left"></i>Back</a>
 
                         <div class="form-footer-right">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </div><!-- End .form-footer -->
                 </form>
