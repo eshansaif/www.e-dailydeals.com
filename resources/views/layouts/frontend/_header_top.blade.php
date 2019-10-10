@@ -48,7 +48,12 @@
     </div><!-- End .header-left -->
 
     <div class="header-right">
-        <p class="welcome-msg">Welcome to Dailydeals! </p>
+        @if(empty(Auth::check()))
+
+            <p class="welcome-msg">Welcome to Dailydeals! </p>
+        @else
+            <p class="welcome-msg">Welcome {{ $userDetails->name }}! </p>
+        @endif
 
         <div class="header-dropdown dropdown-expanded">
             <a href="#">Links</a>

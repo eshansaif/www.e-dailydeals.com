@@ -53,7 +53,7 @@
                     </div><!-- End .form-group -->
 
                     <div class="form-group required-field col-lg-8">
-                        <label for="country">District</label>
+                        <label for="country">Country</label>
                         <select name="country" id="country" class="form-control">
                             <option value="">Select Country</option>
                         @foreach($countries as $country)
@@ -69,8 +69,12 @@
 
                     </div><!-- End .form-group -->
 
+                    <div class="form-footer-right">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
 
-                    
+
 
                     <div class="mb-2"></div><!-- margin -->
 
@@ -81,6 +85,8 @@
 
                     <div id="account-chage-pass">
                         <h3 class="mb-2">Change Password</h3>
+                        <form id="passwordForm" name="passwordForm" action="{{ url('update-user-pwd') }}" method="POST">
+                            @csrf
                         <div class="col-md-6">
                             <div class="form-group required-field">
                                 <label for="current_pwd">Current Password</label>
@@ -89,7 +95,6 @@
                             </div><!-- End .form-group -->
                             <span id="chkPwd"></span>
                         </div><!-- End .col-md-6 -->
-
 
 
                             <div class="col-md-6">
@@ -105,6 +110,10 @@
                                     <input type="password" class="form-control" id="confirm_pwd" name="confirm_pwd">
                                 </div><!-- End .form-group -->
                             </div><!-- End .col-md-6 -->
+                        <div class="form-footer-right">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                        </form>
 
                     </div><!-- End #account-chage-pass -->
 
@@ -112,11 +121,9 @@
                     <div class="form-footer">
                         <a href="#"><i class="icon-angle-double-left"></i>Back</a>
 
-                        <div class="form-footer-right">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
+
                     </div><!-- End .form-footer -->
-                </form>
+
             </div><!-- End .col-lg-9 -->
 
             <aside class="sidebar col-lg-3">
