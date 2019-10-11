@@ -201,7 +201,7 @@
                             <select name="billing_country" id="billing_country" class="form-control">
                                 <option value="">Select Country</option>
                                 @foreach($countries as $country)
-                                    <option value="{{ $country->name }}" @if($country->name == $userDetails->country) selected  @endif>{{ $country->name }}</option>
+                                    <option value="{{ $country->name }}" @if(!empty($userDetails->country) && $country->name == $userDetails->country) selected  @endif>{{ $country->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -221,31 +221,31 @@
                     <div class="signup-form"><!--sign up form-->
                         <h2>Ship To</h2>
                         <div class="form-group">
-                            <input value="{{ $shippingDetails->name }}" name="shipping_name" id="shipping_name"   type="text" placeholder="Shipping Name" class="form-control" />
+                            <input @if(!empty($shippingDetails->name)) value="{{ $shippingDetails->name }}" @endif name="shipping_name" id="shipping_name"   type="text" placeholder="Shipping Name" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <textarea style="height: 5px;" class="form-control" name="shipping_address" id="shipping_address" cols="30" rows="10">{{ $shippingDetails->address }}</textarea>
+                            <textarea style="height: 5px;" class="form-control" name="shipping_address" id="shipping_address" cols="30" rows="10">@if(!empty($shippingDetails->name)) {{ $shippingDetails->address }} @endif</textarea>
 
                         </div>
                         <div class="form-group">
-                            <input value="{{ $shippingDetails->zip }}"  name="shipping_zip" id="shipping_zip"  type="text" placeholder="Shipping Zip Code" class="form-control" />
+                            <input @if(!empty($shippingDetails->zip)) value="{{ $shippingDetails->zip }}" @endif  name="shipping_zip" id="shipping_zip"  type="text" placeholder="Shipping Zip Code" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input value="{{ $shippingDetails->city }}" name="shipping_city" id="shipping_city"  type="text" placeholder="Shipping City" class="form-control" />
+                            <input @if(!empty($shippingDetails->city)) value="{{ $shippingDetails->city }}" @endif name="shipping_city" id="shipping_city"  type="text" placeholder="Shipping City" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <input value="{{ $shippingDetails->district }}" name="shipping_district" id="shipping_district"  type="text" placeholder="Shipping District" class="form-control" />
+                            <input @if(!empty($shippingDetails->district)) value="{{ $shippingDetails->district }}" @endif name="shipping_district" id="shipping_district"  type="text" placeholder="Shipping District" class="form-control" />
                         </div>
                         <div class="form-group">
                             <select name="shipping_country" id="shipping_country" class="form-control">
                                 <option value="">Select Country</option>
                                 @foreach($countries as $country)
-                                    <option value="{{ $country->name }}" @if($country->name == $shippingDetails->country) selected  @endif>{{ $country->name }}</option>
+                                    <option value="{{ $country->name }}" @if(!empty($shippingDetails->country) && $country->name == $shippingDetails->country) selected  @endif>{{ $country->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <input value="{{ $shippingDetails->phone }}" name="shipping_phone" id="shipping_phone"  type="text" placeholder="Shipping Phone" class="form-control" />
+                            <input @if(!empty($shippingDetails->phone)) value="{{ $shippingDetails->phone }}" @endif name="shipping_phone" id="shipping_phone"  type="text" placeholder="Shipping Phone" class="form-control" />
                         </div>
                         <button type="submit" class="btn btn-default">Check Out</button>
                     </div><!--/sign up form-->

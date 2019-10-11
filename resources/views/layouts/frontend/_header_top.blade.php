@@ -64,6 +64,7 @@
                     <li><a href="#">MY WISHLIST </a></li>
                     <li><a href="blog.html">BLOG</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li><a href="{{ route('cart') }}">Cart</a></li>
 
                     @if(empty(Auth::check()))
                         <li><a href="{{ route('customer.register_form') }}" class="">Register</a></li>

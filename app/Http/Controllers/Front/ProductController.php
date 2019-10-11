@@ -14,7 +14,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 //use mysql_xdevapi\Session;
-use Session;
+//use Session;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -209,6 +210,7 @@ class ProductController extends Controller
         $title = "Checkout-Shipping Address";
         $user_id = Auth::user()->id;
         $user_email = Auth::user()->email;
+        //dd($user_email);
         $userDetails = User::find($user_id);
         $countries = Country::get();
 
@@ -220,8 +222,9 @@ class ProductController extends Controller
         }
 
         // Update cart table with user email
-        //$session_id = Session::get('session_id');
-        //DB::table('cart')->where(['session_id'=>$session_id])->update(['user_email'=>$user_email]);
+        $session_id = Session::get('session_id');
+         DB::table('cart')->where(['session_id'=>$session_id])->update(['user_email'=>$user_email]);
+
         if($request->isMethod('post')){
             $data = $request->all();
             // Return to Checkout page if any of the field is empty
@@ -270,11 +273,38 @@ class ProductController extends Controller
                 return redirect()->back()->with('flash_message_error','Your location is not available for delivery. Please enter another location.');
             }*/
 
-            //return redirect()->action('ProductsController@orderReview');
+            return redirect()->action('Front\ProductController@orderReview');
 
         }
 
         return view('front.product.shipping_checkout')->with(compact('userDetails','countries','shippingDetails','title'));
+    }
+
+
+    public function orderReview()
+    {
+        $data['title'] = "Order Review";
+        $session_id = Session::get('session_id');
+        $user_id = Auth::user()->id;
+        $data['user_email'] = Auth::user()->email;
+        $data[userDetails] = User::where('id',$user_id)->first();
+        $data[shippingDetails] = DeliveryAddress::where('user_id',$user_id)->first();
+        //dd($shippingDetails);
+
+        $data['user_cart'] = DB::table('cart')->where(['user_email'=>$data['user_email']])->get();
+
+        //dd($data['user_cart']);
+        //$data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
+
+        foreach ($data['user_cart'] as $key => $product){
+            $productDetails = Product::with('product_image')->where('id',$product->product_id)->first();
+            //dd($productDetails);
+            $data['user_cart'][$key]->file = $productDetails->product_image[0]->file_path;
+        }
+
+        //dd(count($data['user_cart']));
+        return view('front.product.order_review', $data);
+
     }
 
 
