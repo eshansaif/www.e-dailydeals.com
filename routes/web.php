@@ -38,6 +38,9 @@ Route::group(['middleware'=>['frontlogin']],function (){
     // Update User Password
     Route::post('update-user-pwd','Front\CustomerController@updatePassword');
 
+    //checkout
+    Route::match(['get','post'],'checkout','Front\ProductController@checkout')->name('checkout');
+
 });
 
 //Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');

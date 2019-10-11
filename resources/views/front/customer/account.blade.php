@@ -57,7 +57,7 @@
                         <select name="country" id="country" class="form-control">
                             <option value="">Select Country</option>
                         @foreach($countries as $country)
-                            <option value="{{ $country->name }}">@if($country->name == $userDetails->country) selected @endif{{ $country->name }}</option>
+                            <option value="{{ $country->name }}" @if($country->name == $userDetails->country) selected  @endif>{{ $country->name }}</option>
                             @endforeach
                         </select>
 

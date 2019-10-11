@@ -194,6 +194,27 @@ $().ready(function () {
         });
     });
 
+    // Copy Billing Address to Shipping Address Script
+    $("#copyAddress").click(function(){
+        if(this.checked){
+            $("#shipping_name").val($("#billing_name").val());
+            $("#shipping_address").val($("#billing_address").val());
+            $("#shipping_zip").val($("#billing_zip").val());
+            $("#shipping_city").val($("#billing_city").val());
+            $("#shipping_district").val($("#billing_district").val());
+            $("#shipping_country").val($("#billing_country").val());
+            $("#shipping_phone").val($("#billing_phone").val());
+        }else{
+            $("#shipping_name").val('');
+            $("#shipping_address").val('');
+            $("#shipping_zip").val('');
+            $("#shipping_city").val('');
+            $("#shipping_district").val('');
+            $("#shipping_country").val('');
+            $("#shipping_phone").val('');
+        }
+    });
+
     // Password Strength Script
     $('#password').passtrength({
         minChars: 4,
@@ -201,6 +222,8 @@ $().ready(function () {
         tooltip: true,
         eyeImg : "assets/frontend/assets/images/eye.svg"
     });
+
+
 
 });
 

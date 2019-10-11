@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Front;
 
 use App\Cart;
 use App\Category;
+use App\Country;
+use App\DeliveryAddress;
 use App\Product;
 use App\ProductAttribute;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 //use mysql_xdevapi\Session;
 use Session;
@@ -82,6 +86,7 @@ class ProductController extends Controller
 
         $countProducts = DB::table('cart')->where(['product_id'=>$data['product_id'],
             'color'=>$data['color'], 'size'=>$data['size'], 'session_id'=>$session_id ])->count();
+        //dd($countProducts);
 
         if ($countProducts > 0) {
             return redirect()->back()->with(session()->flash('error_message','This Product is already exist in cart!'));
@@ -136,6 +141,143 @@ class ProductController extends Controller
             return redirect('cart')->with(session()->flash('error_message','Sorry!Required quantity is not available!'));
 
     }
+
+    /*public function checkout(Request $request)
+    {
+        $title = "Checkout-Shipping Address";
+        $user_id = Auth::user()->id;
+        $user_email = Auth::user()->email;
+        $userDetails = User::find($user_id);
+        //dd($data[userDetails]);
+        $countries = Country::get();
+
+        //Check if Shipping Address exists
+        $shippingCount = DeliveryAddress::where('user_id',$user_id)->count();
+        //$shippingDetails = array();
+        if($shippingCount>0){
+            $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
+        }
+
+        if ($request->isMethod('post')){
+            $data = $request->all();
+            //dd($data['address']);
+
+            if(empty($data['billing_name']) ||
+                empty($data['billing_address']) ||
+                empty($data['billing_zip']) ||
+                empty($data['billing_city']) ||
+                empty($data['billing_district']) ||
+                empty($data['billing_country']) ||
+                empty($data['billing_phone']) ||
+
+                empty($data['shipping_name']) ||
+                empty($data['shipping_address']) ||
+                empty($data['shipping_zip']) ||
+                empty($data['shipping_city']) ||
+                empty($data['shipping_district']) ||
+                empty($data['shipping_country']) ||
+                empty($data['shipping_phone'])){
+                return redirect()->back()->with(session()->flash('error_message','Fill up All Fields to Checkout!'));
+            }
+
+            //Updating user table with billing checkout data
+            User::where('id',$user_id)->update(['name'=>$data['billing_name'],'address'=>$data['billing_address'], 'zip'=>$data['billing_zip'],'city'=>$data['billing_city'],'district'=>$data['billing_district'],'country'=>$data['billing_country'],'phone'=>$data['billing_phone']]);
+
+            if ($shippingCount > 0){
+                User::where('id',$user_id)->update(['name'=>$data['shipping_name'],'address'=>$data['shipping_address'], 'zip'=>$data['shipping_zip'],'city'=>$data['shipping_city'],'district'=>$data['shipping_country'],'country'=>$data['shipping_country'],'phone'=>$data['shipping_phone']]);
+            }else{
+                $shipping = new DeliveryAddress();
+                $shipping->user_id = $user_id;
+                $shipping->email = $user_email;
+                $shipping->name = $data['shipping_name'];
+                $shipping->address = $data['shipping_address'];
+                $shipping->zip = $data['shipping_zip'];
+                $shipping->city = $data['shipping_city'];
+                $shipping->district = $data['shipping_district'];
+                $shipping->country = $data['shipping_country'];
+                $shipping->phone = $data['shipping_phone'];
+                $shipping->save();
+
+            }
+            //echo "Product Review Page";
+        }
+
+        return view('front.product.shipping_checkout')->with(compact('userDetails','countries','title','shippingDetails'));
+    }*/
+
+    public function checkout(Request $request){
+        $title = "Checkout-Shipping Address";
+        $user_id = Auth::user()->id;
+        $user_email = Auth::user()->email;
+        $userDetails = User::find($user_id);
+        $countries = Country::get();
+
+        //Check if Shipping Address exists
+        $shippingCount = DeliveryAddress::where('user_id',$user_id)->count();
+        $shippingDetails = array();
+        if($shippingCount>0){
+            $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
+        }
+
+        // Update cart table with user email
+        //$session_id = Session::get('session_id');
+        //DB::table('cart')->where(['session_id'=>$session_id])->update(['user_email'=>$user_email]);
+        if($request->isMethod('post')){
+            $data = $request->all();
+            // Return to Checkout page if any of the field is empty
+            if(empty($data['billing_name']) ||
+                empty($data['billing_address']) ||
+                empty($data['billing_zip']) ||
+                empty($data['billing_city']) ||
+                empty($data['billing_district']) ||
+                empty($data['billing_country']) ||
+                empty($data['billing_phone']) ||
+
+                empty($data['shipping_name']) ||
+                empty($data['shipping_address']) ||
+                empty($data['shipping_zip']) ||
+                empty($data['shipping_city']) ||
+                empty($data['shipping_district']) ||
+                empty($data['shipping_country']) ||
+                empty($data['shipping_phone'])){
+                return redirect()->back()->with(session()->flash('error_message','Fill up all Fields to Checkout!'));
+        }
+
+            // Update User details
+            User::where('id',$user_id)->update(['name'=>$data['billing_name'],'address'=>$data['billing_address'], 'zip'=>$data['billing_zip'],'city'=>$data['billing_city'],'district'=>$data['billing_district'],'country'=>$data['billing_country'],'phone'=>$data['billing_phone']]);
+
+            if($shippingCount>0){
+                // Update Shipping Address
+                DeliveryAddress::where('user_id',$user_id)->update(['name'=>$data['shipping_name'],'address'=>$data['shipping_address'],'zip'=>$data['shipping_zip'],'city'=>$data['shipping_city'],'district'=>$data['shipping_district'],'country'=>$data['shipping_country'],'phone'=>$data['shipping_phone']]);
+
+            }else{
+                // Add New Shipping Address
+                $shipping = new DeliveryAddress();
+                $shipping->user_id = $user_id;
+                $shipping->email = $user_email;
+                $shipping->name = $data['shipping_name'];
+                $shipping->address = $data['shipping_address'];
+                $shipping->zip = $data['shipping_zip'];
+                $shipping->city = $data['shipping_city'];
+                $shipping->district = $data['shipping_district'];
+                $shipping->country = $data['shipping_country'];
+                $shipping->phone = $data['shipping_phone'];
+                $shipping->save();
+            }
+
+            /*$pincodeCount = DB::table('pincodes')->where('pincode',$data['shipping_pincode'])->count();
+            if($pincodeCount == 0){
+                return redirect()->back()->with('flash_message_error','Your location is not available for delivery. Please enter another location.');
+            }*/
+
+            //return redirect()->action('ProductsController@orderReview');
+
+        }
+
+        return view('front.product.shipping_checkout')->with(compact('userDetails','countries','shippingDetails','title'));
+    }
+
+
 
 
 }
