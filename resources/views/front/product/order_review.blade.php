@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="order-summary">
-                    <h3>Summary</h3>
+                    <h3>Review Ordered Products</h3>
 
                     <h4>
                         <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{ count($user_cart) }} products in Cart</a>
@@ -99,7 +99,7 @@
 
             <div class="col-lg-8 order-lg-first">
                 <div class="checkout-payment">
-                    <h2 class="step-title">Billing Address:</h2>
+                    <h2 class="step-title">Review Your Billing Address:</h2>
 
                     {{--<h4>Check / Money order</h4>
 
@@ -166,7 +166,7 @@
 
             <div class="col-lg-8 order-lg-first">
                 <div class="checkout-payment">--}}
-                    <h2 class="step-title">Shipping Address:</h2>
+                    <h2 class="step-title">Review Your Shipping Address:</h2>
 
                     {{--<h4>Check / Money order</h4>
 
@@ -227,8 +227,30 @@
                         </form>
                     </div><!-- End #new-checkout-address -->
 
+                    <h2 class="step-title">Payment Method</h2>
+
+                    <form name="paymentForm" id="paymentForm" action="{{ route('place_order') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="grand_total" value="{{ $total_amount }}">
+                        <div class="payment-options">
+					<span>
+						<label><strong>Select Payment Method:</strong></label>
+					</span>
+                            <span>
+						<label><input type="radio" name="payment_method" id="COD" value="COD"> <strong>COD</strong></label>
+					</span>
+                            <span>
+						<label><input type="radio" name="payment_method" id="Paypal" value="Paypal"> <strong>Paypal</strong></label>
+					</span>
+
+                            <span style="float:right;">
+						{{--<button type="submit" class="btn btn-default" onclick="return selectPaymentMethod();">Place Order</button>--}}
+                            <button type="submit"  class="btn btn-primary float-right" onclick="return selectPaymentMethod();">Place Order</button>
+					</span>
+                        </div>
+                    </form>
+
                     <div class="clearfix">
-                        <a href="#" class="btn btn-primary float-right">Place Order</a>
                     </div><!-- End .clearfix -->
                 </div><!-- End .checkout-payment -->
 

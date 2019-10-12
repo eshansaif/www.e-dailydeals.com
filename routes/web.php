@@ -43,6 +43,9 @@ Route::group(['middleware'=>['frontlogin']],function (){
 
     Route::match(['get','post'],'order-review','Front\ProductController@orderReview')->name('order_review');
 
+    //Place order
+    Route::match(['get','post'],'place-order','Front\ProductController@placeOrder')->name('place_order');
+
 });
 
 //Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');

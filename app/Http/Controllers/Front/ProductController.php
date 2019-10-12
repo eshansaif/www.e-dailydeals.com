@@ -106,8 +106,18 @@ class ProductController extends Controller
     public function cart()
     {
         $data['title'] = "Shopping Cart";
-        $data['session_id'] = Session::get('session_id');
-        $data['user_cart'] = DB::table('cart')->where(['session_id'=>$data['session_id']])->get();
+
+        if (Auth::check()){
+            $data['user_email'] = Auth::user()->email;
+            $data['user_cart'] = DB::table('cart')->where(['user_email'=>$data['user_email']])->get();
+
+
+        }else{
+            $data['session_id'] = Session::get('session_id');
+            $data['user_cart'] = DB::table('cart')->where(['session_id'=>$data['session_id']])->get();
+
+        }
+
 
         //dd($data['user_cart']);
         //$data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
@@ -143,68 +153,6 @@ class ProductController extends Controller
 
     }
 
-    /*public function checkout(Request $request)
-    {
-        $title = "Checkout-Shipping Address";
-        $user_id = Auth::user()->id;
-        $user_email = Auth::user()->email;
-        $userDetails = User::find($user_id);
-        //dd($data[userDetails]);
-        $countries = Country::get();
-
-        //Check if Shipping Address exists
-        $shippingCount = DeliveryAddress::where('user_id',$user_id)->count();
-        //$shippingDetails = array();
-        if($shippingCount>0){
-            $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
-        }
-
-        if ($request->isMethod('post')){
-            $data = $request->all();
-            //dd($data['address']);
-
-            if(empty($data['billing_name']) ||
-                empty($data['billing_address']) ||
-                empty($data['billing_zip']) ||
-                empty($data['billing_city']) ||
-                empty($data['billing_district']) ||
-                empty($data['billing_country']) ||
-                empty($data['billing_phone']) ||
-
-                empty($data['shipping_name']) ||
-                empty($data['shipping_address']) ||
-                empty($data['shipping_zip']) ||
-                empty($data['shipping_city']) ||
-                empty($data['shipping_district']) ||
-                empty($data['shipping_country']) ||
-                empty($data['shipping_phone'])){
-                return redirect()->back()->with(session()->flash('error_message','Fill up All Fields to Checkout!'));
-            }
-
-            //Updating user table with billing checkout data
-            User::where('id',$user_id)->update(['name'=>$data['billing_name'],'address'=>$data['billing_address'], 'zip'=>$data['billing_zip'],'city'=>$data['billing_city'],'district'=>$data['billing_district'],'country'=>$data['billing_country'],'phone'=>$data['billing_phone']]);
-
-            if ($shippingCount > 0){
-                User::where('id',$user_id)->update(['name'=>$data['shipping_name'],'address'=>$data['shipping_address'], 'zip'=>$data['shipping_zip'],'city'=>$data['shipping_city'],'district'=>$data['shipping_country'],'country'=>$data['shipping_country'],'phone'=>$data['shipping_phone']]);
-            }else{
-                $shipping = new DeliveryAddress();
-                $shipping->user_id = $user_id;
-                $shipping->email = $user_email;
-                $shipping->name = $data['shipping_name'];
-                $shipping->address = $data['shipping_address'];
-                $shipping->zip = $data['shipping_zip'];
-                $shipping->city = $data['shipping_city'];
-                $shipping->district = $data['shipping_district'];
-                $shipping->country = $data['shipping_country'];
-                $shipping->phone = $data['shipping_phone'];
-                $shipping->save();
-
-            }
-            //echo "Product Review Page";
-        }
-
-        return view('front.product.shipping_checkout')->with(compact('userDetails','countries','title','shippingDetails'));
-    }*/
 
     public function checkout(Request $request){
         $title = "Checkout-Shipping Address";
@@ -305,6 +253,15 @@ class ProductController extends Controller
         //dd(count($data['user_cart']));
         return view('front.product.order_review', $data);
 
+    }
+
+    public function placeOrder(Request $request)
+    {
+        if ($request->isMethod('post')){
+            $data = $request->all();
+            dd($data);
+
+        }
     }
 
 
