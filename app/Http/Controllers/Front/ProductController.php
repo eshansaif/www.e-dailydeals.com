@@ -6,6 +6,7 @@ use App\Cart;
 use App\Category;
 use App\Country;
 use App\DeliveryAddress;
+use App\Order;
 use App\Product;
 use App\ProductAttribute;
 use App\ProductsAttribute;
@@ -111,7 +112,6 @@ class ProductController extends Controller
         if (Auth::check()){
             $data['user_email'] = Auth::user()->email;
             $data['user_cart'] = DB::table('cart')->where(['user_email'=>$data['user_email']])->get();
-
 
         }else{
             $data['session_id'] = Session::get('session_id');
@@ -260,7 +260,31 @@ class ProductController extends Controller
     {
         if ($request->isMethod('post')){
             $data = $request->all();
-            dd($data);
+            $user_id = Auth::user()->id;
+            $user_email = Auth::user()->email;
+
+            $shippingDetails = DeliveryAddress::where(['email' =>$user_email])->first();
+            //dd($shippingDetails);
+
+            $order = new Order();
+            $order->user_id = $user_id;
+            $order->user_email = $user_email;
+            $order->name = $shippingDetails->name;
+            $order->address = $shippingDetails->address;
+            $order->zip = $shippingDetails->zip;
+            $order->city = $shippingDetails->city;
+            $order->district = $shippingDetails->district;
+            $order->country = $shippingDetails->country;
+            $order->phone = $shippingDetails->phone;
+            $order->phone = $shippingDetails->phone;
+            //$order->coupon_code = $coupon_code;
+            //$order->coupon_amount = $coupon_amount;
+            $order->order_status = "New";
+            $order->payment_method = $data['payment_method'];
+            //$order->shipping_charges = Session::get('ShippingCharges');
+            $order->grand_total = $data['grand_total'];
+            $order->save();
+
 
         }
     }
