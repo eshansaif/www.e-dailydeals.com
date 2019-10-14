@@ -8,6 +8,7 @@ use App\Country;
 use App\DeliveryAddress;
 use App\Product;
 use App\ProductAttribute;
+use App\ProductsAttribute;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -62,14 +63,14 @@ class ProductController extends Controller
         return view('front.product.details', $data)->with(compact('product_details'));
     }
 
-    public function getProductPrice(Request $request)
-    {
-
+    public function getProductPrice(Request $request){
         $data = $request->all();
-        echo $data;
-
-
-
+        $proArr = explode("-",$data['idsize']);
+        $proAttr = ProductsAttribute::where(['product_id'=>$proArr[0],'size'=>$proArr[1]])->first();
+        $getCurrencyRates = Product::getCurrencyRates($proAttr->price);
+        echo $proAttr->price."-".$getCurrencyRates['USD_Rate']."-".$getCurrencyRates['GBP_Rate']."-".$getCurrencyRates['EUR_Rate'];
+        echo "#";
+        echo $proAttr->stock;
     }
 
     public function addToCart(Request $request)

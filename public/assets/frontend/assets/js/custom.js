@@ -1,5 +1,4 @@
 
-
 $().ready(function () {
     $("#registerForm").validate({
         rules:{
@@ -310,6 +309,8 @@ $(document).ready(function () {
     });
 
 });*/
+
+
 
 
 
