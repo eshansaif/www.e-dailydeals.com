@@ -171,6 +171,8 @@ class ProductController extends Controller
 
 
             // Get Cart Total Amount
+            $session_id = Session::get('session_id');
+
             if(Auth::check()){
                 $user_email = Auth::user()->email;
                 $userCart = DB::table('cart')->where(['user_email' => $user_email])->get();
@@ -391,6 +393,18 @@ class ProductController extends Controller
             $shippingDetails = DeliveryAddress::where(['email' =>$user_email])->first();
             //dd($shippingDetails);
 
+            if(empty(Session::get('CouponCode'))){
+                $coupon_code = '';
+            }else{
+                $coupon_code = Session::get('CouponCode');
+            }
+
+            if(empty(Session::get('CouponAmount'))){
+                $coupon_amount = '';
+            }else{
+                $coupon_amount = Session::get('CouponAmount');
+            }
+
             $order = new Order();
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -402,8 +416,8 @@ class ProductController extends Controller
             $order->country = $shippingDetails->country;
             $order->phone = $shippingDetails->phone;
             $order->phone = $shippingDetails->phone;
-            //$order->coupon_code = $coupon_code;
-            //$order->coupon_amount = $coupon_amount;
+            $order->coupon_code = $coupon_code;
+            $order->coupon_amount = $coupon_amount;
             $order->order_status = "New";
             $order->payment_method = $data['payment_method'];
             //$order->shipping_charges = Session::get('ShippingCharges');

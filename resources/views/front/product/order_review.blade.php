@@ -56,17 +56,26 @@
                                 @endphp
                             @endforeach
                             <tr>
-                                <td>Discount</td>
-                                <td>৳00/-</td>
+                                <td><strong>Sub Total</strong></td>
+                                <td><strong>৳ @php echo $total_amount; @endphp/-</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td>Discount Price(Coupon)</td>
+                                @if(!empty(Session::get('CouponAmount')))
+                                <td>৳{{ Session::get('CouponAmount') }}/-</td>
+                                @else
+                                <td>৳ 0/- </td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>Shipping</td>
-                                <td>Free</td>
+                                <td>৳ 0/-</td>
                             </tr>
                             </tbody>
                             <tfoot>
                                     <td class="product-col"><strong>Grand Total</strong></td>
-                                    <td ><strong>৳ @php echo $total_amount;  @endphp/-</strong></td>
+                                    <td ><strong>৳ @php echo $total_amount - Session::get('CouponAmount');  @endphp/-</strong></td>
 
                             </tfoot>
                         </table>
