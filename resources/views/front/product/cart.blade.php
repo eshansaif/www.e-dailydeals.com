@@ -106,12 +106,13 @@
                 </div><!-- End .cart-table-container -->
 
                 <div class="cart-discount">
-                    <h4>Apply Discount Code</h4>
-                    <form action="#">
+                    <h4>Apply Coupon Code</h4>
+                    <form action="{{ route('cart.apply_coupon') }}" method="post">
+                        @csrf
                         <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code"  required>
+                            <input name="coupon_code" type="text" class="form-control form-control-sm" placeholder="Enter coupon code"  required>
                             <div class="input-group-append">
-                                <button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>
+                                <button class="btn btn-sm btn-primary" type="submit">Apply Coupon</button>
                             </div>
                         </div><!-- End .input-group -->
                     </form>
@@ -175,22 +176,32 @@
 
                     <table class="table table-totals">
                         <tbody>
+                        @if(!empty(Session::get('CouponAmount')))
                         <tr>
                             <td>Subtotal</td>
                             <td>৳ @php echo $total_amount;  @endphp/-</td>
                         </tr>
 
                         <tr>
-                            <td>Tax</td>
-                            <td>$0.00</td>
+                            <td>Discount Price(Coupon)</td>
+                            <td>৳ @php echo Session::get('CouponAmount');  @endphp/-</td>
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td>Order Total</td>
-                            <td>৳ @php echo $total_amount;  @endphp/-</td>
+                            <td>Grand Total</td>
+                            <td>৳ @php echo $total_amount - Session::get('CouponAmount');  @endphp/-</td>
                         </tr>
                         </tfoot>
+                        @else
+
+                            <tfoot>
+                            <tr>
+                                <td>Grand Total</td>
+                                <td>৳ @php echo $total_amount;  @endphp/-</td>
+                            </tr>
+                            </tfoot>
+                        @endif
                     </table>
 
                     <div class="checkout-methods">

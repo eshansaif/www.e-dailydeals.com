@@ -1,3 +1,5 @@
+
+
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="{{asset('assets/backend/js/jquery-1.10.2.min.js')}}"></script>
 <script src="{{asset('assets/backend/js/jquery-ui-1.9.2.custom.min.js')}}"></script>
@@ -42,4 +44,6 @@
 
 <!--common scripts for all pages-->
 <script src="{{asset('assets/backend/js/scripts.js')}}"></script>
+
+
 

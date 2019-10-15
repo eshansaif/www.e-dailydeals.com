@@ -19,6 +19,7 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 Route::get('register','Front\CustomerController@view_register')->name('customer.register_form');
 Route::post('customer_register','Front\CustomerController@register')->name('customer.register');
 
+
 //customer login
 Route::get('login','Front\CustomerController@view_login')->name('customer.login_form');
 Route::post('customer-login','Front\CustomerController@login')->name('customer.login');
@@ -68,6 +69,9 @@ Route::match(['get', 'post'], 'cart','Front\ProductController@cart')->name('cart
 //delete product from cart item
 Route::get('cart/delete-product/{id}','Front\ProductController@deleteCartProduct')->name('cart.delete');
 
+//coupon code
+Route::post('cart/apply-coupon','Front\ProductController@applyCoupon')->name('cart.apply_coupon');
+
 //update product quantity
 Route::get('cart/update-quantity/{id}/{quantity}','Front\ProductController@updateCartQuantity');
 
@@ -109,6 +113,10 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::resource('user','UserController');
     Route::post('user/{id}/restore','UserController@restore')->name('user.restore');
     Route::delete('user/{id}/permanent_delete','UserController@permanent_delete')->name('user.permanent_delete');
+
+    Route::resource('coupon','CouponController');
+    Route::post('coupon/{id}/restore','CouponController@restore')->name('coupon.restore');
+    Route::delete('coupon/{id}/permanent_delete','CouponController@permanent_delete')->name('coupon.permanent_delete');
 
 
 });
