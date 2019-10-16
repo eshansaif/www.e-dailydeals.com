@@ -47,6 +47,17 @@ Route::group(['middleware'=>['frontlogin']],function (){
     //Place order
     Route::match(['get','post'],'place-order','Front\ProductController@placeOrder')->name('place_order');
 
+    //Thanks Page
+    Route::get('thanks','Front\ProductController@thanks')->name('thanks');
+
+    //Show Orders
+    Route::get('orders','Front\ProductController@userOrders')->name('orders');
+
+    //Oder Details
+    Route::get('orders/{id}','Front\ProductController@userOrderDetails')->name('orders.details');
+
+
+
 });
 
 //Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
@@ -59,7 +70,7 @@ Route::get('products/{id?}','Front\ProductController@index')->name('front.produc
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
 
 
-Route::get('get-product-price','Front\ProductController@getProductPrice');
+Route::get('product/get-product-price/{idSize}','Front\ProductController@getProductPrice');
 
 
 Route::match(['get', 'post'], 'add-to-cart', 'Front\ProductController@addToCart' )->name('add-cart');

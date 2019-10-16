@@ -63,9 +63,13 @@
                             <tr>
                                 <td>Discount Price(Coupon)</td>
                                 @if(!empty(Session::get('CouponAmount')))
+
                                 <td>৳{{ Session::get('CouponAmount') }}/-</td>
+
                                 @else
+
                                 <td>৳ 0/- </td>
+
                                 @endif
                             </tr>
                             <tr>
@@ -75,7 +79,7 @@
                             </tbody>
                             <tfoot>
                                     <td class="product-col"><strong>Grand Total</strong></td>
-                                    <td ><strong>৳ @php echo $total_amount - Session::get('CouponAmount');  @endphp/-</strong></td>
+                                    <td ><strong>৳ {{ $grand_total = $total_amount - Session::get('CouponAmount')  }}/-</strong></td>
 
                             </tfoot>
                         </table>
@@ -240,7 +244,7 @@
 
                     <form name="paymentForm" id="paymentForm" action="{{ route('place_order') }}" method="post">
                         @csrf
-                        <input type="hidden" name="grand_total" value="{{ $total_amount }}">
+                        <input type="hidden" name="grand_total" value="{{ $grand_total }}">
                         <div class="payment-options">
 					<span>
 						<label><strong>Select Payment Method:</strong></label>

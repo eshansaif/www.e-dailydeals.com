@@ -8,6 +8,7 @@ use App\Country;
 use App\Coupon;
 use App\DeliveryAddress;
 use App\Order;
+use App\OrdersProduct;
 use App\Product;
 use App\ProductAttribute;
 use App\ProductsAttribute;
@@ -67,12 +68,13 @@ class ProductController extends Controller
 
     public function getProductPrice(Request $request){
         $data = $request->all();
-        $proArr = explode("-",$data['idsize']);
+        echo "<pre>"; print_r($data); die;
+        /*$proArr = explode("-",$data['idsize']);
         $proAttr = ProductsAttribute::where(['product_id'=>$proArr[0],'size'=>$proArr[1]])->first();
         $getCurrencyRates = Product::getCurrencyRates($proAttr->price);
         echo $proAttr->price."-".$getCurrencyRates['USD_Rate']."-".$getCurrencyRates['GBP_Rate']."-".$getCurrencyRates['EUR_Rate'];
         echo "#";
-        echo $proAttr->stock;
+        echo $proAttr->stock;*/
     }
 
     public function addToCart(Request $request)
@@ -81,9 +83,13 @@ class ProductController extends Controller
         Session::forget('CouponCode');
 
         $data = $request->all();
-        if (empty($data['user_email'])){
+
+        if(empty(Auth::user()->email)){
             $data['user_email'] = '';
+        }else{
+            $data['user_email'] = Auth::user()->email;
         }
+
 
         $session_id = Session::get('session_id');
         if (empty($session_id)){
@@ -91,18 +97,27 @@ class ProductController extends Controller
             Session::put('session_id',$session_id);
         }
 
-        $countProducts = DB::table('cart')->where(['product_id'=>$data['product_id'],
-            'color'=>$data['color'], 'size'=>$data['size'], 'session_id'=>$session_id ])->count();
-        //dd($countProducts);
 
-        if ($countProducts > 0) {
-            return redirect()->back()->with(session()->flash('error_message','This Product is already exist in cart!'));
+        if (empty(Auth::check())){
+            $countProducts = DB::table('cart')->where(['product_id'=>$data['product_id'],
+                'color'=>$data['color'], 'size'=>$data['size'], 'session_id'=>$session_id ])->count();
+            if ($countProducts > 0) {
+                return redirect()->back()->with(session()->flash('error_message','This Product is already exist in cart!'));
+            }
         }else{
+            $countProducts = DB::table('cart')->where(['product_id'=>$data['product_id'],
+                'color'=>$data['color'], 'size'=>$data['size'], 'user_email'=>$data['user_email'] ])->count();
+            if ($countProducts > 0) {
+                return redirect()->back()->with(session()->flash('error_message','This Product is already exist in cart!'));
+            }
+        }
+
+
             DB::table('cart')->insert(['product_id'=>$data['product_id'],'name'=>$data[name], 'code'=>$data['code'],
                 'color'=>$data['color'], 'price'=>$data['price'], 'size'=>$data['size'],
                 'quantity'=>$data['quantity'], 'user_email'=>$data['user_email'],'session_id'=>$session_id
             ]);
-        }
+
 
 
 
@@ -415,7 +430,6 @@ class ProductController extends Controller
             $order->district = $shippingDetails->district;
             $order->country = $shippingDetails->country;
             $order->phone = $shippingDetails->phone;
-            $order->phone = $shippingDetails->phone;
             $order->coupon_code = $coupon_code;
             $order->coupon_amount = $coupon_amount;
             $order->order_status = "New";
@@ -425,7 +439,57 @@ class ProductController extends Controller
             $order->save();
 
 
+            $order_id = DB::getPdo()->lastInsertId();
+            $cartProducts = DB::table('cart')->where(['user_email'=>$user_email])->get();
+            foreach($cartProducts as $pro){
+                $cartPro = new OrdersProduct;
+                $cartPro->order_id = $order_id;
+                $cartPro->user_id = $user_id;
+                $cartPro->product_id = $pro->product_id;
+                $cartPro->product_code = $pro->code;
+                $cartPro->product_name = $pro->name;
+                $cartPro->product_color = $pro->color;
+                $cartPro->product_size = $pro->size;
+                $cartPro->product_price = $pro->price;
+                $cartPro->product_quantity = $pro->quantity;
+                $cartPro->save();
+            }
+
+            Session::put('order_id',$order_id);
+            Session::put('grand_total',$data['grand_total']);
+
+            return redirect()->route('thanks');
+
+
         }
+    }
+
+    public function thanks()
+    {
+        $user_email = Auth::user()->email;
+        DB::table('cart')->where('user_email',$user_email)->delete();
+        return view('front.product.thanks');
+    }
+
+    public function userOrders()
+    {
+        $data['title'] = "My Orders";
+        $user_id = Auth::user()->id;
+        $user_email = Auth::user()->email;
+
+        $data['orders'] = Order::with('orders')->where(['user_id'=>$user_id,'user_email'=>$user_email])->orderBy('id','DESC')->get();
+        //dd($data['orders']);
+        return view('front.order.user_order',$data);
+    }
+
+    public function userOrderDetails($order_id)
+    {
+        $data['title'] = 'Order Details';
+        $user_id = Auth::user()->id;
+        $data['orderDetails'] = Order::with('orders')->where('id',$order_id)->first();
+        return view('front.order.user_order_details',$data);
+
+
     }
 
 
