@@ -6,7 +6,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('customer.account') }}">My Account</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('customer.account') }}">My Orders</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('orders') }}">My Orders</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $orderDetails->id }}</li>
             </ol>
         </div><!-- End .container -->

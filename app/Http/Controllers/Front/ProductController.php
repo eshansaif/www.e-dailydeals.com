@@ -84,6 +84,22 @@ class ProductController extends Controller
 
         $data = $request->all();
 
+       /* $getProductDetails = DB::table('products')->where('id',$product_id)->first();
+        dd($getProductDetails);
+        // Check Product Stock is available or not
+        $getStock = Product::where('code',$getCartDetails->code)->first();
+        echo $getStock->stock; echo "--";
+
+        if($getStock->stock<$data['quantity']){
+            return redirect()->back()->with('flash_message_error','Required Quantity is not available!');
+        }*/
+
+        $getProductStock = Product::where(['id'=>$data['product_id']])->first();
+
+        if($getProductStock->stock<$data['quantity']){
+            return redirect()->back()->with(session()->flash('error_message','Required Quantity is not available right now!'));
+        }
+
         if(empty(Auth::user()->email)){
             $data['user_email'] = '';
         }else{

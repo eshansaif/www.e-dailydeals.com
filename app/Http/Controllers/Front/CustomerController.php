@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -79,7 +80,12 @@ class CustomerController extends Controller
         //dd($credentials);
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'],'admin' => null])){
             Session::put('frontSession',$credentials['email']);
-            return redirect()->intended('/');
+
+            if(!empty(Session::get('session_id'))){
+                $session_id = Session::get('session_id');
+                DB::table('cart')->where('session_id',$session_id)->update(['user_email' => $credentials['email']]);
+            }
+            return redirect()->intended('cart');
         }
 
         Session::flash('error_message', 'Invalid Email or Password!');
