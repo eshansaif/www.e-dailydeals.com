@@ -6,6 +6,7 @@ use App\Cart;
 use App\Category;
 use App\Country;
 use App\Coupon;
+use App\Customer;
 use App\DeliveryAddress;
 use App\Order;
 use App\OrdersProduct;
@@ -84,15 +85,7 @@ class ProductController extends Controller
 
         $data = $request->all();
 
-       /* $getProductDetails = DB::table('products')->where('id',$product_id)->first();
-        dd($getProductDetails);
-        // Check Product Stock is available or not
-        $getStock = Product::where('code',$getCartDetails->code)->first();
-        echo $getStock->stock; echo "--";
 
-        if($getStock->stock<$data['quantity']){
-            return redirect()->back()->with('flash_message_error','Required Quantity is not available!');
-        }*/
 
         $getProductStock = Product::where(['id'=>$data['product_id']])->first();
 
@@ -474,7 +467,11 @@ class ProductController extends Controller
             Session::put('order_id',$order_id);
             Session::put('grand_total',$data['grand_total']);
 
-            return redirect()->route('thanks');
+            if ($data['payment_method'] == "COD"){
+                return redirect()->route('thanks');
+            }else{
+                return redirect()->route('paynow');
+            }
 
 
         }
@@ -484,8 +481,26 @@ class ProductController extends Controller
     {
         $user_email = Auth::user()->email;
         DB::table('cart')->where('user_email',$user_email)->delete();
-        return view('front.product.thanks');
+        return view('front.order.thanks');
     }
+
+    public function paynow()
+    {
+        $user_email = Auth::user()->email;
+        DB::table('cart')->where('user_email',$user_email)->delete();
+        return view('front.order.paynow');
+    }
+
+    public function thanksPaynow()
+    {
+        return view('front.order.thanks_paynow');
+    }
+
+    public function cancelPaynow()
+    {
+        return view('front.order.cancel_paynow');
+    }
+
 
     public function userOrders()
     {
@@ -503,10 +518,55 @@ class ProductController extends Controller
         $data['title'] = 'Order Details';
         $user_id = Auth::user()->id;
         $data['orderDetails'] = Order::with('orders')->where('id',$order_id)->first();
+
         return view('front.order.user_order_details',$data);
 
 
     }
+
+    private function _sslCommerz($data)
+    {
+
+        $post_data = array();
+        $post_data['total_amount'] = $data['order']->grand_total; # You cant not pay less than 10
+        $post_data['currency'] = "BDT";
+        $post_data['tran_id'] = uniqid(); // tran_id must be unique
+
+        # CUSTOMER INFORMATION
+        $post_data['cus_name'] = 'Customer Name';
+        $post_data['cus_email'] = 'customer@mail.com';
+        $post_data['cus_add1'] = 'Customer Address';
+        $post_data['cus_add2'] = "";
+        $post_data['cus_city'] = "";
+        $post_data['cus_state'] = "";
+        $post_data['cus_postcode'] = "";
+        $post_data['cus_country'] = "Bangladesh";
+        $post_data['cus_phone'] = '8801XXXXXXXXX';
+        $post_data['cus_fax'] = "";
+
+        # SHIPMENT INFORMATION
+        $post_data['ship_name'] = "Store Test";
+        $post_data['ship_add1'] = "Dhaka";
+        $post_data['ship_add2'] = "Dhaka";
+        $post_data['ship_city'] = "Dhaka";
+        $post_data['ship_state'] = "Dhaka";
+        $post_data['ship_postcode'] = "1000";
+        $post_data['ship_phone'] = "";
+        $post_data['ship_country'] = "Bangladesh";
+
+        $post_data['shipping_method'] = "NO";
+        $post_data['product_name'] = "Computer";
+        $post_data['product_category'] = "Goods";
+        $post_data['product_profile'] = "physical-goods";
+
+        # OPTIONAL PARAMETERS
+        $post_data['value_a'] = "ref001";
+        $post_data['value_b'] = "ref002";
+        $post_data['value_c'] = "ref003";
+        $post_data['value_d'] = "ref004";
+    }
+
+
 
 
 

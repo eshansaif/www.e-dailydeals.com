@@ -47,8 +47,18 @@ Route::group(['middleware'=>['frontlogin']],function (){
     //Place order
     Route::match(['get','post'],'place-order','Front\ProductController@placeOrder')->name('place_order');
 
+
+    //Route::match(['get','post'],'place-order/{}','Front\ProductController@placeOrder')->name('place_order');
+
+
+
     //Thanks Page
     Route::get('thanks','Front\ProductController@thanks')->name('thanks');
+
+    //Thanks Page for Pay Now
+    Route::get('paynow','Front\ProductController@paynow')->name('paynow');
+    Route::get('paynow/thanks','Front\ProductController@thanksPaynow')->name('paynow.thanks');
+    Route::get('paypal/cancel','Front\ProductController@cancelPaynow')->name('paypal.cancel');
 
     //Show Orders
     Route::get('orders','Front\ProductController@userOrders')->name('orders');

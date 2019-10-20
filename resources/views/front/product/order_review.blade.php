@@ -253,7 +253,7 @@
 						<label><input type="radio" name="payment_method" id="COD" value="COD"> <strong>COD</strong></label>
 					</span>
                             <span>
-						<label><input type="radio" name="payment_method" id="Paypal" value="Paypal"> <strong>Paypal</strong></label>
+						<label><input type="radio" name="payment_method" id="Paypal" value="Paypal"> <strong>Pay Now</strong></label>
 					</span>
 
                             <span style="float:right;">
