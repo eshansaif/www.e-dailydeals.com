@@ -139,6 +139,8 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::post('coupon/{id}/restore','CouponController@restore')->name('coupon.restore');
     Route::delete('coupon/{id}/permanent_delete','CouponController@permanent_delete')->name('coupon.permanent_delete');
 
+    Route::get('orders', 'Front\ProductController@viewOrders')->name('order.index');
+
 
 });
 

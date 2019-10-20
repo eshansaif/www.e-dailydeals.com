@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use SoftDeletes;
 //use mysql_xdevapi\Session;
 //use Session;
 use Illuminate\Support\Facades\Session;
@@ -564,6 +565,30 @@ class ProductController extends Controller
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
+    }
+
+    public function viewOrders(Request $request)
+    {
+        $data['title'] = 'Order List';
+        $order = new order();
+        $order = $order->withTrashed();
+        if ($request->has('search') && $request->search != null){
+            $order = $order->where('order_code','like','%'.$request->search.'%');
+        }
+        if ($request->has('status') && $request->status != null) {
+            $order = $order->where('status',$request->status );
+        }
+        $order = $order->with('orders')->orderBy('id','DESC')->paginate(5);
+        $data['orders'] = $order;
+
+        if (isset($request->status) || $request->search) {
+            $render['status'] = $request->status;
+            $render['search'] = $request->search;
+            $order = $order->appends($render);
+        }
+
+        $data['serial'] = managePagination($order);
+        return view('admin.order.index',$data);
     }
 
 

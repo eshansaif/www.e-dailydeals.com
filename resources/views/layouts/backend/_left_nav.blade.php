@@ -87,6 +87,13 @@
                 </ul>
             </li>
 
+            <li class="menu-list"><a href="#"><i class="fa fa-percent"></i> <span>Customer Orders</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{{ route('order.index') }}"> View Orders</a></li>
+
+                </ul>
+            </li>
+
             <li class="menu-list"><a href="#"><i class="fa fa-laptop"></i> <span>Settings</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="blank_page.html"> Blank Page</a></li>
