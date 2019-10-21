@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 
@@ -48,6 +49,14 @@ class CustomerController extends Controller
                 $user->created_at = date("Y-m-d H:i:s");
                 $user->updated_at = date("Y-m-d H:i:s");*/
                 $user->save();
+
+                //Send new registration Email
+                $email = $data['email'];
+                $messageData = ['email'=>$data['email'],'name'=>$data['name'],'phone'=>$data['phone']];
+                Mail::send('emails.register',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Registration with Daily Deals');
+                });
+
                 if (Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     Session::put('frontSession',$data['email']);
 

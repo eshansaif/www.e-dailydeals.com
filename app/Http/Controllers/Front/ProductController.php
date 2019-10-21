@@ -591,7 +591,26 @@ class ProductController extends Controller
         return view('admin.order.index',$data);
     }
 
+    public function viewOrderDetails($order_id)
+    {
+        $data['orderDetails'] = Order::with('orders')->where('id',$order_id)->first();
+        $data['title'] = 'Order Details # '.$data['orderDetails']->id.'';
+        $user_id = $data['orderDetails']->user_id;
+        $data['userDetails'] = User::where('id',$user_id)->first();
+        //dd($data['userDetails']);
+        return view('admin.order.details',$data);
+    }
 
+    public function updateOrderStatus(Request $request)
+    {
+        if($request->isMethod('post')){
+            $data = $request->all();
+            //dd($data);
+            Order::where('id',$data['order_id'])->update(['order_status'=>$data['order_status']]);
+            return redirect()->back()->with(session()->flash('message','Order Status has been Updated Successfully!'));
+        }
+
+    }
 
 
 

@@ -85,7 +85,7 @@
                                         <td>{{ $order->order_status }}</td>
                                         <td>{{ $order->payment_method }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-info">View Order Details</a>
+                                            <a href="{{ route('order.details',$order->id) }}" class="btn btn-sm btn-info">View Order Details</a>
                                         </td>
 
                                         {{--<td><span class="label {{ ($coupon->status == 'Active')?'label-info':'label-danger'}}">{{ $coupon->status }}</span></td>--}}

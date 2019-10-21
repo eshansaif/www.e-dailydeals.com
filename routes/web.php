@@ -139,7 +139,14 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::post('coupon/{id}/restore','CouponController@restore')->name('coupon.restore');
     Route::delete('coupon/{id}/permanent_delete','CouponController@permanent_delete')->name('coupon.permanent_delete');
 
+    //View Orders
     Route::get('orders', 'Front\ProductController@viewOrders')->name('order.index');
+
+    //View order Details
+    Route::get('orders/{id}', 'Front\ProductController@viewOrderDetails')->name('order.details');
+
+    //update Order Status
+    Route::post('update-order-status','Front\ProductController@updateOrderStatus')->name('order.status.update');
 
 
 });
