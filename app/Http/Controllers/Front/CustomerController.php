@@ -51,11 +51,20 @@ class CustomerController extends Controller
                 $user->save();
 
                 //Send new registration Email
-                $email = $data['email'];
+                /*$email = $data['email'];
                 $messageData = ['email'=>$data['email'],'name'=>$data['name'],'phone'=>$data['phone']];
                 Mail::send('emails.register',$messageData,function($message) use($email){
                     $message->to($email)->subject('Registration with Daily Deals');
+                });*/
+
+                // Send Confirmation Email
+                $email = $data['email'];
+                $messageData = ['email'=>$data['email'],'name'=>$data['name'],'code'=>base64_encode($data['email'])];
+                Mail::send('emails.confirmation',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Confirm your Daily Deals Account');
                 });
+
+                return redirect()->back()->with(session()->flash('message','Please Confirm your email to Activate your Account!'));
 
                 if (Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     Session::put('frontSession',$data['email']);
@@ -68,6 +77,30 @@ class CustomerController extends Controller
                     return redirect('cart');
                 }
             }
+        }
+    }
+
+    public function confirmAccount($email)
+    {
+        $email = base64_decode($email);
+        $userCount = User::where('email',$email)->count();
+        if($userCount > 0){
+            $userDetails = User::where('email',$email)->first();
+            if($userDetails->status == 'Active'){
+                return redirect('login')->with(session()->flash('message','Your Email account is already activated. You can login now!'));
+            }else{
+                User::where('email',$email)->update(['status'=>'Active']);
+
+                // Send Welcome Email
+                $messageData = ['email'=>$email,'name'=>$userDetails->name];
+                Mail::send('emails.welcome',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Welcome to Daily Deals');
+                });
+
+                return redirect('login')->with(session()->flash('message','Your Email account is activated. You can login now!'));
+            }
+        }else{
+            abort(404);
         }
     }
 
@@ -94,6 +127,12 @@ class CustomerController extends Controller
         $credentials = $request->input();
         //dd($credentials);
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password'],'admin' => null])){
+            $userStatus = User::where('email',$credentials['email'])->first();
+            //dd($userStatus);
+            if ($userStatus->status == 'Inactive'){
+                Session::flash('error_message', 'Your account is not Activated yet! To Active your account , Please Confirm your email!');
+                return redirect()->back()->withInput(['email' => $request->email]);
+            }
             Session::put('frontSession',$credentials['email']);
 
             if(!empty(Session::get('session_id'))){

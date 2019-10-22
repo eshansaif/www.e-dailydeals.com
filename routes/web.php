@@ -19,6 +19,9 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 Route::get('register','Front\CustomerController@view_register')->name('customer.register_form');
 Route::post('customer_register','Front\CustomerController@register')->name('customer.register');
 
+// Confirm Account
+Route::get('confirm/{code}','Front\CustomerController@confirmAccount');
+
 
 //customer login
 Route::get('login','Front\CustomerController@view_login')->name('customer.login_form');
