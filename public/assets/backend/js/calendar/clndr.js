@@ -89,7 +89,7 @@
   function Clndr( element, options ) {
     this.element = element;
 
-    // merge the default options with user-provided options
+    // merge the default options with admin-provided options
     this.options = $.extend(true, {}, defaults, options);
 
     // if there are events, we should run them through our addMomentObjectToEvents function
@@ -448,7 +448,7 @@
       if(end && moment(end).add('years', 1).isAfter(moment(this.month).add('years', 1)) ) {
         this.element.find('.' + this.options.targets.nextYearButton).toggleClass('inactive', true);
       }
-      // today? we could put this in init(), but we want to support the user changing the constraints on a living instance.
+      // today? we could put this in init(), but we want to support the admin changing the constraints on a living instance.
       if(( start && start.isAfter( moment(), 'month' ) ) || ( end && end.isBefore( moment(), 'month' ) )) {
         this.element.find('.' + this.options.targets.today).toggleClass('inactive', true);
       }
@@ -503,7 +503,7 @@
       .on('click', '.'+this.options.targets.previousYearButton, { context: this }, this.previousYearAction);
   }
 
-  // If the user provided a click callback we'd like to give them something nice to work with.
+  // If the admin provided a click callback we'd like to give them something nice to work with.
   // buildTargetObject takes the DOM element that was clicked and returns an object with
   // the DOM element, events, and the date (if the latter two exist). Currently it is based on the id,
   // however it'd be nice to use a data- attribute in the future.

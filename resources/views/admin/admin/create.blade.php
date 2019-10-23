@@ -9,17 +9,17 @@
                 <div class="col-lg-8 col-md-offset-2">
                     <section class="panel">
                         <header class="panel-heading">
-                            Create New User
+                            Create New Admin
                         </header>
                         <div class="panel-body">
 
-                            <form action="{{ route('user.store') }}" method="post" class="form-horizontal">
-                                @include('admin.user._form')
+                            <form action="{{ route('admin.store') }}" method="post" class="form-horizontal">
+                                @include('admin.admin._form')
 
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10 text-right">
-                                        <button name="" type="submit" class="btn btn-primary">Create User</button>
+                                        <button name="" type="submit" class="btn btn-primary">Create Admin</button>
                                     </div>
                                 </div>
                             </form>

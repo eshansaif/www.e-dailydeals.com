@@ -28,13 +28,13 @@ class UserController extends Controller
         }
 
         $data['serial'] = managePagination($user);
-        return view('admin.user.index',$data);
+        return view('admin.admin.index',$data);
     }
 
     public function create()
     {
         $data['title'] = 'Create new User';
-        return view('admin.user.create',$data);
+        return view('admin.admin.create',$data);
     }
 
 
@@ -53,11 +53,11 @@ class UserController extends Controller
         /*if($request->hasFile('image')){
             $file = $request->file('image');
             $file->move('images/users/',$file->getClientOriginalName());
-            $user['image'] = 'images/users/'.$file->getClientOriginalName();
+            $admin['image'] = 'images/users/'.$file->getClientOriginalName();
         }*/
         User::create($user);
         session()->flash('message', 'User is Created Successfully!');
-        return redirect()->route('user.index');
+        return redirect()->route('admin.index');
     }
 
 
@@ -70,8 +70,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $data['title']="Edit User";
-        $data['user']= User::findOrFail($id);
-        return view('admin.user.edit',$data);
+        $data['admin']= User::findOrFail($id);
+        return view('admin.admin.edit',$data);
     }
 
 
@@ -92,13 +92,13 @@ class UserController extends Controller
         /*if($request->hasFile('image')){
             $file = $request->file('image');
             $file->move('images/users/',$file->getClientOriginalName());
-            File::delete($user->image);
+            File::delete($admin->image);
             $user_req['image'] = 'images/users/'.$file->getClientOriginalName();
         }*/
 
         $user->update($user_req);
         session()->flash('message','User updated successfully');
-        return redirect()->route('user.index');
+        return redirect()->route('admin.index');
     }
 
     
@@ -106,7 +106,7 @@ class UserController extends Controller
     {
         $user->delete();
         session()->flash('message','User is Deleted Successfully!');
-        return redirect()->route('user.index');
+        return redirect()->route('admin.index');
     }
 
     public function restore($id)
@@ -114,7 +114,7 @@ class UserController extends Controller
         $user = User::onlyTrashed()->findOrFail($id);
         $user->restore();
         session()->flash('message','User is restored successfully!');
-        return redirect()->route('user.index');
+        return redirect()->route('admin.index');
     }
 
 
@@ -124,6 +124,33 @@ class UserController extends Controller
         $user = User::onlyTrashed()->findOrFail($id);
         $user->forceDelete();
         session()->flash('message','User is permanently deleted!');
-        return redirect()->route('user.index');
+        return redirect()->route('admin.index');
     }
+
+
+    public function viewCustomers(Request $request)
+    {
+        $data['title'] = 'Customer List';
+        $user = new User();
+        $user = $user->withTrashed();
+        if ($request->has('search') && $request->search != null){
+            $user = $user->where('name','like','%'.$request->search.'%');
+        }
+        if ($request->has('status') && $request->status != null) {
+            $user = $user->where('status',$request->status );
+        }
+        $user = $user->where(['admin' => null])->orderBy('id','DESC')->paginate(5);
+        $data['users'] = $user;
+
+        if (isset($request->status) || $request->search) {
+            $render['status'] = $request->status;
+            $render['search'] = $request->search;
+            $user = $user->appends($render);
+        }
+
+        $data['serial'] = managePagination($user);
+        return view('admin.customer.customer_view',$data);
+    }
+
+
 }

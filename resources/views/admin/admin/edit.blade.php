@@ -9,17 +9,17 @@
                 <div class="col-lg-8 col-md-offset-2">
                     <section class="panel">
                         <header class="panel-heading">
-                            Edit User
+                            Edit Admin
                         </header>
                         <div class="panel-body">
 
-                            <form action="{{ route('user.update', $user->id) }}" method="post" class="form-horizontal">
-                                @include('admin.user._form')
+                            <form action="{{ route('admin.update', $admin->id) }}" method="post" class="form-horizontal">
+                                @include('admin.admin._form')
                                 @method('put')
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-2 col-lg-10 text-right">
-                                        <button name="" type="submit" class="btn btn-primary">Update User</button>
+                                        <button name="" type="submit" class="btn btn-primary">Update Admin</button>
                                     </div>
                                 </div>
                             </form>

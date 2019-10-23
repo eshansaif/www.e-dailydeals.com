@@ -178,7 +178,7 @@ $().ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type:'post',
-            url:'check-user-pwd',
+            url:'check-admin-pwd',
             data:{current_pwd:current_pwd},
             success:function(resp){
                 /*alert(resp);*/

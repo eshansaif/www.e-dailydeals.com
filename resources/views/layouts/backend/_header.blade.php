@@ -185,7 +185,7 @@
             </li>
             <li>
                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{asset('assets/backend/images/photos/user-avatar.png')}}" alt="" />
+                    <img src="{{asset('admin')}}" alt="" />
                     John Doe
                     <span class="caret"></span>
                 </a>

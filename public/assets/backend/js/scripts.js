@@ -123,7 +123,7 @@
 
    function searchform_reposition() {
       if(jQuery('.searchform').css('position') == 'relative') {
-         jQuery('.searchform').insertBefore('.left-side-inner .logged-user');
+         jQuery('.searchform').insertBefore('.left-side-inner .logged-admin');
       } else {
          jQuery('.searchform').insertBefore('.menu-right');
       }

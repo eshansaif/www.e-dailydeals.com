@@ -41,8 +41,9 @@
 
             <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Users</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="{{ route('user.create') }}"> Add User</a></li>
-                    <li><a href="{{ route('user.index') }}"> View Users</a></li>
+                    <li><a href="{{ route('admin.create') }}"> Add Admin</a></li>
+                    <li><a href="{{ route('admin.index') }}"> View Admins</a></li>
+                    <li><a href="{{ route('admin.customer.view') }}"> View Customers</a></li>
 
                 </ul>
             </li>

@@ -8,7 +8,7 @@
             <header class="col-sm-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        <a class="btn btn-primary" href="{{ route('user.create') }}">Add New <i class="fa fa-plus"></i></a>
+                        {{--<a class="btn btn-primary" href="{{ route('admin.create') }}">Add New <i class="fa fa-plus"></i></a>--}}
                         <span class="tools pull-right">
                         <a href="javascript:;" class="fa fa-chevron-down"></a>
                         {{--<a href="javascript:;" class="fa fa-times"></a>--}}
@@ -54,45 +54,56 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>User Type</th>
-                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>City</th>
+                                    <th>District</th>
+                                    <th>Country</th>
+                                    <th>Zip COde</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Registered on</th>
 
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($categories as $user)
+                                @foreach($users as $customer)
 
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td><span class="label {{ ($user->type == 'Admin')?'label-primary':'label-default'}}">{{ $user->type }}</span></td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td><span class="label {{ ($user->status == 'Active')?'label-info':'label-danger'}}">{{ $user->status }}</span></td>
-                                    <td>
+                                    <td>{{ $customer->name }}</td>
+                                    <td>{{ $customer->address }}</td>
+                                    <td>{{ $customer->city }}</td>
+                                    <td>{{ $customer->district }}</td>
+                                    <td>{{ $customer->country }}</td>
+                                    <td>{{ $customer->zip }}</td>
+                                    <td>{{ $customer->phone }}</td>
+                                    <td>{{ $customer->email }}</td>
+                                    <td><span class="label {{ ($customer->status == 'Active')?'label-info':'label-danger'}}">{{ $customer->status }}</span></td>
+                                    <td>{{ $customer->created_at }}</td>
+                                    {{--<td>
 
-                                        @if($user->deleted_at == null)
-                                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-info">Edit</a>
-                                       <form action="{{ route('user.destroy', $user->id) }}" method="post" style="display: inline">
+                                        @if($admin->deleted_at == null)
+                                         <a href="{{ route('admin.edit', $admin->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                       <form action="{{ route('admin.destroy', $admin->id) }}" method="post" style="display: inline">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this user')">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to delete this admin')">Delete</button>
                                         </form>
                                         @else
-                                        <form action="{{ route('user.restore', $user->id) }}" method="post" style="display: inline">
+                                        <form action="{{ route('admin.restore', $admin->id) }}" method="post" style="display: inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this user')">Restore</button>
+                                            <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('You are going to restore this admin')">Restore</button>
                                         </form>
 
-                                            <form action="{{ route('user.permanent_delete', $user->id) }}" method="post" style="display: inline">
+                                            <form action="{{ route('admin.permanent_delete', $admin->id) }}" method="post" style="display: inline">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this user')">Permanent Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this admin')">Permanent Delete</button>
                                             </form>
                                             @endif
                                     </td>
-
+--}}
 
                                 </tr>
                                 @endforeach
@@ -100,7 +111,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ $categories->render() }}
+                        {{ $users->render() }}
                     </div>
 
                 </section>

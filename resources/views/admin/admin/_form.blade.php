@@ -4,13 +4,13 @@
     @php
         if(old("type")){
             $type = old('type');
-        }elseif(isset($user)){
-            $type = $user->type;
+        }elseif(isset($admin)){
+            $type = $admin->type;
         }else{
             $type = null;
         }
     @endphp
-    <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>User type</strong> </label>
+    <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>Admin type</strong> </label>
     <div class="col-lg-10">
         <select name="type" class="form-control">
             <option value="">--Select--</option>
@@ -28,9 +28,9 @@
 </div>
 
 <div class="form-group">
-    <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>User Name</strong></label>
+    <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>Admin Name</strong></label>
     <div class="col-lg-10">
-        <input name="name" value="{{ old('name', isset($user)?$user->name:null) }}" type="text" class="form-control form-control-line @error('name') is-invalid @enderror" id="name" placeholder="User Name">
+        <input name="name" value="{{ old('name', isset($admin)?$admin->name:null) }}" type="text" class="form-control form-control-line @error('name') is-invalid @enderror" id="name" placeholder="Admin Name">
         @error('name')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
@@ -42,7 +42,7 @@
 <div class="form-group">
     <label for="email" class="col-lg-2 col-sm-2 control-label"><strong>Email</strong></label>
     <div class="col-lg-10">
-        <input name="email" value="{{ old('email', isset($user)?$user->email:null) }}" type="email" class="form-control form-control-line @error('email') is-invalid @enderror" id="email" placeholder="Email">
+        <input name="email" value="{{ old('email', isset($admin)?$admin->email:null) }}" type="email" class="form-control form-control-line @error('email') is-invalid @enderror" id="email" placeholder="Email">
         @error('email')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
@@ -54,7 +54,7 @@
 <div class="form-group">
     <label for="phone" class="col-lg-2 col-sm-2 control-label"><strong>Phone</strong></label>
     <div class="col-lg-10">
-        <input name="phone" value="{{ old('phone', isset($user)?$user->phone:null) }}" type="text" class="form-control form-control-line @error('phone') is-invalid @enderror" id="phone" placeholder="Phone">
+        <input name="phone" value="{{ old('phone', isset($admin)?$admin->phone:null) }}" type="text" class="form-control form-control-line @error('phone') is-invalid @enderror" id="phone" placeholder="Phone">
         @error('phone')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
@@ -87,13 +87,13 @@
     @php
         if(old("status")){
             $status = old('status');
-        }elseif(isset($user)){
-            $status = $user->status;
+        }elseif(isset($admin)){
+            $status = $admin->status;
         }else{
             $status = null;
         }
     @endphp
-    <label for="status" class="col-lg-2 col-sm-2 control-label"><strong>User Status</strong></label>
+    <label for="status" class="col-lg-2 col-sm-2 control-label"><strong>Admin Status</strong></label>
 
     <div class="col-lg-10">
     <label class="radio-inline"><input type="radio" name="status" value="Active" id="Active" @if($status =='Active') checked @endif>Active</label>

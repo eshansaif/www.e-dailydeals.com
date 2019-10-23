@@ -109,8 +109,8 @@ Route::prefix('admin')->group(function () {
 
 
 
-Route::middleware('auth')->prefix('admin')->group(function (){
-    Route::get('dashboard','DashboardController@index')->name('admin.dashboard')->middleware('auth');
+Route::middleware('adminlogin')->prefix('admin')->group(function (){
+    Route::get('dashboard','DashboardController@index')->name('admin.dashboard')->middleware('adminlogin');
 
     Route::resource('category','CategoryController');
     Route::post('category/{id}/restore','CategoryController@restore')->name('category.restore');
@@ -138,6 +138,11 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::post('user/{id}/restore','UserController@restore')->name('user.restore');
     Route::delete('user/{id}/permanent_delete','UserController@permanent_delete')->name('user.permanent_delete');
 
+
+    Route::resource('admin','AdminController');
+    Route::post('admin/{id}/restore','AdminController@restore')->name('admin.restore');
+    Route::delete('admin/{id}/permanent_delete','AdminController@permanent_delete')->name('admin.permanent_delete');
+
     Route::resource('coupon','CouponController');
     Route::post('coupon/{id}/restore','CouponController@restore')->name('coupon.restore');
     Route::delete('coupon/{id}/permanent_delete','CouponController@permanent_delete')->name('coupon.permanent_delete');
@@ -151,13 +156,19 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     //update Order Status
     Route::post('update-order-status','Front\ProductController@updateOrderStatus')->name('order.status.update');
 
+    //View Registered Users
+    Route::get('view-customers','UserController@viewCustomers')->name('admin.customer.view');
 
+    //admin logout
+    Route::get('logout','LoginController@logout')->name('admin.logout');
 });
 
-Route::get('emergency-logout',function (){
+
+
+/*Route::get('emergency-logout',function (){
     auth()->logout();
     return redirect()->route('admin.login.form');
-})->name('admin.logout');
+})->name('admin.logout');*/
 
 
 
