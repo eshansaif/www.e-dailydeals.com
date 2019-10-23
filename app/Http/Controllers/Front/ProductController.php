@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use SoftDeletes;
 //use mysql_xdevapi\Session;
 //use Session;
@@ -469,6 +470,23 @@ class ProductController extends Controller
             Session::put('grand_total',$data['grand_total']);
 
             if ($data['payment_method'] == "COD"){
+
+                $productDetails = Order::with('orders')->where('id',$order_id)->first();
+                $userBillingDetails = User::where('id',$user_id)->first();
+
+                /* COD Order Email Start */
+                $email = $user_email;
+                $messageData = [
+                    'email' => $email,
+                    'name' => $shippingDetails->name,
+                    'order_id' => $order_id,
+                    'productDetails' => $productDetails,
+                    'userDetails' => $userBillingDetails
+                ];
+                Mail::send('emails.order.order_cod',$messageData,function($message) use($email){
+                    $message->to($email)->subject('COD Order Placed Successfully- Daily Deals');
+                });
+                /* COD Order Email Ends */
                 return redirect()->route('thanks');
             }else{
                 return redirect()->route('paynow');
