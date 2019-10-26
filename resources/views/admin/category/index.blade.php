@@ -54,6 +54,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>URL</th>
                                     <th>Status</th>
                                     <th>Action</th>
 
@@ -65,6 +66,7 @@
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
                                     <td>{{ $category->name }}</td>
+                                    <td>{{ $category->url }}</td>
                                     <td><span class="label {{ ($category->status == 'Active')?'label-info':'label-danger'}}">{{ $category->status }}</span></td>
                                     <td>
 

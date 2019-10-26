@@ -630,6 +630,14 @@ class ProductController extends Controller
 
     }
 
+    public function searchProducts(Request $request)
+    {
+        if ($request->ismethod('post')){
+            $data = $request->all();
+            dd($data);
+        }
+    }
+
 
 
 

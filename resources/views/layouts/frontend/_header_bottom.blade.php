@@ -46,7 +46,10 @@
                 </div><!-- End .megamenu -->
             </li>
             <li class="megamenu-container">
-                <a href="product.html" class="sf-with-ul">Products</a>
+                @foreach($categories as $id=>$category)
+                <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}{{--<span class="tip tip-hot">Hot!</span>--}}</a></li>
+                {{--<a href="product.html" class="sf-with-ul">Products</a>--}}
+                @endforeach
                 <div class="megamenu">
                     <div class="row">
                         <div class="col-lg-8">

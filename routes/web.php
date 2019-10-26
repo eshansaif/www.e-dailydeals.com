@@ -27,6 +27,10 @@ Route::get('confirm/{code}','Front\CustomerController@confirmAccount');
 Route::get('login','Front\CustomerController@view_login')->name('customer.login_form');
 Route::post('customer-login','Front\CustomerController@login')->name('customer.login');
 
+
+//search product
+Route::post('search-product','Front\ProductController@searchProducts')->name('search.products');
+
 //customer logout
 Route::get('customer-logout','Front\CustomerController@logout')->name('customer.logout');
 

@@ -41,6 +41,8 @@ class CategoryController extends Controller
     public function create()
     {
         $data['title'] = 'Create new Category';
+        /*$data['levels'] =  Category::where(['parent_id'=>0])->get();*/
+        //dd($data['levels']);
          return view('admin.category.create',$data);
     }
 
@@ -49,13 +51,20 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required',
             'status' => 'required',
+            'url' => 'required',
         ]);
 
         $category= $request->except('_token');
+        //dd($category);
         $category['created_by'] = 1;
-        $category['parent_id'] = 1;
+        $category['parent_id'] = 0;
         Category::create($category);
-        session()->flash('message','Category is created successfully');
+        session()->flash('message','Category is created successfully!');
+
+
+        //sub-category
+
+
 
 
         return redirect()->route('category.index');
@@ -86,7 +95,7 @@ class CategoryController extends Controller
         $category_data= $request->except('_token','_method');
         $category_data['updated_by'] = 1;
         $category->update($category_data);
-        session()->flash('message','Category is updated successfully');
+        session()->flash('message','Category is updated successfully!');
         return redirect()->route('category.index');
     }
 
@@ -112,7 +121,7 @@ class CategoryController extends Controller
     {
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
-        session()->flash('message','Category is permanently deleted');
+        session()->flash('error_message','Category has been permanently deleted!');
         return redirect()->route('category.index');
     }
 }
