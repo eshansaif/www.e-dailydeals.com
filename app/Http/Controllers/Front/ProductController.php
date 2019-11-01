@@ -642,6 +642,17 @@ class ProductController extends Controller
 
     }
 
+    public function viewOrderInvoice($order_id)
+    {
+        $data['orderDetails'] = Order::with('orders')->where('id',$order_id)->first();
+        //dd($data['orderDetails']);
+        $data['title'] = 'Order Details # '.$data['orderDetails']->id.'';
+        $user_id = $data['orderDetails']->user_id;
+        $data['userDetails'] = User::where('id',$user_id)->first();
+        //dd($data['userDetails']);
+        return view('admin.order.invoice',$data);
+    }
+
 
 
 

@@ -190,7 +190,7 @@
                                 <td>{{ $orderDetails->name }}</td>
                             </tr>
                             <tr>
-                                <th>Order Status</th>
+                                <th>Customer Email </th>
                                 <td>{{ $orderDetails->user_email }}</td>
                             </tr>
 
@@ -199,49 +199,54 @@
                     </div>
                 </section>
             </div>
-            <div class="col-sm-6">
-                <section class="panel">
-                    <header class="panel-heading">
-                        Billing Address
-                        <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                {{--<a href="javascript:;" class="fa fa-times"></a>--}}
-                             </span>
-                    </header>
-                    <div class="panel-body">
-                        <address>
-                            {{ $userDetails->name }} <br>
-                            {{ $userDetails->address }} <br>
-                            {{ $userDetails->city }},{{ $userDetails->district }},{{ $userDetails->zip }} <br>
-                            {{ $userDetails->country }} <br>
-                            {{ $userDetails->phone }}
-
-                        </address>
-                    </div>
-                </section>
-            </div>
-            <div class="col-sm-6">
-                <section class="panel">
-                    <header class="panel-heading">
-                        Shipping Address
-                        <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                {{--<a href="javascript:;" class="fa fa-times"></a>--}}
-                             </span>
-                    </header>
-                    <div class="panel-body">
-                        <address>
-                            {{ $orderDetails->name }} <br>
-                            {{ $orderDetails->address }} <br>
-                            {{ $orderDetails->city }},{{ $userDetails->district }},{{ $userDetails->zip }} <br>
-                            {{ $orderDetails->country }} <br>
-                            {{ $orderDetails->phone }}
-
-                        </address>
-                    </div>
-                </section>
-            </div>
         </div>
+         <div class="row">
+             <div class="col-sm-6">
+                 <section class="panel">
+                     <header class="panel-heading">
+                         Billing Address
+                         <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                {{--<a href="javascript:;" class="fa fa-times"></a>--}}
+                             </span>
+                     </header>
+                     <div class="panel-body">
+                         <address>
+                             {{ $userDetails->name }} <br>
+                             {{ $userDetails->address }} <br>
+                             {{ $userDetails->city }},{{ $userDetails->district }},{{ $userDetails->zip }} <br>
+                             {{ $userDetails->country }} <br>
+                             {{ $userDetails->phone }}
+
+                         </address>
+                     </div>
+                 </section>
+             </div>
+             <div class="col-sm-6">
+                 <section class="panel">
+                     <header class="panel-heading">
+                         Shipping Address
+                         <span class="tools pull-right">
+                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                {{--<a href="javascript:;" class="fa fa-times"></a>--}}
+                             </span>
+                     </header>
+                     <div class="panel-body">
+                         <address>
+                             {{ $orderDetails->name }} <br>
+                             {{ $orderDetails->address }} <br>
+                             {{ $orderDetails->city }},{{ $userDetails->district }},{{ $userDetails->zip }} <br>
+                             {{ $orderDetails->country }} <br>
+                             {{ $orderDetails->phone }}
+
+                         </address>
+                     </div>
+                 </section>
+             </div>
+         </div>
+
+
+
         <div class="row">
             <div class="col-sm-12">
                 <section class="panel">
@@ -280,6 +285,7 @@
                     </div>
                 </section>
             </div>
+
         </div>
     </div>
     <!--body wrapper end-->

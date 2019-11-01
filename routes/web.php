@@ -159,8 +159,12 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
     //View order Details
     Route::get('orders/{id}', 'Front\ProductController@viewOrderDetails')->name('order.details');
 
+    //Order Invoice
+    Route::get('orders-invoice/{id}', 'Front\ProductController@viewOrderInvoice')->name('order.invoice');
+
     //update Order Status
     Route::post('update-order-status','Front\ProductController@updateOrderStatus')->name('order.status.update');
+
 
     //View Registered Users
     Route::get('view-customers','UserController@viewCustomers')->name('admin.customer.view');
