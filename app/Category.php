@@ -17,6 +17,11 @@ class Category extends Model
         'updated_by',
     ];
 
+    Public function categories()
+    {
+        return $this->hasMany('App\Category','parent_id');
+    }
+
     public function SubCategory()
     {
         return $this->hasMany('App\SubCategory', 'category_id', 'id');
@@ -26,6 +31,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Product', 'category_id', 'id');
     }
+
+
+
 }
 
 

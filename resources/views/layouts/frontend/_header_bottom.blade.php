@@ -14,7 +14,7 @@
                                     </div>
                                     <ul>
                                         @foreach($categories as $id=>$category)
-                                        <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}{{--<span class="tip tip-hot">Hot!</span>--}}</a></li>
+                                            <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}<span class="tip tip-hot">Hot!</span></a></li>
                                         @endforeach
                                     </ul>
                                 </div><!-- End .col-lg-6 -->
@@ -101,6 +101,8 @@
                     </div>
                 </div><!-- End .megamenu -->
             </li>
+
+
             <li>
                 <a href="#" class="sf-with-ul">Pages</a>
 
@@ -131,12 +133,16 @@
                     <li><a href="forgot-password.html">Forgot Password</a></li>
                 </ul>
             </li>
-            <li><a href="#" class="sf-with-ul">Features</a>
+
+            {{--@foreach($allCategories as $category)
+            <li><a href="#" class="sf-with-ul">{{ $category->name }}</a>
                 <ul>
-                    <li><a href="#">Header Types</a></li>
-                    <li><a href="#">Footer Types</a></li>
+                    @foreach($category->categories as $sub_category)
+                    <li><a href="#">{{ $sub_category->name }}</a></li>
+                    @endforeach
                 </ul>
             </li>
+            @endforeach--}}
             <li class="float-right"><a href="#">Buy Porto!</a></li>
             <li class="float-right"><a href="#">Special Offer!</a></li>
         </ul>

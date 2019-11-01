@@ -41,6 +41,18 @@ class ProductController extends Controller
         return view('front.product.index',$data);
     }
 
+    public function searchProducts(Request $request)
+    {
+        if ($request->isMethod('post')){
+            $data = $request->all();
+            $search_product = $data['product'];
+            $products = Product::where('name','like','%'.$search_product.'%')->orWhere('code',$search_product)->where('status','Active')->paginate(4);
+            return view('front.product.index')->with(compact('products','search_product'));
+        }
+    }
+
+
+
     public function details($id)
     {
 
@@ -630,13 +642,7 @@ class ProductController extends Controller
 
     }
 
-    public function searchProducts(Request $request)
-    {
-        if ($request->ismethod('post')){
-            $data = $request->all();
-            dd($data);
-        }
-    }
+
 
 
 

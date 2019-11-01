@@ -52,7 +52,7 @@
                                                 <select id="selSize" name="size"  style="width: 100px">
                                                     <option value="">Sizes</option>
                                                     @foreach($product_details->product_attributes as $sizes)
-                                                        <option {{--id="idSize"--}} value="{{ $product_details->id }}-{{ $sizes->size }}">{{ $sizes->size }}</option>
+                                                        <option {{--id="idSize"--}} value="{{ $product_details->id }}{{ $sizes->size }}">{{ $sizes->size }}</option>
                                                     @endforeach
                                                 </select>
                                             </li>

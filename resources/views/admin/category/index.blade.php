@@ -53,6 +53,7 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Parent Category</th>
                                     <th>Name</th>
                                     <th>URL</th>
                                     <th>Status</th>
@@ -65,6 +66,7 @@
 
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
+                                    <td>{{ $category->parent_id }}</td>
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->url }}</td>
                                     <td><span class="label {{ ($category->status == 'Active')?'label-info':'label-danger'}}">{{ $category->status }}</span></td>

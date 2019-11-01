@@ -271,7 +271,7 @@ $(document).ready(function () {
 
 
 
-/*$(document).ready(function () {
+$(document).ready(function () {
     $("#selSize").change(function (){
         var idSize = $(this).val();
         $.ajax({
@@ -287,7 +287,7 @@ $(document).ready(function () {
 
         });
     });
-});*/
+});
 
 /*$(document).ready(function () {
     $("#selSize").change(function () {

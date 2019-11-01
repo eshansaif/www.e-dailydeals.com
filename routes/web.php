@@ -84,6 +84,8 @@ Route::match(['GET','POST'],'check-email','Front\CustomerController@checkEmail')
 //Front Routes
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('products/{id?}','Front\ProductController@index')->name('front.product.index');
+
+
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
 
 

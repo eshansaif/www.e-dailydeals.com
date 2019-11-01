@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
     public function index(Request $request)
     {
+
         $data['title'] = 'Category List';
         $category = new Category();
         $category = $category->withTrashed();
@@ -41,23 +43,25 @@ class CategoryController extends Controller
     public function create()
     {
         $data['title'] = 'Create new Category';
-        /*$data['levels'] =  Category::where(['parent_id'=>0])->get();*/
+        $data['levels'] =  Category::where(['parent_id'=>0])->get();
         //dd($data['levels']);
          return view('admin.category.create',$data);
     }
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'status' => 'required',
             'url' => 'required',
+            'parent_id' => 'required',
         ]);
 
         $category= $request->except('_token');
         //dd($category);
         $category['created_by'] = 1;
-        $category['parent_id'] = 0;
+        //$category['parent_id'] = 0;
         Category::create($category);
         session()->flash('message','Category is created successfully!');
 
@@ -80,6 +84,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $data['title'] = 'Edit Category';
+        $data['levels'] =  Category::where(['parent_id'=>0])->get();
         $data['category'] = $category;
         return view('admin.category.edit',$data);
     }
@@ -90,6 +95,7 @@ class CategoryController extends Controller
         $request->validate([
             'name'=>'required',
             'status'=>'required',
+            'parent_id' => 'required',
         ]);
 
         $category_data= $request->except('_token','_method');
