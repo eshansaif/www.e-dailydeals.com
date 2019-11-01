@@ -173,6 +173,7 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
     Route::get('logout','LoginController@logout')->name('admin.logout');
 });
 
+Route::match(['get','post'],'contact-us','PageController@contactUs')->name('page.contact_us');
 
 
 /*Route::get('emergency-logout',function (){

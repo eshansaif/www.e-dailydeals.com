@@ -61,7 +61,7 @@
                                 <div class="col-sm-6 col-md-5">
                                     <ul class="links">
                                         <li><a href="about.html">About Us</a></li>
-                                        <li><a href="contact.html">Contact Us</a></li>
+                                        <li><a href="{{ route('page.contact_us') }}">Contact Us</a></li>
                                         <li><a href="my-account.html">My Account</a></li>
                                     </ul>
                                 </div><!-- End .col-sm-6 -->

@@ -21,3 +21,5 @@
 <script src="{{ asset('assets/frontend/assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/frontend/assets/js/jquery.validate.js') }}"></script>
 
+
+@stack('map')

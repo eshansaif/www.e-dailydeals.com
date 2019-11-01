@@ -85,7 +85,7 @@
                                         <td>{{ $order->order_status }}</td>
                                         <td>{{ $order->payment_method }}</td>
                                         <td>
-                                            <a href="{{ route('order.details',$order->id) }}" class="btn btn-sm btn-info">View Order Details</a> <br>
+                                            <a href="{{ route('order.details',$order->id) }}" class="btn btn-sm btn-info">View Order Details</a> <br><br>
                                             <a href="{{ route('order.invoice',$order->id) }}" class="btn btn-sm btn-primary">View Order Invoice</a>
                                         </td>
 
