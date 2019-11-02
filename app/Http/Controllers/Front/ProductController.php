@@ -428,6 +428,37 @@ class ProductController extends Controller
             $user_id = Auth::user()->id;
             $user_email = Auth::user()->email;
 
+            //Preventing the sold out products from ordering
+            $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+            foreach ($userCart as $cart) {
+                $getProductCount = Product::getProductCount($cart->product_id);
+                if ($getProductCount==0){
+                    Product::deleteCartProduct($cart->product_id,$user_email);
+                    return redirect()->route('cart')->with(session()->flash('error_message','Sorry!Product is not available and removed from the cart!Try another Product!'));
+                }
+
+              $product_stock = Product::getProductStock($cart->product_id);
+              if ($product_stock == 0){
+                  Product::deleteCartProduct($cart->product_id,$user_email);
+                  return redirect()->route('cart')->with(session()->flash('error_message','Sorry!Product is Sold out and removed from the cart!Try another Product!'));
+              }
+
+              /*echo "Original Stock: ".$product_stock;
+              echo "Demanded Stock: ".$cart->quantity;
+              die;*/
+              if ($cart->quantity>$product_stock){
+                  return redirect()->route('cart')->with(session()->flash('error_message','Please reduce product quantity  to keep going and try again!'));
+              }
+
+              $product_status = Product::getProductStatus($cart->product_id);
+              if ($product_status == 'Inactive'){
+                  Product::deleteCartProduct($cart->product_id,$user_email);
+                  return redirect()->route('cart')->with(session()->flash('error_message','The Product is Disabled currently and removed from the cart! Try another product.'));
+              }
+            }
+
+
+            //Getting user's shipping address
             $shippingDetails = DeliveryAddress::where(['email' =>$user_email])->first();
             //dd($shippingDetails);
 
@@ -482,6 +513,9 @@ class ProductController extends Controller
                 echo "Original Stock:" .$getProductStock->stock;
                 echo "Reduced Stock:" .$pro->quantity;
                 $newStock = $getProductStock->stock - $pro->quantity;
+                if ($newStock<0){
+                    $newStock = 0;
+                }
 
                 Product::where('code',$pro->code)->update(['stock'=>$newStock]);
 
