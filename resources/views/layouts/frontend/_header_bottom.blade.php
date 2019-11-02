@@ -1,3 +1,8 @@
+{{--@php
+use App\Category;
+$allCategories = Category::allCategories();
+@endphp--}}
+
 <div class="container">
     <nav class="main-nav">
         <ul class="menu sf-arrows">
@@ -14,7 +19,8 @@
                                     </div>
                                     <ul>
                                         @foreach($categories as $id=>$category)
-                                            <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}<span class="tip tip-hot">Hot!</span></a></li>
+                                            @php $productCount = \App\Product::productCount($id); @endphp
+                                            <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}({{ $productCount }})<span class="tip tip-hot">Hot!</span></a></li>
                                         @endforeach
                                     </ul>
                                 </div><!-- End .col-lg-6 -->
@@ -47,6 +53,7 @@
             </li>
             <li class="megamenu-container">
                 @foreach($categories as $id=>$category)
+
                 <li><a href="{{ route('front.product.index',$id) }}">{{ $category }}{{--<span class="tip tip-hot">Hot!</span>--}}</a></li>
                 {{--<a href="product.html" class="sf-with-ul">Products</a>--}}
                 @endforeach
@@ -135,15 +142,15 @@
             </li>
 
             {{--@foreach($allCategories as $category)
-            <li><a href="#" class="sf-with-ul">{{ $category->name }}</a>
+            <li><a href="{{ route('front.product.index',$id) }}" class="sf-with-ul">{{ $category->name }}</a>
                 <ul>
                     @foreach($category->categories as $sub_category)
-                    <li><a href="#">{{ $sub_category->name }}</a></li>
+                    <li><a href="{{ route('front.product.index',$id) }}">{{ $sub_category->name }}</a></li>
                     @endforeach
                 </ul>
             </li>
             @endforeach--}}
-            <li class="float-right"><a href="#">Buy Porto!</a></li>
+            {{--<li class="float-right"><a href="#">Buy Porto!</a></li>--}}
             <li class="float-right"><a href="#">Special Offer!</a></li>
         </ul>
     </nav>

@@ -21,22 +21,34 @@
                     @csrf
                     <div class="form-group required-field">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name" >
+                        @error('name')
+                        <div class="pl-1 text-danger">{{ $message }}</div>
+                        @enderror
                     </div><!-- End .form-group -->
 
                     <div class="form-group required-field">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" >
+                        @error('email')
+                        <div class="pl-1 text-danger">{{ $message }}</div>
+                        @enderror
                     </div><!-- End .form-group -->
 
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
                         <input type="tel" class="form-control" id="phone" name="phone">
+                        @error('phone')
+                        <div class="pl-1 text-danger">{{ $message }}</div>
+                        @enderror
                     </div><!-- End .form-group -->
 
                     <div class="form-group required-field">
                         <label for="message">What’s on your mind?</label>
-                        <textarea cols="30" rows="1" id="message" class="form-control" name="message" required></textarea>
+                        <textarea cols="30" rows="1" id="message" class="form-control" name="message" ></textarea>
+                        @error('message')
+                        <div class="pl-1 text-danger">{{ $message }}</div>
+                        @enderror
                     </div><!-- End .form-group -->
 
                     <div class="form-footer">

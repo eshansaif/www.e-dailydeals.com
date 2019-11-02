@@ -1,5 +1,6 @@
 @extends('layouts.frontend.master')
 @section('content')
+
     <div class="banner banner-cat" style="background-image: url({{ asset('assets/frontend/assets/images/banners/banner-top.jpg') }});">
         <div class="banner-content container">
             <h2 class="banner-subtitle">check out over <span>200+</span></h2>
@@ -13,7 +14,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb mt-0">
-                <li class="breadcrumb-item"><a href="index-2.html"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="category.html">Categories</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Default</li>
             </ol>

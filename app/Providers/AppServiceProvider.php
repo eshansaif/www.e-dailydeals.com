@@ -41,5 +41,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts/frontend/_header_top',function ($view){
             $view->with('userDetails', User::find(Auth::user()->id));
         });
+
+
     }
 }

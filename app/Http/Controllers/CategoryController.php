@@ -95,7 +95,6 @@ class CategoryController extends Controller
         $request->validate([
             'name'=>'required',
             'status'=>'required',
-            'parent_id' => 'required',
         ]);
 
         $category_data= $request->except('_token','_method');

@@ -1,3 +1,7 @@
+@php
+use App\Product;
+$cartCount = Product::cartCount();
+@endphp
 <div class="container">
     <div class="header-left">
         <a href="{{ route('home') }}" class="logo">
@@ -50,12 +54,12 @@
 
         <div class="dropdown cart-dropdown">
             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                <span class="cart-count">2</span>
+                <span class="cart-count">{{ $cartCount }}</span>
             </a>
 
             <div class="dropdown-menu" >
                 <div class="dropdownmenu-wrapper">
-                    <div class="dropdown-cart-products">
+                    {{--<div class="dropdown-cart-products">
                         <div class="product">
                             <div class="product-details">
                                 <h4 class="product-title">
@@ -101,11 +105,11 @@
                         <span>Total</span>
 
                         <span class="cart-total-price">$134.00</span>
-                    </div><!-- End .dropdown-cart-total -->
+                    </div><!-- End .dropdown-cart-total -->--}}
 
                     <div class="dropdown-cart-action">
-                        <a href="cart.html" class="btn">View Cart</a>
-                        <a href="checkout-shipping.html" class="btn">Checkout</a>
+                        <a href="{{ route('cart') }}" class="btn">View Cart</a>
+                        <a href="{{ route('checkout') }}" class="btn">Checkout</a>
                     </div><!-- End .dropdown-cart-total -->
                 </div><!-- End .dropdownmenu-wrapper -->
             </div><!-- End .dropdown-menu -->

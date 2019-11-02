@@ -13,6 +13,13 @@ class PageController extends Controller
         if ($request->isMethod('post')){
             $data = $request->all();
 
+            $request->validate([
+                'name'=>'required|max:255',
+                'email'=>'required|email',
+                'phone' => 'required|numeric|size:11',
+                'message' => 'required',
+            ]);
+
             //send email to admin
             $email = "shanjeed.saif.eshan@gmail.com";
             $messageData = [

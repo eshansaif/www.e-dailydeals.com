@@ -32,6 +32,13 @@ class Category extends Model
         return $this->hasMany('App\Product', 'category_id', 'id');
     }
 
+    /*public static function allCategories()
+    {
+        $allCategories = Category::with('categories')->where(['parent_id'=>0, 'status'=>'Active'])->get();
+
+        return $allCategories;
+    }*/
+
 
 
 }

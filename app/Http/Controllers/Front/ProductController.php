@@ -476,6 +476,15 @@ class ProductController extends Controller
                 $cartPro->product_price = $pro->price;
                 $cartPro->product_quantity = $pro->quantity;
                 $cartPro->save();
+
+                //reduce stocks
+                $getProductStock = Product::where('code',$pro->code)->first();
+                echo "Original Stock:" .$getProductStock->stock;
+                echo "Reduced Stock:" .$pro->quantity;
+                $newStock = $getProductStock->stock - $pro->quantity;
+
+                Product::where('code',$pro->code)->update(['stock'=>$newStock]);
+
             }
 
             Session::put('order_id',$order_id);
