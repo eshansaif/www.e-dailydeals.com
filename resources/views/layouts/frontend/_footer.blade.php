@@ -10,11 +10,13 @@
                         </div><!-- End .col-lg-6 -->
 
                         <div class="col-lg-6">
-                            <form action="#">
-                                <input type="email" class="form-control" placeholder="Email address" required>
+                            <form action="javascript:void(0);" type="post">
+                                @csrf
+                                <input onfocus="enableSubscriber();" onfocusout="checkSubscriber();" name="subscriber_email" id="subscriber_email" type="email" class="form-control" placeholder="Email address" required>
 
-                                <input type="submit" class="btn" value="Subscribe">
+                                <button onclick="checkSubscriber(); addSubscriber();" id="btnSubmit" type="submit" class="btn" value="Subscribe">Subscribe</button>
                             </form>
+                            <span id="statusSubscriber" style="display: none; color:white; font-weight: bold;"></span>
                         </div><!-- End .col-lg-6 -->
                     </div><!-- End .row -->
                 </div><!-- End .widget -->
@@ -114,3 +116,56 @@
         </div><!-- End .row -->
     </div><!-- End .container -->
 </div><!-- End .footer-middle -->
+
+
+<script>
+    function checkSubscriber() {
+        var subscriber_email = $("#subscriber_email").val();
+        $.ajax({
+           type:'post',
+            url:'check-subscriber-email',
+            data:{subscriber_email:subscriber_email},
+            success:function (resp) {
+                if (resp=="exists"){
+                    //alert("You have already subscribed using this Email!");
+                    $("#statusSubscriber").show();
+                    $("#btnSubmit").hide();
+                    $("#statusSubscriber").html("You have already subscribed using this Email!");
+                }
+            },error:function () {
+                alert("error");
+            }
+
+        });
+
+    }
+    function addSubscriber() {
+        var subscriber_email = $("#subscriber_email").val();
+        $.ajax({
+            type:'post',
+            url:'add-subscriber-email',
+            data:{subscriber_email:subscriber_email},
+            success:function (resp) {
+                if (resp=="exists"){
+                    //alert("You have already subscribed using this Email!");
+                    $("#statusSubscriber").show();
+                    $("#btnSubmit").hide();
+                    $("#statusSubscriber").html("You have already subscribed using this Email!");
+                }else if (resp=="saved"){
+                    $("#statusSubscriber").show();
+                    $("#statusSubscriber").html("Thanks for Your Subscription!");
+                }
+            },error:function () {
+                alert("error");
+            }
+
+        });
+
+    }
+
+    function enableSubscriber() {
+
+        $("#btnSubmit").show();
+        $("#statusSubscriber").hide();
+    }
+</script>

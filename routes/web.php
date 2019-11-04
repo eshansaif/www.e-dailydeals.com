@@ -34,6 +34,13 @@ Route::post('search-product','Front\ProductController@searchProducts')->name('se
 //customer logout
 Route::get('customer-logout','Front\CustomerController@logout')->name('customer.logout');
 
+//check subscribers
+Route::post('check-subscriber-email','Front\NewsletterSubscriberController@checkSubscriber');
+
+//add subscribers
+Route::post('add-subscriber-email','Front\NewsletterSubscriberController@addSubscriber');
+
+
 //middleware(Routes after customer login)
 Route::group(['middleware'=>['frontlogin']],function (){
 
@@ -89,7 +96,7 @@ Route::get('products/{id?}','Front\ProductController@index')->name('front.produc
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
 
 
-Route::get('product/get-product-price/{idSize}','Front\ProductController@getProductPrice');
+Route::get('get-product-price','Front\ProductController@getProductPrice');
 
 
 Route::match(['get', 'post'], 'add-to-cart', 'Front\ProductController@addToCart' )->name('add-cart');
@@ -168,6 +175,16 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
 
     //View Registered Users
     Route::get('view-customers','UserController@viewCustomers')->name('admin.customer.view');
+
+    //view subscriber
+    Route::get('view-subscriber','Front\NewsletterSubscriberController@index')->name('subscriber.index');
+
+    Route::get('subscriber/{id}/edit','Front\NewsletterSubscriberController@index')->name('subscriber.edit');
+    Route::get('subscriber/{id}','Front\NewsletterSubscriberController@index')->name('subscriber.update');
+    Route::delete('subscriber/{id}','Front\NewsletterSubscriberController@destroy')->name('subscriber.destroy');
+    Route::post('subscriber/{id}/restore','Front\NewsletterSubscriberController@restore')->name('subscriber.restore');
+    Route::delete('subscriber/{id}/permanent_delete','Front\NewsletterSubscriberController@permanent_delete')->name('subscriber.permanent_delete');
+
 
     //admin logout
     Route::get('logout','LoginController@logout')->name('admin.logout');

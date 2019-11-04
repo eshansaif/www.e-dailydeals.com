@@ -88,9 +88,16 @@
                 </ul>
             </li>
 
-            <li class="menu-list"><a href="#"><i class="fa fa-percent"></i> <span>Customer Orders</span></a>
+            <li class="menu-list"><a href="#"><i class="fa fa-first-order"></i> <span>Customer Orders</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('order.index') }}"> View Orders</a></li>
+
+                </ul>
+            </li>
+
+            <li class="menu-list"><a href="#"><i class="fa fa-hand-stop-o"></i> <span>Newsletter Subscriber</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="{{ route('subscriber.index') }}"> View Subscriber</a></li>
 
                 </ul>
             </li>

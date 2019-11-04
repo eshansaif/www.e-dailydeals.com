@@ -73,6 +73,7 @@ class Product extends Model
 
     }
 
+
     public static function deleteCartProduct($product_id, $user_email)
     {
         DB::table('cart')->where(['product_id' => $product_id, 'user_email' => $user_email])->delete();
@@ -83,11 +84,32 @@ class Product extends Model
         return $getProductStatus->status;
     }
 
+    public static function getCategoryStatus($category_id){
+        $getCategoryStatus = Category::select('status')->where('id',$category_id)->first();
+        return $getCategoryStatus->status;
+    }
+
     public static function getProductCount($id)
     {
         $getProductCount = Product::select('stock')->where(['id' => $id])->count();
         return $getProductCount;
 
+    }
+
+    public static function getGrandTotal()
+    {
+        $getGrandTotall = "";
+        $user_email = Auth::user()->email;
+        $userCart = DB::table('cart')->where('user_email',$user_email)->get();
+        $userCart = json_decode(json_encode($userCart),true);
+        //dd($userCart);
+        foreach ($userCart as $product) {
+            $productPrice = Product::where(['id'=>$product['product_id']])->first();
+            $priceArray[] = $productPrice->price;
+
+        }
+        $grandTotal = array_sum($priceArray) - Session::get('CouponAmount');
+        return $grandTotal;
     }
 
 }

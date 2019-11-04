@@ -455,6 +455,14 @@ class ProductController extends Controller
                   Product::deleteCartProduct($cart->product_id,$user_email);
                   return redirect()->route('cart')->with(session()->flash('error_message','The Product is Disabled currently and removed from the cart! Try another product.'));
               }
+
+              $getCategoryId = Product::select('category_id')->where('id',$cart->product_id)->first();
+              $category_status = Product::getCategoryStatus($getCategoryId->category_id);
+
+              if ($category_status == 'Inactive'){
+                  Product::deleteCartProduct($cart->product_id,$user_email);
+                  return redirect()->route('cart')->with(session()->flash('error_message','The Product Category is Disabled currently and removed from the cart! Try another product.'));
+              }
             }
 
 
@@ -474,6 +482,10 @@ class ProductController extends Controller
                 $coupon_amount = Session::get('CouponAmount');
             }
 
+            //securing grand total
+            $grand_total = Product::getGrandTotal();
+
+
             $order = new Order();
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -489,7 +501,8 @@ class ProductController extends Controller
             $order->order_status = "New";
             $order->payment_method = $data['payment_method'];
             //$order->shipping_charges = Session::get('ShippingCharges');
-            $order->grand_total = $data['grand_total'];
+            //$order->grand_total = $data['grand_total'];
+            $order->grand_total = $grand_total;
             $order->save();
 
 
@@ -522,7 +535,8 @@ class ProductController extends Controller
             }
 
             Session::put('order_id',$order_id);
-            Session::put('grand_total',$data['grand_total']);
+            //Session::put('grand_total',$data['grand_total']);
+            Session::put('grand_total',$grand_total);
 
             if ($data['payment_method'] == "COD"){
 
