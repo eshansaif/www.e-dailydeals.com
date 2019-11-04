@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class NewsletterSubscriber extends Model
 {
     use SoftDeletes;
+
+
 }

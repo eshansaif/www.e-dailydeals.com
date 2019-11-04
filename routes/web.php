@@ -179,6 +179,15 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
     //view subscriber
     Route::get('view-subscriber','Front\NewsletterSubscriberController@index')->name('subscriber.index');
 
+    //Update subscriber
+    Route::get('update-newsletter-status/{id}/{status}','Front\NewsletterSubscriberController@updateStatus');
+
+    //delete subscriber email
+    Route::get('delete-newsletter-email/{id}','Front\NewsletterSubscriberController@deleteSubscriber');
+
+    //Export Newsletter email
+    Route::get('export-newsletter-emails','Front\NewsletterSubscriberController@exportSubscribers')->name('newsletter.export');
+
     Route::get('subscriber/{id}/edit','Front\NewsletterSubscriberController@index')->name('subscriber.edit');
     Route::get('subscriber/{id}','Front\NewsletterSubscriberController@index')->name('subscriber.update');
     Route::delete('subscriber/{id}','Front\NewsletterSubscriberController@destroy')->name('subscriber.destroy');

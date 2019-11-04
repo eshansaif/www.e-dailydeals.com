@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\NewsletterSubscriber;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NewsletterSubscriberController extends Controller
 {
@@ -46,7 +47,7 @@ class NewsletterSubscriberController extends Controller
 
         $data['title'] = 'Subscriber List';
         $subscriber = new NewsletterSubscriber();
-        $subscriber = $subscriber->withTrashed();
+        //$subscriber = $subscriber->withTrashed();
         if ($request->has('search') && $request->search != null){
             $subscriber = $subscriber->where('email','like','%'.$request->search.'%');
         }
@@ -68,50 +69,35 @@ class NewsletterSubscriberController extends Controller
 
     }
 
-    public function edit(NewsletterSubscriber $newsletterSubscriber)
+
+    public function updateStatus($id,$status)
     {
-        $data['title'] = 'Edit Newsletter';
-        $data['subscriber'] = $newsletterSubscriber;
-        return view('admin.newsletter.edit',$data);
+        NewsletterSubscriber::where('id',$id)->update(['status'=>$status]);
+        return redirect()->back()->with(session()->flash('message','Newsletter Status is updated Successfully!'));
+
+    }
+
+    public function deleteSubscriber($id)
+    {
+        $subscriber = new NewsletterSubscriber();
+        $subscriber = $subscriber->where('id',$id)->delete();
+        return redirect()->back()->with(session()->flash('message','Newsletter email has been deleted successfully!'));
     }
 
 
-    public function update(Request $request, NewsletterSubscriber $newsletterSubscriber)
+    public function exportSubscribers()
     {
-        $request->validate([
-            'status'=>'required',
-        ]);
+        $subscriberData = NewsletterSubscriber::select('id','email','created_at')->where('status','Active')->orderBy('id','DESC')->get();
+        $subscriberData = json_decode(json_encode($subscriberData),true);
+        //dd($subscriberData);
 
-        $subscriber_data = $request->except('_token','_method');
-        $subscriber_data['updated_by'] = 1;
-        $newsletterSubscriber->update($subscriber_data);
-        session()->flash('message','Newsletter is updated successfully!');
-        return redirect()->route('subscriber.index');
-    }
-
-    public function destroy(NewsletterSubscriber $newsletterSubscriber)
-    {
-        $newsletterSubscriber->delete();
-        session()->flash('message','Newsletter is deleted successfully');
-        return redirect()->route('subscriber.index');
-    }
-
-    public function restore($id)
-    {
-        $newsletterSubscriber = NewsletterSubscriber::onlyTrashed()->findOrFail($id);
-        $newsletterSubscriber->restore();
-        session()->flash('message','Newsletter is restored successfully');
-        return redirect()->route('subscriber.index');
+        return Excel::create('subscribers'.rand(),function ($excel) use($subscriberData){
+            $excel->sheet('mySheet',function ($sheet) use($subscriberData){
+                $sheet->fromArray($subscriberData);
+            });
+        })->download('xlsx');
     }
 
 
-
-    public function permanent_delete($id)
-    {
-        $newsletterSubscriber = NewsletterSubscriber::onlyTrashed()->findOrFail($id);
-        $newsletterSubscriber->forceDelete();
-        session()->flash('error_message','Newsletter has been permanently deleted!');
-        return redirect()->route('subscriber.index');
-    }
 
 }

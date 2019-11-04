@@ -44,7 +44,7 @@
                                     <ul class="dropdown-menu pull-right">
                                         <li><a href="#">Print</a></li>
                                         <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
+                                        <li><a href="{{ route('newsletter.export') }}">Export to Excel</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -54,8 +54,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Email</th>
-                                    <th>Status</th>
+                                    <th>(Change)Status</th>
                                     <th>Created At</th>
+                                    <th>Action</th>
 
                                 </tr>
                                 </thead>
@@ -65,9 +66,18 @@
                                     <tr class="">
                                         <td>{{ $serial++ }}</td>
                                         <td>{{ $subscriber->email }}</td>
-                                        <td><span class="label {{ ($subscriber->status == 'Active')?'label-info':'label-danger'}}">{{ $subscriber->status }}</span></td>
-                                        <td>{{ $subscriber->created_at }}</td>
                                         <td>
+                                            @if($subscriber->status == 'Active')
+                                                <a href="{{ url('admin/update-newsletter-status/'.$subscriber->id.'/Inactive') }}"><span class="label label-info"> Active </span></a>
+                                                @else
+                                                <a href="{{ url('admin/update-newsletter-status/'.$subscriber->id.'/Active') }}"><span class="label label-danger"> Inactive </span></a>
+
+                                                @endif
+                                        </td>
+                                       {{-- <td><span class="label {{ ($subscriber->status == 'Active')?'label-info':'label-danger'}}">{{ $subscriber->status }}</span></td>
+                                       --}} <td>{{ $subscriber->created_at }}</td>
+                                        <td><a class="btn btn-sm btn-danger" href="{{ url('admin/delete-newsletter-email/'.$subscriber->id.'') }}" >Delete</a></td>
+                                        {{--<td>
 
                                             @if($subscriber->deleted_at == null)
                                                 <a href="{{ route('subscriber.edit', $subscriber->id) }}" class="btn btn-sm btn-info">Edit</a>
@@ -88,7 +98,7 @@
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('You are going to permanently delete this subscriber')">Permanent Delete</button>
                                                 </form>
                                             @endif
-                                        </td>
+                                        </td>--}}
 
 
                                     </tr>

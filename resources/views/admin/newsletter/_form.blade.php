@@ -3,9 +3,9 @@
 
 
 <div class="form-group">
-    <label for="email" class="col-lg-2 col-sm-2 control-label">Category Name</label>
+    <label for="email" class="col-lg-2 col-sm-2 control-label">Subscriber Name</label>
     <div class="col-lg-10">
-        <input name="name" value="{{ old('name', isset($subscriber)?$subscriber->name:null) }}" type="email" class="form-control form-control-line @error('email') is-invalid @enderror" id="email" placeholder="" disabled>
+        <input name="email" value="{{ old('email', isset($subscriber)?$subscriber->name:null) }}" type="email" class="form-control form-control-line @error('email') is-invalid @enderror" id="email" placeholder="" disabled>
 
     </div>
 

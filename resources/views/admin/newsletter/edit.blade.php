@@ -13,7 +13,7 @@
                         </header>
                         <div class="panel-body">
 
-                            <form action="{{ route('category.update', $category->id) }}" method="post" class="form-horizontal">
+                            <form action="{{ route('subscriber.update', $subscriber->id) }}" method="post" class="form-horizontal">
                                 @include('admin.newsletter._form')
                                 @method('put')
 
