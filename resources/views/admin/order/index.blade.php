@@ -85,8 +85,12 @@
                                         <td>{{ $order->order_status }}</td>
                                         <td>{{ $order->payment_method }}</td>
                                         <td>
-                                            <a href="{{ route('order.details',$order->id) }}" class="btn btn-sm btn-info">View Order Details</a> <br><br>
-                                            <a href="{{ route('order.invoice',$order->id) }}" class="btn btn-sm btn-primary">View Order Invoice</a>
+
+                                            <a href="{{ route('order.details',$order->id) }}" class="btn btn-sm btn-info">View Order Details</a> <br>
+                                            @if($order->order_status == "Shipped" || $order->order_status == "Delivered" || $order->order_status == "Paid")
+                                            <a href="{{ route('order.invoice',$order->id) }}" class="btn btn-sm btn-primary">View Order Invoice</a> <br>
+                                            <a href="{{ route('order.invoice.pdf',$order->id) }}" class="btn btn-sm btn-warning">View PDF Invoice</a>
+                                            @endif
                                         </td>
 
                                         {{--<td><span class="label {{ ($coupon->status == 'Active')?'label-info':'label-danger'}}">{{ $coupon->status }}</span></td>--}}

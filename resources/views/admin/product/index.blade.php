@@ -39,12 +39,12 @@
                                 </div>
 
                                 <div class="btn-group pull-left">
-                                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+                                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Export <i class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
                                         <li><a href="#">Print</a></li>
                                         <li><a href="#">Save as PDF</a></li>
-                                        <li><a href="#">Export to Excel</a></li>
+                                        <li><a href="{{ route('products.export') }}">Export to Excel</a></li>
                                     </ul>
                                 </div>
                             </div>

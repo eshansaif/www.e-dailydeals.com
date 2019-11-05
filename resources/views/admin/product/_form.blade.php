@@ -98,12 +98,15 @@
 <div class="form-group">
     <label for="description" class="col-lg-2 col-sm-2 control-label"><strong>Product Description</strong></label>
     <div class="col-lg-10">
-    <textarea placeholder="Enter Product Short Description" name="description"  class="tinymce form-control" rows="9">{{ old('description', isset($product)?$product->description:null) }}</textarea>
+    <textarea placeholder="Enter Product Short Description" name="description"  class="wysihtml5 form-control" rows="9">{{ old('description', isset($product)?$product->description:null) }}</textarea>
         @error('description')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
     </div>
 </div>
+
+
+
 
 <div class="form-group">
     <label for="price" class="col-lg-2 col-sm-2 control-label"><strong>Product Price</strong></label>
@@ -196,3 +199,12 @@
 </div>
 
 
+
+
+
+
+<script>
+    jQuery(document).ready(function(){
+        $('.wysihtml5').wysihtml5();
+    });
+</script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Exports\subscribersExport;
 use App\NewsletterSubscriber;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -85,7 +86,7 @@ class NewsletterSubscriberController extends Controller
     }
 
 
-    public function exportSubscribers()
+    /*public function exportSubscribers()
     {
         $subscriberData = NewsletterSubscriber::select('id','email','created_at')->where('status','Active')->orderBy('id','DESC')->get();
         $subscriberData = json_decode(json_encode($subscriberData),true);
@@ -96,6 +97,11 @@ class NewsletterSubscriberController extends Controller
                 $sheet->fromArray($subscriberData);
             });
         })->download('xlsx');
+    }*/
+
+    public function exportSubscribers()
+    {
+        return Excel::download(new subscribersExport(),'subscribers.xlsx');
     }
 
 

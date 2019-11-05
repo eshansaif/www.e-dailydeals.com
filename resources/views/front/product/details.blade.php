@@ -169,7 +169,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
                             <div class="product-desc-content">
-                                <p>{{ $product->description }}</p>
+                                <p>@php echo nl2br($product->description)  @endphp</p>
                                 <ul>
                                     <li  class="fas fa-align-justify">List of Available sizes:</li>
                                     @foreach($product->product_attributes as $size)

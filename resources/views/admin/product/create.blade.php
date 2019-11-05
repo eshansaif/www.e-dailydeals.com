@@ -10,6 +10,7 @@
                     <section class="panel">
                         <header class="panel-heading">
                             Create New Product
+
                         </header>
                         <div class="panel-body">
 

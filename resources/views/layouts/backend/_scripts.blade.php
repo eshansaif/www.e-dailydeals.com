@@ -8,6 +8,12 @@
 <script src="{{asset('assets/backend/js/modernizr.min.js')}}"></script>
 <script src="{{asset('assets/backend/js/jquery.nicescroll.js')}}"></script>
 
+//editors
+<script type="text/javascript" src="{{ asset('assets/backend/js/ckeditor/ckeditor.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/backend/js/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/backend/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}"></script>
+
+
 <!--easy pie chart-->
 <script src="{{asset('assets/backend/js/easypiechart/jquery.easypiechart.js')}}"></script>
 <script src="{{asset('assets/backend/js/easypiechart/easypiechart-init.js')}}"></script>
@@ -43,18 +49,12 @@
 <script src="{{ asset('assets/backend/js/validation-init.js') }}"></script>
 
 
-//editors
-<script type="text/javascript" src="{{ asset('assets/backend/js/bootstrap-wysihtml5/wysihtml5-0.3.0.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/backend/js/bootstrap-wysihtml5/bootstrap-wysihtml5.js') }}"></script>
+
 
 <!--common scripts for all pages-->
 <script src="{{asset('assets/backend/js/scripts.js')}}"></script>
 
-<script>
-    jQuery(document).ready(function(){
-        $('.wysihtml5').wysihtml5();
-    });
-</script>
+
 
 
 

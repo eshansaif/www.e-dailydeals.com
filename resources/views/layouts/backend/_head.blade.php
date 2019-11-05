@@ -8,6 +8,8 @@
 <title>{{isset($title)?$title:config('app.name')}}</title>
 
 
+{{--wysihtml5 editor--}}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" />
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -46,8 +48,6 @@
 </script>
 
 
-{{--wysihtml5 editor--}}
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/backend/js/bootstrap-wysihtml5/bootstrap-wysihtml5.css') }}" />
 
 <!--icheck-->
 <link href="{{asset('assets/backend/js/iCheck/skins/minimal/minimal.css')}}" rel="stylesheet">
