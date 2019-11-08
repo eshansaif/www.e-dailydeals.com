@@ -249,11 +249,15 @@
 					<span>
 						<label><strong>Select Payment Method:</strong></label>
 					</span>
-                            <span>
+                     <span>
 						<label><input type="radio" name="payment_method" id="COD" value="COD"> <strong>COD</strong></label>
 					</span>
-                            <span>
-						<label><input type="radio" name="payment_method" id="Paypal" value="Paypal"> <strong>Pay Now</strong></label>
+                     <span>
+						<label><input type="radio" name="payment_method" id="Paypal" value="Paypal"> <strong>Paypal</strong></label>
+					</span>
+
+                     <span>
+						<label><input type="radio" name="payment_method" id="SSLCommerze" value="SSLCommerze"> <strong>SSLCommerze</strong></label>
 					</span>
 
                             <span style="float:right;">

@@ -227,7 +227,7 @@ $().ready(function () {
 });
 
 function selectPaymentMethod(){
-    if($('#Paypal').is(':checked') || $('#COD').is(':checked')){
+    if($('#Paypal').is(':checked') || $('#COD').is(':checked') || $('#SSLCommerze').is(':checked')){
         /*alert("checked");*/
     }else{
         alert("Please select Payment Method");

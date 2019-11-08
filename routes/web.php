@@ -71,6 +71,12 @@ Route::group(['middleware'=>['frontlogin']],function (){
 
     //Thanks Page for Pay Now
     Route::get('paynow','Front\ProductController@paynow')->name('paynow');
+
+
+    //Thanks for SSLCOmmerz
+    Route::get('ssl-paynow','Front\ProductController@paymentGateway')->name('ssl.paymentGateway');
+
+
     Route::get('paynow/thanks','Front\ProductController@thanksPaynow')->name('paynow.thanks');
     Route::get('paypal/cancel','Front\ProductController@cancelPaynow')->name('paypal.cancel');
 
@@ -79,6 +85,22 @@ Route::group(['middleware'=>['frontlogin']],function (){
 
     //Oder Details
     Route::get('orders/{id}','Front\ProductController@userOrderDetails')->name('orders.details');
+
+
+
+    // SSLCOMMERZ Start
+    Route::get('example1', 'Front\ProductController@exampleEasyCheckout');
+    Route::get('example2', 'Front\ProductController@exampleHostedCheckout');
+
+    Route::post('pay/{id}', 'Front\ProductController@index');
+    Route::post('pay-via-ajax', 'Front\ProductController@payViaAjax');
+
+    Route::post('success', 'Front\ProductController@sslSuccess');
+    Route::post('fail', 'Front\ProductController@sslFail');
+    Route::post('cancel', 'Front\ProductController@sslCancel');
+
+    Route::post('ipn', 'Front\ProductController@ipn');
+//SSLCOMMERZ END
 
 
 
@@ -94,6 +116,7 @@ Route::get('products/{id?}','Front\ProductController@index')->name('front.produc
 
 
 Route::get('product/{id}','Front\ProductController@details')->name('product.details');
+
 
 
 Route::get('get-product-price','Front\ProductController@getProductPrice');

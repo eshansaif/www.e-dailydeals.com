@@ -298,9 +298,9 @@ class SslCommerzNotification extends AbstractSslCommerz
         $this->setFailedUrl();
         $this->setCancelUrl();
 
-        $this->data['success_url'] = $this->getSuccessUrl(); // string (255)	Mandatory - It is the callback URL of your website where admin will redirect after successful payment (Length: 255)
-        $this->data['fail_url'] = $this->getFailedUrl(); // string (255)	Mandatory - It is the callback URL of your website where admin will redirect after any failure occure during payment (Length: 255)
-        $this->data['cancel_url'] = $this->getCancelUrl(); // string (255)	Mandatory - It is the callback URL of your website where admin will redirect if admin canceled the transaction (Length: 255)
+        $this->data['success_url'] = $this->getSuccessUrl(); // string (255)	Mandatory - It is the callback URL of your website where user will redirect after successful payment (Length: 255)
+        $this->data['fail_url'] = $this->getFailedUrl(); // string (255)	Mandatory - It is the callback URL of your website where user will redirect after any failure occure during payment (Length: 255)
+        $this->data['cancel_url'] = $this->getCancelUrl(); // string (255)	Mandatory - It is the callback URL of your website where user will redirect if user canceled the transaction (Length: 255)
 
         /*
          * IPN is very important feature to integrate with your site(s).

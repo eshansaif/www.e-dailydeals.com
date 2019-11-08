@@ -103,13 +103,22 @@ class Product extends Model
         $userCart = DB::table('cart')->where('user_email',$user_email)->get();
         $userCart = json_decode(json_encode($userCart),true);
         //dd($userCart);
+        foreach ($userCart as $cart) {
+            $quantity = DB::table('cart')->where(['user_email'=>$user_email,'product_id'=>$cart['product_id']])->first();
+            $quantityArray[] = $quantity->quantity;
+        }
+
         foreach ($userCart as $product) {
             $productPrice = Product::where(['id'=>$product['product_id']])->first();
-            $priceArray[] = $productPrice->price;
+            $priceArray[] = $productPrice->price * $quantityArray ;
 
         }
-        $grandTotal = array_sum($priceArray) - Session::get('CouponAmount');
-        return $grandTotal;
+
+        //echo "<pre>"; print_r($quantityArray); die;
+        //$totalQuantity = array_sum($quantityArray);
+        dd($priceArray);
+        /*$grandTotal = array_sum($priceArray) - Session::get('CouponAmount');
+        return $grandTotal;*/
     }
 
 }

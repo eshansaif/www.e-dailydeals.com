@@ -8,6 +8,7 @@ use App\Country;
 use App\Coupon;
 use App\Customer;
 use App\DeliveryAddress;
+use App\Library\SslCommerz\SslCommerzNotification;
 use App\Order;
 use App\OrdersProduct;
 use App\Product;
@@ -33,6 +34,9 @@ class ProductController extends Controller
         $products = $products->with(['brand','category','product_image','product_attributes']);
         if($category_id != false){
             $data['product'] = $products->where('category_id',$category_id);
+            //dd($data['product']);
+        }else{
+            echo abort(404);
         }
         $products = $products->where('status','Active');
         $products = $products->orderBy('id','DESC')->paginate(6);
@@ -55,6 +59,7 @@ class ProductController extends Controller
 
     public function details($id)
     {
+
 
         $data['product'] = Product::with(['category','brand','product_attributes'])->findOrfail($id);
 
@@ -483,27 +488,33 @@ class ProductController extends Controller
             }
 
             //securing grand total
-            $grand_total = Product::getGrandTotal();
+            /*$data['grand_total'] = 0;
+            echo Product::getGrandTotal();
+            echo $data['grand_total']; die;
+            //$grand_total = Product::getGrandTotal();
+            //dd($grand_total);*/
 
 
-            $order = new Order();
-            $order->user_id = $user_id;
-            $order->user_email = $user_email;
-            $order->name = $shippingDetails->name;
-            $order->address = $shippingDetails->address;
-            $order->zip = $shippingDetails->zip;
-            $order->city = $shippingDetails->city;
-            $order->district = $shippingDetails->district;
-            $order->country = $shippingDetails->country;
-            $order->phone = $shippingDetails->phone;
-            $order->coupon_code = $coupon_code;
-            $order->coupon_amount = $coupon_amount;
-            $order->order_status = "New";
-            $order->payment_method = $data['payment_method'];
-            //$order->shipping_charges = Session::get('ShippingCharges');
-            //$order->grand_total = $data['grand_total'];
-            $order->grand_total = $grand_total;
-            $order->save();
+                $order = new Order();
+                $order->user_id = $user_id;
+                $order->user_email = $user_email;
+                $order->name = $shippingDetails->name;
+                $order->address = $shippingDetails->address;
+                $order->zip = $shippingDetails->zip;
+                $order->city = $shippingDetails->city;
+                $order->district = $shippingDetails->district;
+                $order->country = $shippingDetails->country;
+                $order->phone = $shippingDetails->phone;
+                $order->coupon_code = $coupon_code;
+                $order->coupon_amount = $coupon_amount;
+                $order->order_status = "New";
+                $order->payment_method = $data['payment_method'];
+                //$order->shipping_charges = Session::get('ShippingCharges');
+                $order->grand_total = $data['grand_total'];
+                //$order->grand_total = $grand_total;
+                $order->save();
+
+
 
 
             $order_id = DB::getPdo()->lastInsertId();
@@ -523,8 +534,8 @@ class ProductController extends Controller
 
                 //reduce stocks
                 $getProductStock = Product::where('code',$pro->code)->first();
-                echo "Original Stock:" .$getProductStock->stock;
-                echo "Reduced Stock:" .$pro->quantity;
+                //echo "Original Stock:" .$getProductStock->stock;
+                //echo "Reduced Stock:" .$pro->quantity;
                 $newStock = $getProductStock->stock - $pro->quantity;
                 if ($newStock<0){
                     $newStock = 0;
@@ -534,9 +545,11 @@ class ProductController extends Controller
 
             }
 
+
+
             Session::put('order_id',$order_id);
-            //Session::put('grand_total',$data['grand_total']);
-            Session::put('grand_total',$grand_total);
+            Session::put('grand_total',$data['grand_total']);
+            //Session::put('grand_total',$grand_total);
 
             if ($data['payment_method'] == "COD"){
 
@@ -557,16 +570,118 @@ class ProductController extends Controller
                 });
                 /* COD Order Email Ends */
                 return redirect()->route('thanks');
-            }else{
+            }elseif($data['payment_method'] == "Paypal"){
                 return redirect()->route('paynow');
+            }else{
+                $data['customers'] = User::findOrFail($user_id);
+                $data['orders'] = Order::with('orders')->findOrFail($order_id);
+                //dd($data['orders']);
+                $data['shipping_address'] = DeliveryAddress::where(['email' =>$user_email])->first();
+                //return redirect()->route('ssl.paymentGateway');
+                //$this->_sslCommerz($data);
+
+                return view('front.order.ssl_paynow',$data);
             }
 
 
         }
     }
 
+    public function paymentGateway()
+    {
+        $order_id = Session::get('order_id');
+        $user_id = Auth::user()->id;
+        $user_email = Auth::user()->email;
+
+        $data['customers'] = User::findOrFail($user_id);
+        $data['orders'] = Order::with('orders')->findOrFail($order_id);
+        $data['shipping_address'] = DeliveryAddress::where(['email' =>$user_email])->first();
+
+        $this->_sslCommerz($data);
+    }
+
+    private function _sslCommerz($data)
+    {
+        $post_data = array();
+        $post_data['total_amount'] = $data['orders']->grand_total; # You cant not pay less than 10
+        $post_data['currency'] = "BDT";
+        $post_data['tran_id'] = uniqid(); // tran_id must be unique
+
+        # CUSTOMER INFORMATION
+        $post_data['cus_name'] = $data['customers']->name;
+        $post_data['cus_email'] = $data['customers']->email;
+        $post_data['cus_add1'] = $data['customers']->address;
+        $post_data['cus_add2'] = "";
+        $post_data['cus_city'] = $data['customers']->city;
+        $post_data['cus_state'] = $data['customers']->district;
+        $post_data['cus_postcode'] = $data['customers']->zip;
+        $post_data['cus_country'] = $data['customers']->country;
+        $post_data['cus_phone'] = $data['customers']->phone;
+        $post_data['cus_fax'] = "";
+
+        # SHIPMENT INFORMATION
+        $post_data['ship_name'] = $data['shipping_address']->name;
+        $post_data['ship_add1'] = $data['shipping_address']->address;
+        $post_data['ship_add2'] = "Dhaka";
+        $post_data['ship_city'] = $data['shipping_address']->city;
+        $post_data['ship_state'] = $data['shipping_address']->district;
+        $post_data['ship_postcode'] = $data['shipping_address']->zip;
+        $post_data['ship_phone'] = $data['shipping_address']->phone;
+        $post_data['ship_country'] = $data['shipping_address']->country;
+
+        $post_data['shipping_method'] = "NO";
+        $post_data['product_name'] = "N/A";
+        $post_data['product_category'] = "N/A";
+        $post_data['product_profile'] = "N/A";
+
+        # OPTIONAL PARAMETERS
+        $post_data['value_a'] = $data['orders']->id;
+        $post_data['value_b'] = "ref002";
+        $post_data['value_c'] = "ref003";
+        $post_data['value_d'] = "ref004";
+
+
+        $sslc = new SslCommerzNotification();
+        # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
+        $payment_options = $sslc->makePayment($post_data, 'hosted');
+
+        //dd($payment_options);
+        //dd($post_data);
+
+    }
+
+
+    public function sslSuccess(Request $request)
+    {
+        $order = Order::findOrFail($request->value_a);
+        $order->order_status = 'Paid';
+        $order->save();
+        $user_email = Auth::user()->email;
+        DB::table('cart')->where('user_email',$user_email)->delete();
+        return view('front.order.ssl_paynow')->with(session()->flash('message','You have successfully completed your payment!'));
+        //dump($request->value_a);
+        //dd($request);
+    }
+
+
+    public function sslFail(Request $request)
+    {
+        $order = Order::findOrFail($request->value_a);
+        $order->order_status = 'Cancelled';
+        $order->save();
+        //$user_email = Auth::user()->email;
+        //DB::table('cart')->where('user_email',$user_email)->delete();
+        return view('front.order.ssl_paynow')->with(session()->flash('error_message','You have cancelled your Payment. To complete your order please Complete payment process! '));
+        //dump($request->value_a);
+        //dd($request);
+    }
+
     public function thanks()
     {
+        $order_id = $order_id = Session::get('order_id');
+        $order = Order::findOrFail($order_id);
+        $order->order_status = 'Pending';
+        $order->save();
         $user_email = Auth::user()->email;
         DB::table('cart')->where('user_email',$user_email)->delete();
         return view('front.order.thanks');
@@ -612,47 +727,7 @@ class ProductController extends Controller
 
     }
 
-    private function _sslCommerz($data)
-    {
 
-        $post_data = array();
-        $post_data['total_amount'] = $data['order']->grand_total; # You cant not pay less than 10
-        $post_data['currency'] = "BDT";
-        $post_data['tran_id'] = uniqid(); // tran_id must be unique
-
-        # CUSTOMER INFORMATION
-        $post_data['cus_name'] = 'Customer Name';
-        $post_data['cus_email'] = 'customer@mail.com';
-        $post_data['cus_add1'] = 'Customer Address';
-        $post_data['cus_add2'] = "";
-        $post_data['cus_city'] = "";
-        $post_data['cus_state'] = "";
-        $post_data['cus_postcode'] = "";
-        $post_data['cus_country'] = "Bangladesh";
-        $post_data['cus_phone'] = '8801XXXXXXXXX';
-        $post_data['cus_fax'] = "";
-
-        # SHIPMENT INFORMATION
-        $post_data['ship_name'] = "Store Test";
-        $post_data['ship_add1'] = "Dhaka";
-        $post_data['ship_add2'] = "Dhaka";
-        $post_data['ship_city'] = "Dhaka";
-        $post_data['ship_state'] = "Dhaka";
-        $post_data['ship_postcode'] = "1000";
-        $post_data['ship_phone'] = "";
-        $post_data['ship_country'] = "Bangladesh";
-
-        $post_data['shipping_method'] = "NO";
-        $post_data['product_name'] = "Computer";
-        $post_data['product_category'] = "Goods";
-        $post_data['product_profile'] = "physical-goods";
-
-        # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
-        $post_data['value_b'] = "ref002";
-        $post_data['value_c'] = "ref003";
-        $post_data['value_d'] = "ref004";
-    }
 
     public function viewOrders(Request $request)
     {

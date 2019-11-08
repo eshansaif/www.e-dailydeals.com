@@ -69,7 +69,6 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $curlErrorNo = curl_errno($curl);
         curl_close($curl);
-
         if ($code == 200 & !($curlErrorNo)) {
             return $response;
         } else {
@@ -93,11 +92,7 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
         } else {
             if (isset($sslcz['GatewayPageURL']) && $sslcz['GatewayPageURL'] != "") {
                 // this is important to show the popup, return or echo to send json response back
-                if(isset($this->getApiUrl()) && $this->getApiUrl() == 'https://securepay.sslcommerz.com') {
-                   $response = json_encode(['status' => 'SUCCESS', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
-                } else {
-                    $response = json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
-                }
+                $response = json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
             } else {
                 $response = json_encode(['status' => 'fail', 'data' => null, 'message' => "JSON Data parsing error!"]);
             }
