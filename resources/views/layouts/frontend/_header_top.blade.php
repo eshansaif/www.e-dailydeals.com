@@ -61,7 +61,7 @@
                 <ul>
 
                     <li><a href="#">DAILY DEAL</a></li>
-                    <li><a href="#">MY WISHLIST </a></li>
+                    <li><a href="{{ route('wishlist') }}">MY WISHLIST </a></li>
                     <li><a href="blog.html">BLOG</a></li>
                     <li><a href="{{ route('page.contact_us') }}">Contact</a></li>
                     <li><a href="{{ route('cart') }}">Cart</a></li>

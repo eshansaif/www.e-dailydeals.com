@@ -102,9 +102,13 @@ Route::group(['middleware'=>['frontlogin']],function (){
     Route::post('ipn', 'Front\ProductController@ipn');
 //SSLCOMMERZ END
 
+    //Wishlist
+    Route::match(['get', 'post'], 'wish-list','Front\ProductController@wishlist')->name('wishlist');
+    Route::get('wish-list/delete-product/{id}','Front\ProductController@deleteWishlistProduct')->name('wishlist.delete');
 
 
 });
+
 
 //Route::match(['GET','POST'],'register','Front\CustomerController@register')->name('customer.register');
 
@@ -125,6 +129,7 @@ Route::get('get-product-price','Front\ProductController@getProductPrice');
 Route::match(['get', 'post'], 'add-to-cart', 'Front\ProductController@addToCart' )->name('add-cart');
 
 Route::match(['get', 'post'], 'cart','Front\ProductController@cart')->name('cart');
+
 
 //delete product from cart item
 Route::get('cart/delete-product/{id}','Front\ProductController@deleteCartProduct')->name('cart.delete');

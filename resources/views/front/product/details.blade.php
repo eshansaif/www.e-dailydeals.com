@@ -130,12 +130,12 @@
                                         <input name="quantity" class="horizontal-quantity form-control" type="text">
                                     </div><!-- End .product-single-qty -->
 
-                                    <button href="cart.html" class="paction add-cart" title="Add to Cart">
+                                    <button  class="paction add-cart" title="Add to Cart" id="cartButton" name="cartButton" value="Cart">
                                         <span class="">Add to Cart</span>
                                     </button>
-                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                    <button  class="paction add-wishlist" title="Add to Wishlist" id="wishlistButton" name="wishlistButton" value="Wish List">
                                         <span>Add to Wishlist</span>
-                                    </a>
+                                    </button>
                                     <a type="submit" href="#" class="paction add-compare" title="Add to Compare">
                                         <span>Add to Compare</span>
                                     </a>
