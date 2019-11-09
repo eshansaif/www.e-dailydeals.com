@@ -21,11 +21,15 @@
         </div><!-- End .header-dropown -->
 
         <div class="dropdown compare-dropdown">
-            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                <i class="icon-retweet"></i> Compare (2)
+            @php
+                $user_email = \Illuminate\Support\Facades\Auth::user()->email;
+                $compareCount = \App\Comparision::where(['user_email'=>$user_email])->count();
+                    @endphp
+            <a href="{{ route('compare') }}" {{--class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"--}}>
+                <i class="icon-retweet"></i> Compare ({{ $compareCount }})
             </a>
 
-            <div class="dropdown-menu" >
+            {{--<div class="dropdown-menu" >
                 <div class="dropdownmenu-wrapper">
                     <ul class="compare-products">
                         <li class="product">
@@ -40,10 +44,10 @@
 
                     <div class="compare-actions">
                         <a href="#" class="action-link">Clear All</a>
-                        <a href="#" class="btn btn-primary">Compare</a>
+                        <a href="{{ route('compare') }}" class="btn btn-primary">Compare</a>
                     </div>
                 </div><!-- End .dropdownmenu-wrapper -->
-            </div><!-- End .dropdown-menu -->
+            </div>--}}<!-- End .dropdown-menu -->
         </div><!-- End .dropdown -->
     </div><!-- End .header-left -->
 

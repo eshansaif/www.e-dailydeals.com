@@ -5,30 +5,34 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page">Wish List</li>
+                <li class="breadcrumb-item active" aria-current="page">Product Comparison</li>
             </ol>
         </div><!-- End .container -->
     </nav>
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="cart-table-container">
                     <table class="table table-cart">
                         <thead>
                         <tr>
                             <th class="product-col">Product</th>
+                            <th class="price-col">Product Code</th>
                             <th class="price-col">Price</th>
+                            <th class="price-col">Brand</th>
+                            <th class="price-col">Availability</th>
+
                             {{--<th class="qty-col">Qty</th>--}}
-                            <th class="qty-col">Quantity</th>
-                            <th>Subtotal</th>
+
+
                         </tr>
                         </thead>
                         <tbody>
                         @php
                             $total_amount = 0;
                         @endphp
-                        @foreach($user_wishlist as $wishlist)
+                        @foreach($user_compare as $wishlist)
                         <tr class="product-row">
                             <td class="product-col">
                                 <figure class="product-image-container">
@@ -38,38 +42,19 @@
                                 </figure>
                                 <h2 class="product-title">
                                     <a href="{{ route('product.details', $wishlist->id) }}">{{ $wishlist->name }}</a>
-                                    <p>{{ $wishlist->code}} | {{ $wishlist->size }}</p>
                                 </h2>
                             </td>
+                            <td> {{ $wishlist->code}}</td>
                             <td>৳ {{ $wishlist->price }}/-</td>
-                            {{--<td>
-                                <input class="vertical-quantity form-control" type="text" value=" {{ $cart->quantity }}" disabled>
-                            </td>--}}
-                            <td>
+                            <td>{{ $wishlist->brand_name }}</td>
+                            <td>In Stock</td>
 
-                                <div class="qty mt-5">
-
-                                        {{--<a class="plus bg-dark" href="--}}{{--{{ url('cart/update-quantity/'.$wishlist->id.'/1') }--}}{{--}">+</a>--}}
-                                    <input type="number" class="count" name="qty" value="{{ $wishlist->quantity }}" min="0" autocomplete="off">
-                                    {{--@if($wishlist->quantity > 1)
-                                        <a class="minus bg-dark" href="--}}{{--{{ url('cart/update-quantity/'.$cart->id.'/-1') }}--}}{{--">-</a>
-                                    @endif--}}
-                                </div>
-                                {{--<div class="input-group">
-                                    @if($cart->quantuty > 1)
-                                    <a  href="{{ url('cart/update-quantity/'.$cart->id.'/-1') }}"><input type="button" value="-" class="button-minus" data-field="quantity"></a>
-                                    @endif
-                                        <input type="number" step="1" max="" value="1" name="quantity" class="quantity-field">
-                                    <a  href="{{ url('cart/update-quantity/'.$cart->id.'/1') }}"><input type="button" value="+" class="button-plus" data-field="quantity"></a>
-                                </div>--}}
-                            </td>
-                            <td>৳ {{ $wishlist->price * $wishlist->quantity }}/-</td>
 
                         </tr>
 
 
                         <tr class="product-action-row">
-                            <td colspan="4" class="clearfix">
+                            <td colspan="5" class="clearfix">
                                 <div class="float-left">
                                     <form name="addToCartFrom" id="addToCartForm" method="post" action="{{ route('add-cart') }}">
                                         @csrf
@@ -84,7 +69,7 @@
                                 </div><!-- End .float-left -->
 
                                 <div class="float-right">
-                                    <a href="{{ route('wishlist.delete',$wishlist->id) }}" onclick="return confirm('Are you confirm to remove this Product from Wish List?')" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
+                                    <a href="{{ route('wishlist.delete',$wishlist->id) }}" onclick="return confirm('Are you confirm to remove this Product from Product Comparisons?')" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
                                 </div><!-- End .float-right -->
                             </td>
                         </tr>
@@ -123,7 +108,7 @@
                 </div>--}}<!-- End .cart-discount -->
             </div><!-- End .col-lg-8 -->
 
-            <div class="col-lg-4">
+            {{--<div class="col-lg-4">
                 <div class="cart-summary">
                     <h3>Summary</h3>
 
@@ -131,7 +116,7 @@
                         <a data-toggle="collapse" href="#total-estimate-section" class="collapsed" role="button" aria-expanded="false" aria-controls="total-estimate-section">Estimate Shipping and Tax</a>
                     </h4>
 
-                    {{--<div class="collapse" id="total-estimate-section">
+                    --}}{{--<div class="collapse" id="total-estimate-section">
                         <form action="#">
                             <div class="form-group form-group-sm">
                                 <label>Country</label>
@@ -176,7 +161,7 @@
                                 </div><!-- End .custom-checkbox -->
                             </div><!-- End .form-group -->
                         </form>
-                    </div>--}}<!-- End #total-estimate-section -->
+                    </div>--}}{{--<!-- End #total-estimate-section -->
 
                     <table class="table table-totals">
                         <tbody>
@@ -208,12 +193,12 @@
                         @endif
                     </table>
 
-                    {{--<div class="checkout-methods">
+                    --}}{{--<div class="checkout-methods">
                         <a href="{{ route('checkout') }}" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
                         <a href="#" class="btn btn-link btn-block">Check Out with Multiple Addresses</a>
-                    </div>--}}<!-- End .checkout-methods -->
+                    </div>--}}{{--<!-- End .checkout-methods -->
                 </div><!-- End .cart-summary -->
-            </div><!-- End .col-lg-4 -->
+            </div><!-- End .col-lg-4 -->--}}
         </div><!-- End .row -->
     </div><!-- End .container -->
 

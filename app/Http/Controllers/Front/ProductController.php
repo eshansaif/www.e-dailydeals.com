@@ -127,6 +127,7 @@ class ProductController extends Controller
 
             //prevent add same product more than 1
             $wishlistCount = DB::table('wish_list')->where(['user_email'=>$user_email,'product_id'=>$data['product_id'],'code'=>$data['code']])->count();
+
             if ($wishlistCount>0){
                 return redirect()->back()->with(session()->flash('error_message','This Product has already been added to Wish List!'));
             }else{
@@ -139,11 +140,40 @@ class ProductController extends Controller
             }
 
 
+    } elseif(!empty($data['compareButton']) && $data['compareButton']=="Add to Compare"){
+            //echo "WishList Button IS selected"; die;
+            //Checking user logged in or not
+            if (!Auth::check()){
+                return redirect()->back()->with(session()->flash('error_message','Please Login First to Add Products in WishList!'));
+            }
 
+            //get product price
+            $getProductPrice = Product::with('brand')->where(['id'=>$data['product_id']])->first();
+            $product_price = $getProductPrice->price;
+            $product_brand = $getProductPrice->brand->name;
+            //dd($product_brand);
+            //get user email
+            $user_email = Auth::user()->email;
 
+            $quantity = 1;
 
+            //get current date
+            $created_at = Carbon::now();
 
-    }else{
+            //prevent add same product more than 1
+            $compareCount = DB::table('comparisions')->where(['user_email'=>$user_email,'product_id'=>$data['product_id'],'code'=>$data['code']])->count();
+            if ($compareCount>0){
+                return redirect()->back()->with(session()->flash('error_message','This Product has already been added to Comparisons!'));
+            }else{
+                //insert data into wish list table
+                DB::table('comparisions')->insert(['product_id'=>$data['product_id'],'name'=>$data[name], 'code'=>$data['code'],
+                    'color'=>$data['color'], 'price'=>$data['price'], 'size'=>$data['size'],
+                    'quantity'=>$quantity, 'user_email'=>$user_email, 'created_at'=>$created_at, 'brand_name'=>$product_brand,
+                ]);
+                return redirect()->back()->with(session()->flash('message','Product has been added to Comparisons!'));
+            }
+
+        }else{
             if (!empty($data['cartButton']) && $data['cartButton']=="Cart"){
                 $data['quantity'] = 1;
             }
@@ -227,22 +257,44 @@ class ProductController extends Controller
 
     public function wishlist()
     {
-        $data['title'] = "Wish List";
+    $data['title'] = "Wish List";
+    if (Auth::check()){
+        $user_email = Auth::user()->email;
+        $data['user_wishlist'] = DB::table('wish_list')->where('user_email',$user_email)->get();
+
+        foreach ($data['user_wishlist'] as $key => $product){
+            $productDetails = Product::with('product_image')->where('id',$product->product_id)->first();
+            //dd($productDetails);
+            $data['user_wishlist'][$key]->file = $productDetails->product_image[0]->file_path;
+        }
+    }else{
+        $data['user_wishlist'] = array();
+    }
+
+    return view('front.product.wishlist', $data);
+    }
+
+
+    public function compare()
+    {
+        $data['title'] = "Product Comparison";
         if (Auth::check()){
             $user_email = Auth::user()->email;
-            $data['user_wishlist'] = DB::table('wish_list')->where('user_email',$user_email)->get();
+            $data['user_compare'] = DB::table('comparisions')->where('user_email',$user_email)->get();
 
-            foreach ($data['user_wishlist'] as $key => $product){
+            foreach ($data['user_compare'] as $key => $product){
                 $productDetails = Product::with('product_image')->where('id',$product->product_id)->first();
                 //dd($productDetails);
-                $data['user_wishlist'][$key]->file = $productDetails->product_image[0]->file_path;
+                $data['user_compare'][$key]->file = $productDetails->product_image[0]->file_path;
             }
         }else{
-            $data['user_wishlist'] = array();
+            $data['user_compare'] = array();
         }
 
-        return view('front.product.wishlist', $data);
+        return view('front.product.compare', $data);
     }
+
+
 
     public function deleteCartProduct($id)
     {
@@ -260,6 +312,15 @@ class ProductController extends Controller
 
         DB::table('wish_list')->where('id',$id)->delete();
         return redirect()->back()->with(session()->flash('error_message','The Product has been removed from your Wish list!'));
+    }
+
+    public function deleteCompareProduct($id)
+    {
+        //Session::forget('CouponAmount');
+        //Session::forget('CouponCode');
+
+        DB::table('comparisions')->where('id',$id)->delete();
+        return redirect()->back()->with(session()->flash('error_message','The Product has been removed from your Comparison List!'));
     }
 
     public function applyCoupon(Request $request)

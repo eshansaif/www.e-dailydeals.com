@@ -136,9 +136,9 @@
                                     <button  class="paction add-wishlist" title="Add to Wishlist" id="wishlistButton" name="wishlistButton" value="Wish List">
                                         <span>Add to Wishlist</span>
                                     </button>
-                                    <a type="submit" href="#" class="paction add-compare" title="Add to Compare">
+                                    <button type="submit" href="#" class="paction add-compare" title="Add to Compare" id="compareButton" name="compareButton" value="Add to Compare">
                                         <span>Add to Compare</span>
-                                    </a>
+                                    </button>
                                 </div><!-- End .product-action -->
                                 @endif
                                 </form>

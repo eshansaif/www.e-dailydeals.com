@@ -106,6 +106,10 @@ Route::group(['middleware'=>['frontlogin']],function (){
     Route::match(['get', 'post'], 'wish-list','Front\ProductController@wishlist')->name('wishlist');
     Route::get('wish-list/delete-product/{id}','Front\ProductController@deleteWishlistProduct')->name('wishlist.delete');
 
+    //Compare
+    Route::match(['get', 'post'], 'product-comparison','Front\ProductController@compare')->name('compare');
+    Route::get('product-comparison/delete-product/{id}','Front\ProductController@deleteCompareProduct')->name('compare.delete');
+
 
 });
 
