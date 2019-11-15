@@ -54,8 +54,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Admin Type</th>
+                                    <th>Access</th>
                                     <th>Phone</th>
+                                    <th>Admin Type</th>
                                     <th>Status</th>
                                     <th>Action</th>
 
@@ -63,12 +64,33 @@
                                 </thead>
                                 <tbody>
                                 @foreach($admins as $admin)
+                                    <?php
+                                        if($admin->type == "Admin"){
+                                            $access = "All";
+                                        }
+                                        else{
 
+                                            $access = "";
+                                            if ($admin->categories_access == 1){
+                                                $access .= "Categories,";
+                                            }
+                                            if ($admin->products_access == 1){
+                                                $access .= "Products,";
+                                            }
+                                            if ($admin->orders_access == 1){
+                                                $access .= "Orders,";
+                                            }
+                                            if ($admin->users_access == 1){
+                                                $access .= "Users";
+                                            }
+                                        }
+                                 ?>
                                 <tr class="">
                                     <td>{{ $serial++ }}</td>
                                     <td>{{ $admin->name }}</td>
                                     <td><span class="label {{ ($admin->type == 'Admin')?'label-primary':'label-default'}}">{{ $admin->type }}</span></td>
                                     <td>{{ $admin->phone }}</td>
+                                    <td>{{ $access }}</td>
                                     <td><span class="label {{ ($admin->status == 'Active')?'label-info':'label-danger'}}">{{ $admin->status }}</span></td>
                                     <td>
                                         @if($admin->type == 'Admin')
@@ -106,7 +128,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{--{{ $admins->render() }}--}}
+                        {{ $admins->render() }}
                     </div>
 
                 </section>

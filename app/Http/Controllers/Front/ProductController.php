@@ -36,8 +36,6 @@ class ProductController extends Controller
         if($category_id != false){
             $data['product'] = $products->where('category_id',$category_id);
             //dd($data['product']);
-        }else{
-            echo abort(404);
         }
         $products = $products->where('status','Active');
         $products = $products->orderBy('id','DESC')->paginate(6);

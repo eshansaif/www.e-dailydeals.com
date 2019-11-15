@@ -12,7 +12,7 @@
     @endphp
     <label for="name" class="col-lg-2 col-sm-2 control-label"><strong>Admin type</strong> </label>
     <div class="col-lg-10">
-        <select name="type" class="form-control">
+        <select name="type" id="type" class="form-control">
             <option value="">--Select--</option>
             <option value="Admin" @if($type=='Admin') selected @endif>Admin</option>
             <option value="Operator" @if($type=='Operator') selected @endif>Operator</option>
@@ -66,7 +66,7 @@
 <div class="form-group">
     <label for="password" class="col-lg-2 col-sm-2 control-label"><strong>Password</strong></label>
     <div class="col-lg-10">
-        <input name="password"  type="password" class="form-control form-control-line @error('password') is-invalid @enderror" id="phone" placeholder="Password">
+        <input value="{{ old('password', isset($admin)?$admin->password:null) }}" name="password"  type="password" class="form-control form-control-line @error('password') is-invalid @enderror" id="phone" placeholder="Password">
         @error('password')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror
@@ -79,7 +79,7 @@
 
     <label for="password_confirmation" class="col-lg-2 col-sm-2 control-label"><strong>Confirm Password</strong></label>
     <div class="col-lg-10">
-    <input name="password_confirmation" type="password"   class="form-control form-control-line @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="Confirm Password">
+    <input value="{{ old('password', isset($admin)?$admin->password:null) }}" name="password_confirmation" type="password"   class="form-control form-control-line @error('password_confirmation') is-invalid @enderror" id="password_confirmation" placeholder="Confirm Password">
 
     </div>
 </div>
@@ -98,6 +98,32 @@
     <div class="col-lg-10">
     <label class="radio-inline"><input type="radio" name="status" value="Active" id="Active" @if($status =='Active') checked @endif>Active</label>
     <label class="radio-inline"><input type="radio" name="status" value="Inactive" id="Inactive" @if($status =='Inactive') checked @endif >Inactive</label>
+        @error('status')
+        <div class="pl-1 text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
+</div>
+
+
+<div class="form-group" id="access">
+    {{--@php
+        if(old("status")){
+            $status = old('status');
+        }elseif(isset($admin)){
+            $status = $admin->status;
+        }else{
+            $status = null;
+        }
+    @endphp--}}
+    <label for="status" class="col-lg-2 col-sm-2 control-label"><strong>Operator Access</strong></label>
+
+    <div class="col-lg-10">
+        <label class="radio-inline"><input type="checkbox" name="categories_access" value="1" id="categories_access" @if($admin->categories_access =='1') checked @endif>Categories</label>
+        <label class="radio-inline"><input type="checkbox" name="products_access" value="1" id="products_access" @if($admin->products_access =='1') checked @endif>products</label>
+        <label class="radio-inline"><input type="checkbox" name="users_access" value="1" id="users_access" @if($admin->users_access =='1') checked @endif>Users</label>
+        <label class="radio-inline"><input type="checkbox" name="orders_access" value="1" id="orders_access" @if($admin->orders_access =='1') checked @endif>orders</label>
+        {{--<label class="radio-inline"><input type="radio" name="status" value="Inactive" id="Inactive" @if($status =='Inactive') checked @endif >Inactive</label>--}}
         @error('status')
         <div class="pl-1 text-danger">{{ $message }}</div>
         @enderror

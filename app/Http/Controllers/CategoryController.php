@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
     public function index(Request $request)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
 
         $data['title'] = 'Category List';
         $category = new Category();
@@ -50,6 +54,9 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
 
         $request->validate([
             'name' => 'required',
@@ -83,6 +90,9 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $data['title'] = 'Edit Category';
         $data['levels'] =  Category::where(['parent_id'=>0])->get();
         $data['category'] = $category;
@@ -92,6 +102,9 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $request->validate([
             'name'=>'required',
             'status'=>'required',
@@ -107,6 +120,9 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $category->delete();
         session()->flash('message','Category is deleted successfully');
         return redirect()->route('category.index');
@@ -114,6 +130,9 @@ class CategoryController extends Controller
 
     public function restore($id)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->restore();
         session()->flash('message','Category is restored successfully');
@@ -124,6 +143,9 @@ class CategoryController extends Controller
 
     public function permanent_delete($id)
     {
+        if(Session::get(adminDetails)['categories_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $category = Category::onlyTrashed()->findOrFail($id);
         $category->forceDelete();
         session()->flash('error_message','Category has been permanently deleted!');

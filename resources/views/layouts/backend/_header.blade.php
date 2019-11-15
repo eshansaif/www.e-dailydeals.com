@@ -14,7 +14,7 @@
 
     <div class="menu-right">
         <ul class="notification-menu">
-            <li>
+            {{--<li>
                 <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
                     <i class="fa fa-tasks"></i>
                     <span class="badge">8</span>
@@ -182,11 +182,11 @@
                         <li class="new"><a href="#">See All Notifications</a></li>
                     </ul>
                 </div>
-            </li>
+            </li>--}}
             <li>
                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <img src="{{asset('admin')}}" alt="" />
-                    John Doe
+                    <strong>{{ \Illuminate\Support\Facades\Session::get(adminDetails)['name'] }}</strong> ({{ \Illuminate\Support\Facades\Session::get(adminDetails)['type'] }})
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-usermenu pull-right">

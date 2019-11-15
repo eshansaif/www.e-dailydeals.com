@@ -1,7 +1,13 @@
-{{--@php
-use App\Category;
-$allCategories = Category::allCategories();
-@endphp--}}
+{{--
+@php
+    use App\Category;
+    $allCategories = Category::allCategories();
+
+
+@endphp
+--}}
+
+
 
 <div class="container">
     <nav class="main-nav">

@@ -12,6 +12,7 @@ use App\ProductImage;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 use Dompdf\Dompdf;
 
@@ -20,6 +21,9 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+        if(Session::get(adminDetails)['products_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $data['title'] = 'Product List';
         $product = new Product();
         $product = $product->withTrashed();
@@ -107,6 +111,9 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        if(Session::get(adminDetails)['products_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $data['title'] = 'Edit Product';
         $data['product'] = $product;
         $data['categories'] = Category::orderBy('name')->get();
@@ -158,6 +165,9 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        if(Session::get(adminDetails)['products_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $product->delete();
         session()->flash('message', 'Product is Deleted Successfully!');
         return redirect()->route('product.index');
@@ -165,6 +175,9 @@ class ProductController extends Controller
 
     public function restore($id)
     {
+        if(Session::get(adminDetails)['products_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $product = Product::onlyTrashed()->findOrFail($id);
         $product->restore();
         session()->flash('message', 'Product is Restored Successfully!');
@@ -174,6 +187,9 @@ class ProductController extends Controller
 
     public function permanent_delete($id)
     {
+        if(Session::get(adminDetails)['products_access']==0){
+            return redirect('admin/dashboard')->with(session()->flash('error_message','You have no access to this Section!'));
+        }
         $product = Product::onlyTrashed()->with('product_image')->findOrFail($id);
 
         if (count($product->product_image)) {

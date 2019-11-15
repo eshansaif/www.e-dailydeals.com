@@ -144,7 +144,7 @@
                                     <span class="product-price">৳ {{ $product->price }}/-</span>
                                 </div><!-- End .price-box -->
 
-                                <div class="product-action">
+                                {{--<div class="product-action">
                                     <a href="#" class="paction add-wishlist" title="Add to Wishlist">
                                         <span>Add to Wishlist</span>
                                     </a>
@@ -156,7 +156,7 @@
                                     <a href="#" class="paction add-compare" title="Add to Compare">
                                         <span>Add to Compare</span>
                                     </a>
-                                </div><!-- End .product-action -->
+                                </div>--}}<!-- End .product-action -->
                             </div><!-- End .product-details -->
                         </div><!-- End .product -->
                     @endforeach

@@ -38,16 +38,24 @@
 
                 </ul>--}}
             </li>
-
-            <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Users</span></a>
+            @if(\Illuminate\Support\Facades\Session::get(adminDetails)['type']=="Admin")
+            <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Admin</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('admin.create') }}"> Add Admin</a></li>
                     <li><a href="{{ route('admin.index') }}"> View Admins</a></li>
+
+                </ul>
+            </li>
+            @endif
+
+            <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Customers</span></a>
+                <ul class="sub-menu-list">
                     <li><a href="{{ route('admin.customer.view') }}"> View Customers</a></li>
 
                 </ul>
             </li>
 
+            @if(\Illuminate\Support\Facades\Session::get(adminDetails)['categories_access']==1)
             <li class="menu-list"><a href="#"><i class="fa fa-list-alt"></i> <span>Categories</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('category.create') }}"> Add Categories</a></li>
@@ -63,6 +71,7 @@
 
                 </ul>
             </li>
+            @endif
 
             <li class="menu-list"><a href="#"><i class="fa fa fa-bitbucket"></i> <span>Brands</span></a>
                 <ul class="sub-menu-list">
@@ -71,7 +80,7 @@
 
                 </ul>
             </li>
-
+            @if(\Illuminate\Support\Facades\Session::get(adminDetails)['products_access']==1)
             <li class="menu-list"><a href="#"><i class="fa fa-product-hunt"></i> <span>Products</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('product.create') }}"> Add Product</a></li>
@@ -79,7 +88,8 @@
 
                 </ul>
             </li>
-
+            @endif
+            @if(\Illuminate\Support\Facades\Session::get(adminDetails)['type']=="Admin")
             <li class="menu-list"><a href="#"><i class="fa fa-percent"></i> <span>Coupons</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('coupon.create') }}"> Add Coupon</a></li>
@@ -87,6 +97,7 @@
 
                 </ul>
             </li>
+            @endif
 
             <li class="menu-list"><a href="#"><i class="fa fa-first-order"></i> <span>Customer Orders</span></a>
                 <ul class="sub-menu-list">

@@ -110,7 +110,8 @@ Route::group(['middleware'=>['frontlogin']],function (){
     Route::match(['get', 'post'], 'product-comparison','Front\ProductController@compare')->name('compare');
     Route::get('product-comparison/delete-product/{id}','Front\ProductController@deleteCompareProduct')->name('compare.delete');
 
-
+    //Product Review
+    Route::resource('review','ProductReviewController');
 });
 
 

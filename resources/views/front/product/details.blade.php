@@ -206,8 +206,9 @@
                                     <h3 class="text-uppercase heading-text-color font-weight-semibold">WRITE YOUR OWN REVIEW</h3>
                                     <p>How do you rate this product? *</p>
 
-                                    <form action="#">
-                                        <table class="ratings-table">
+                                    <form action="{{ route('review.store') }}" method="post">
+                                        @csrf
+                                        {{--<table class="ratings-table">
                                             <thead>
                                             <tr>
                                                 <th>&nbsp;</th>
@@ -274,22 +275,32 @@
                                                 </td>
                                             </tr>
                                             </tbody>
-                                        </table>
+                                        </table>--}}
+
+
+                                        star
 
                                         <div class="form-group">
-                                            <label>Nickname <span class="required">*</span></label>
-                                            <input type="text" class="form-control form-control-sm" required>
+                                            <label>Rating <span class="required">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" name="rating" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+                                            <label>Nick Name <span class="required">*</span></label>
+                                            <input type="text" class="form-control form-control-sm" name="name" required>
                                         </div><!-- End .form-group -->
                                         <div class="form-group">
                                             <label>Summary of Your Review <span class="required">*</span></label>
-                                            <input type="text" class="form-control form-control-sm" required>
+                                            <input type="text" class="form-control form-control-sm" name="summary" required>
                                         </div><!-- End .form-group -->
                                         <div class="form-group mb-2">
                                             <label>Review <span class="required">*</span></label>
-                                            <textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
+                                            <textarea cols="5" rows="6" class="form-control form-control-sm" name="description"></textarea>
                                         </div><!-- End .form-group -->
 
-                                        <input type="submit" class="btn btn-primary" value="Submit Review">
+                                        <input type="hidden" value="{{ $product->id }}" name="product_id">
+
+                                        <button type="submit" class="btn btn-primary" value="Submit Review"> Submit Review </button>
                                     </form>
                                 </div><!-- End .add-product-review -->
                             </div><!-- End .product-reviews-content -->
@@ -453,3 +464,9 @@
         </div><!-- End .container -->
     </div><!-- End .featured-section -->
 @endsection
+<script>
+    import StarRating from "vue-star-rating/src/star-rating";
+    export default {
+        components: {StarRating}
+    }
+</script>

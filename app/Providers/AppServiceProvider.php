@@ -32,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('categories',Category::where('status','Active')->orderBy('name','ASC')->pluck('name','id'));
         });
 
-
         /*view()->composer('layouts/frontend/_header_bottom',function ($view){
             $view->with('allCategories',Category::with('categories')->where(['parent_id'=>0, 'status'=>'Active'])->get());
         });*/
