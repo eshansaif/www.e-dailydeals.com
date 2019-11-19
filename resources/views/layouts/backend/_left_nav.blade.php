@@ -113,6 +113,16 @@
                 </ul>
             </li>
 
+            <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Blog</span></a>
+                <ul class="sub-menu-list">
+                    {{--<li><a href="{{ route('admin.create') }}">Add Posts</a></li>--}}
+                    <li><a href="{{ route('post.index') }}"> View Post</a></li>
+
+                </ul>
+            </li>
+
+
+
             <li class="menu-list"><a href="#"><i class="fa fa-laptop"></i> <span>Settings</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="blank_page.html"> Blank Page</a></li>

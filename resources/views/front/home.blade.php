@@ -3,7 +3,7 @@
     <div class="home-slider-container">
         <div class="home-slider owl-carousel owl-theme owl-theme-light">
             <div class="home-slide">
-                <div class="slide-bg owl-lazy"  data-src="{{asset('assets/frontend/assets/images/slider/slide-1.jpg') }}"></div><!-- End .slide-bg -->
+                <div class="slide-bg owl-lazy"  data-src="{{asset('assets/frontend/assets/images/slider/cust_slider2.jpg') }}"></div><!-- End .slide-bg -->
                 <div class="container">
                     <div class="home-slide-content">
                         <div class="slide-border-top">

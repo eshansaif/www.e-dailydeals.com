@@ -108,6 +108,9 @@
 
 
 
+
+
+
 <div class="form-group">
     <label for="price" class="col-lg-2 col-sm-2 control-label"><strong>Product Price</strong></label>
     <div class="col-lg-10">

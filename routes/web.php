@@ -148,6 +148,16 @@ Route::get('cart/update-quantity/{id}/{quantity}','Front\ProductController@updat
 // user login/registration
 
 
+
+
+Route::prefix('/blog')->group(function () {
+    Route::get('home','Front\BlogController@index')->name('blog');
+    Route::get('blog-details/{id}','Front\BlogController@blog_details')->name('blog.details');
+    Route::get('category/{id}','Front\BlogController@category_blogs')->name('category.blogs');
+});
+
+
+
 Route::prefix('admin')->group(function () {
     Route::get('login','LoginController@login_form')->name('admin.login.form');
     Route::post('login','LoginController@login')->name('admin.login');
@@ -215,6 +225,9 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
     //View Registered Users
     Route::get('view-customers','UserController@viewCustomers')->name('admin.customer.view');
 
+    //View users charts
+    Route::get('view-customers-charts','UserController@viewCustomersChart')->name('admin.customer_chart.view');
+
     //view subscriber
     Route::get('view-subscriber','Front\NewsletterSubscriberController@index')->name('subscriber.index');
 
@@ -232,6 +245,13 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
     Route::delete('subscriber/{id}','Front\NewsletterSubscriberController@destroy')->name('subscriber.destroy');
     Route::post('subscriber/{id}/restore','Front\NewsletterSubscriberController@restore')->name('subscriber.restore');
     Route::delete('subscriber/{id}/permanent_delete','Front\NewsletterSubscriberController@permanent_delete')->name('subscriber.permanent_delete');
+
+
+    //blog
+    //Route::resource('author','AuthorController');
+    Route::resource('post','PostController');
+    Route::post('post/{id}/restore','PostController@restore')->name('post.restore');
+    Route::delete('post/{id}/permanent_delete','PostController@permanent_delete')->name('post.permanent_delete');
 
 
     //admin logout

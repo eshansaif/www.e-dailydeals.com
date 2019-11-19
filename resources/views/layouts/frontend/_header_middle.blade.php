@@ -5,7 +5,7 @@ $cartCount = Product::cartCount();
 <div class="container">
     <div class="header-left">
         <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('assets/frontend/assets/images/dd_logo.png') }}" alt="Daily Deals Logo">
+            <img src="{{ asset('assets/frontend/assets/images/cg_logo.png') }}" alt="Daily Deals Logo">
         </a>
     </div><!-- End .header-left -->
 

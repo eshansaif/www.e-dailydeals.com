@@ -15,7 +15,7 @@
 
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/assets/images/icons/dailydeals.ico') }}">
+<link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/assets/images/icons/cg_icon.ico') }}">
 
 <!-- Plugins CSS File -->
 <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/bootstrap.min.css') }}">

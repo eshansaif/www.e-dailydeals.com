@@ -152,5 +152,10 @@ class UserController extends Controller
         return view('admin.customer.customer_view',$data);
     }
 
+    /*public function viewCustomersChart()
+    {
+        return view('')
+    }*/
+
 
 }
