@@ -51,6 +51,7 @@
             <li class="menu-list"><a href="#"><i class="fa fa-user"></i> <span>Customers</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('admin.customer.view') }}"> View Customers</a></li>
+                    <li><a href="{{ route('admin.customer_chart.view') }}"> View Customers Reporting</a></li>
 
                 </ul>
             </li>
@@ -102,6 +103,8 @@
             <li class="menu-list"><a href="#"><i class="fa fa-first-order"></i> <span>Customer Orders</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="{{ route('order.index') }}"> View Orders</a></li>
+                    <li><a href="{{ route('admin.order_chart.view') }}"> Report of Customer Orders</a></li>
+                    <li><a href="{{ route('admin.order_status_chart.view') }}"> Report of Order Status</a></li>
 
                 </ul>
             </li>

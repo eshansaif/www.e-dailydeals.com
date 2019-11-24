@@ -24,6 +24,7 @@ $().ready(function () {
             }
         },
         messages:{
+
             name:{
                 required:"Please enter your Name",
                 minlength: "Your Name must be atleast 2 characters long",

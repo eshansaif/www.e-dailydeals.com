@@ -209,6 +209,12 @@ Route::middleware('adminlogin')->prefix('admin')->group(function (){
     //View Orders
     Route::get('orders', 'Front\ProductController@viewOrders')->name('order.index');
 
+    //View orders charts
+    Route::get('view-orders-charts','Front\ProductController@viewOrdersChart')->name('admin.order_chart.view');
+
+    //View orders pie charts of its status
+    Route::get('view-orders-status-charts','Front\ProductController@viewOrdersStatusChart')->name('admin.order_status_chart.view');
+
     //View order Details
     Route::get('orders/{id}', 'Front\ProductController@viewOrderDetails')->name('order.details');
 

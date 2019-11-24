@@ -62,7 +62,7 @@ class ProductController extends Controller
     {
         //dd($request->all());
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|regex:/^[a-zA-Z]+$/u|max:255',
             'code' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',

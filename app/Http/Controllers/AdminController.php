@@ -53,13 +53,14 @@ class AdminController extends Controller
         //$admin['password'] = md5($request->password);
         //dd($admin);
 
-        /*if($request->hasFile('image')){
-            $file = $request->file('image');
-            $file->move('images/admins/',$file->getClientOriginalName());
-            $admin['image'] = 'images/admins/'.$file->getClientOriginalName();
-        }*/
+       /* if($request->hasFile('image')){
+        $file = $request->file('image');
+        $file->move('images/admins/',$file->getClientOriginalName());
+        $admin['image'] = 'images/admins/'.$file->getClientOriginalName();
+    }*/
 
         $data = $request->except('_token','password');
+
         $data['password'] = md5($request->password);
         if ($data['type'] == "Admin"){
             $admin = new Admin();
@@ -68,6 +69,7 @@ class AdminController extends Controller
             $admin->email = $data['email'];
             $admin->phone = $data['phone'];
             $admin->password = $data['password_confirmation'];
+            $admin->file = $admin['image'];
             $admin->status = $data['status'];
             $admin->save();
             session()->flash('message', 'Admin is Created Successfully!');

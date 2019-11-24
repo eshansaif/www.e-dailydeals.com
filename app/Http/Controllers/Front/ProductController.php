@@ -102,6 +102,7 @@ class ProductController extends Controller
         Session::forget('CouponCode');
 
         $data = $request->all();
+        //dd($data);
 
         if (!empty($data['wishlistButton']) && $data['wishlistButton']=="Wish List"){
 
@@ -172,8 +173,9 @@ class ProductController extends Controller
             }
 
         }else{
-            if (!empty($data['cartButton']) && $data['cartButton']=="Cart"){
+            if (empty($data['cartButton']) && $data['cartButton']=="Cart"){
                 $data['quantity'] = 1;
+                //dd($data['quantity']);
             }
 
             $getProductStock = Product::where(['id'=>$data['product_id']])->first();
@@ -370,72 +372,14 @@ class ProductController extends Controller
             Session::put('CouponAmount',$couponAmount );
             Session::put('CouponCode',$data['coupon_code'] );
 
-            return redirect()->back()->with(session()->flash('message','This Coupon Code is successfully Applied, Now you are getting Discount on this Coupon!'));
+            return redirect()->back()->with(session()->flash('message','This Coupon Code is successfully Applied, 
+            Now you are getting Discount on this Coupon!'));
 
         }
     }
 
 
-    /*public function applyCoupon(Request $request){
 
-        Session::forget('CouponAmount');
-        Session::forget('CouponCode');
-
-        $data = $request->all();
-        echo "<pre>"; print_r($data); die;
-        $couponCount = Coupon::where('coupon_code',$data['coupon_code'])->count();
-        if($couponCount == 0){
-            return redirect()->back()->with('flash_message_error','This coupon does not exists!');
-        }else{
-            // with perform other checks like Active/Inactive, Expiry date..
-
-            // Get Coupon Details
-            $couponDetails = Coupon::where('coupon_code',$data['coupon_code'])->first();
-
-            // If coupon is Inactive
-            if($couponDetails->status==0){
-                return redirect()->back()->with('flash_message_error','This coupon is not active!');
-            }
-
-            // If coupon is Expired
-            $expiry_date = $couponDetails->expiry_date;
-            $current_date = date('Y-m-d');
-            if($expiry_date < $current_date){
-                return redirect()->back()->with('flash_message_error','This coupon is expired!');
-            }
-
-            // Coupon is Valid for Discount
-
-            // Get Cart Total Amount
-            if(Auth::check()){
-                $user_email = Auth::user()->email;
-                $userCart = DB::table('cart')->where(['user_email' => $user_email])->get();
-            }else{
-                $session_id = Session::get('session_id');
-                $userCart = DB::table('cart')->where(['session_id' => $session_id])->get();
-            }
-
-            $total_amount = 0;
-            foreach($userCart as $item){
-                $total_amount = $total_amount + ($item->price * $item->quantity);
-            }
-
-            // Check if amount type is Fixed or Percentage
-            if($couponDetails->amount_type=="Fixed"){
-                $couponAmount = $couponDetails->amount;
-            }else{
-                $couponAmount = $total_amount * ($couponDetails->amount/100);
-            }
-
-            // Add Coupon Code & Amount in Session
-            Session::put('CouponAmount',$couponAmount);
-            Session::put('CouponCode',$data['coupon_code']);
-
-            return redirect()->back()->with('flash_message_success','Coupon code successfully
-                applied. You are availing discount!');
-
-        }
-    }*/
 
     public function updateCartQuantity($id=null, $quantity=null)
     {
@@ -788,6 +732,19 @@ class ProductController extends Controller
         $order = Order::findOrFail($request->value_a);
         $order->order_status = 'Paid';
         $order->save();
+        /* SSLcommerz Order Email Start */
+        /*$email = $user_email;
+        $messageData = [
+            'email' => $email,
+            'name' => $shippingDetails->name,
+            'order_id' => $order_id,
+            'productDetails' => $productDetails,
+            'userDetails' => $userBillingDetails
+        ];
+        Mail::send('emails.order.order_cod',$messageData,function($message) use($email){
+            $message->to($email)->subject('COD Order Placed Successfully- Daily Deals');
+        });*/
+        /* SSLcommerz Order Email Ends */
         $user_email = Auth::user()->email;
         DB::table('cart')->where('user_email',$user_email)->delete();
         return view('front.order.ssl_paynow')->with(session()->flash('message','You have successfully completed your payment!'));
@@ -918,7 +875,53 @@ class ProductController extends Controller
     }
 
 
+    public function viewOrdersChart()
+    {
+        $data['title'] = 'Order Reports';
 
+        $data['current_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->month)->count();
+        $data['last_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+        $data['before_last_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+        $data['before_last_two_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(3))->count();
+        $data['before_last_three_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(4))->count();
+        $data['before_last_four_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(5))->count();
+
+        $data['before_last_five_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(6))->count();
+
+        $data['before_last_six_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(7))->count();
+
+        $data['before_last_seven_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(8))->count();
+
+        $data['before_last_eight_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(9))->count();
+
+        $data['before_last_nine_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(10))->count();
+
+        $data['before_last_ten_month_orders'] = Order::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(11))->count();
+        //dd($data['before_last_month_orders']);
+
+        return view('admin.order.order_chart',$data);
+    }
+
+    public function viewOrdersStatusChart()
+    {
+        $data['title'] = 'View Order Status Chart';
+        $data['getOrderStatus'] = Order::select('order_status',DB::raw('count(order_status) as count'))->groupBy('order_status')->get();
+        //dd($data['getOrderStatus'][0]['order_status']);
+
+        return view('admin.order.order_status_chart',$data);
+    }
 
 
 

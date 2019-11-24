@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -152,10 +153,18 @@ class UserController extends Controller
         return view('admin.customer.customer_view',$data);
     }
 
-    /*public function viewCustomersChart()
+    public function viewCustomersChart()
     {
-        return view('')
-    }*/
+        $data['title'] = 'Customer Report';
+        $data['current_month_customers'] = User::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->month)->count();
+        $data['last_month_customers'] = User::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+        $data['before_last_month_customers'] = User::whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+        //dd($data['before_last_month_customers']);
+        return view('admin.customer.customer_chart',$data);
+    }
 
 
 }
