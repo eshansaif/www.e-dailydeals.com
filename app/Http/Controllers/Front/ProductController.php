@@ -173,7 +173,7 @@ class ProductController extends Controller
             }
 
         }else{
-            if (empty($data['cartButton']) && $data['cartButton']=="Cart"){
+            if (!empty($data['cartButton']) && $data['cartButton']=="Cart"){
                 $data['quantity'] = 1;
                 //dd($data['quantity']);
             }
@@ -800,7 +800,7 @@ class ProductController extends Controller
         $user_id = Auth::user()->id;
         $user_email = Auth::user()->email;
 
-        $data['orders'] = Order::with('orders')->where(['user_id'=>$user_id,'user_email'=>$user_email])->orderBy('id','DESC')->get();
+        $data['orders'] = Order::with('orders')->where(['user_id'=>$user_id,'user_email'=>$user_email])->orderBy('id','DESC')->paginate(10);
         //dd($data['orders']);
         return view('front.order.user_order',$data);
     }

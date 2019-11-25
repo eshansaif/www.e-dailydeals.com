@@ -15,8 +15,8 @@
         <div class="container">
             <ol class="breadcrumb mt-0">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="category.html">Categories</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Default</li>
+                <li class="breadcrumb-item"><a href="#">Categories</a></li>{{--
+                <li class="breadcrumb-item active" aria-current="page">{{ $product->category->name }}</li>--}}
             </ol>
         </div><!-- End .container -->
     </nav>
@@ -102,7 +102,7 @@
 
                 <nav class="toolbox toolbox-pagination">
                     <div class="toolbox-item toolbox-show">
-                        <label>Showing 1–9 of {{ $products->total() }} results</label>
+                        <label>{{--Showing 1–9 of --}}Total {{ $products->total() }} results</label>
                     </div><!-- End .toolbox-item -->
 
                     {{ $products->render() }}
@@ -117,7 +117,7 @@
                             <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1">{{ $product->category->name }}</a>
                         </h3>
 
-                        <div class="collapse show" id="widget-body-1">
+                        {{--<div class="collapse show" id="widget-body-1">
                             <div class="widget-body">
                                 <ul class="cat-list">
                                     <li><a href="#">Smart TVs</a></li>
@@ -126,10 +126,10 @@
                                     <li><a href="#">Games</a></li>
                                 </ul>
                             </div><!-- End .widget-body -->
-                        </div><!-- End .collapse -->
+                        </div>--}}<!-- End .collapse -->
                     </div><!-- End .widget -->
 
-                    <div class="widget">
+                    {{--<div class="widget">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Price</a>
                         </h3>
@@ -151,9 +151,9 @@
                                 </form>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div>--}}<!-- End .widget -->
 
-                    <div class="widget">
+                    {{--<div class="widget">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true" aria-controls="widget-body-3">Size</a>
                         </h3>
@@ -170,9 +170,9 @@
                                 </ul>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div>--}}<!-- End .widget -->
 
-                    <div class="widget">
+                    {{--<div class="widget">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-body-4" role="button" aria-expanded="true" aria-controls="widget-body-4">Brands</a>
                         </h3>
@@ -188,9 +188,9 @@
                                 </ul>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div>--}}<!-- End .widget -->
 
-                    <div class="widget">
+                    {{--<div class="widget">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-body-6" role="button" aria-expanded="true" aria-controls="widget-body-6">Color</a>
                         </h3>
@@ -225,7 +225,7 @@
                                 </ul>
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div>--}}<!-- End .widget -->
 
                     <div class="widget widget-featured">
                         <h3 class="widget-title">Featured Products</h3>
@@ -233,7 +233,31 @@
                         <div class="widget-body">
                             <div class="owl-carousel widget-featured-products">
                                 <div class="featured-col">
-                                    <div class="product product-sm">
+                                    @foreach($featured_products as $index=>$product)
+                                        @if($index <= 2)
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="{{ route('product.details', $product->id) }}" class="product-image">
+                                                        <img style="height: 80px; width: 70px" src="{{ asset(isset($product->product_image[0])?$product->product_image[0]->file_path:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        <span class="product-price">৳ {{ $product->price }}/-</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+                                        @endif
+                                    @endforeach
+                                    {{--<div class="product product-sm">
                                         <figure class="product-image-container">
                                             <a href="product.html" class="product-image">
                                                 <img src="assets/images/products/small/product-1.jpg" alt="product">
@@ -295,11 +319,36 @@
                                                 <span class="product-price">$50.00</span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
+                                    </div><!-- End .product -->--}}
                                 </div><!-- End .featured-col -->
 
                                 <div class="featured-col">
-                                    <div class="product product-sm">
+                                    @foreach($featured_products as $index=>$product)
+                                        @if($index >= 3)
+                                            <div class="product product-sm">
+                                                <figure class="product-image-container">
+                                                    <a href="{{ route('product.details', $product->id) }}" class="product-image">
+                                                        <img style="height: 80px; width: 70px" src="{{ asset(isset($product->product_image[0])?$product->product_image[0]->file_path:'assets/frontend/assets/images/products/no-image-available.jpg') }}" alt="product">
+                                                    </a>
+                                                </figure>
+                                                <div class="product-details">
+                                                    <h2 class="product-title">
+                                                        <a href="{{ route('product.details', $product->id) }}">{{ $product->name }}</a>
+                                                    </h2>
+                                                    <div class="ratings-container">
+                                                        <div class="product-ratings">
+                                                            <span class="ratings" style="width:100%"></span><!-- End .ratings -->
+                                                        </div><!-- End .product-ratings -->
+                                                    </div><!-- End .product-container -->
+                                                    <div class="price-box">
+                                                        {{--<span class="old-price">$50.00</span>--}}
+                                                        <span class="product-price">৳ {{ $product->price }}/-</span>
+                                                    </div><!-- End .price-box -->
+                                                </div><!-- End .product-details -->
+                                            </div><!-- End .product -->
+                                        @endif
+                                    @endforeach
+                                    {{--<div class="product product-sm">
                                         <figure class="product-image-container">
                                             <a href="product.html" class="product-image">
                                                 <img src="assets/images/products/small/product-4.jpg" alt="product">
@@ -361,7 +410,7 @@
                                                 <span class="product-price">$40.00</span>
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
-                                    </div><!-- End .product -->
+                                    </div><!-- End .product -->--}}
                                 </div><!-- End .featured-col -->
                             </div><!-- End .widget-featured-slider -->
                         </div><!-- End .widget-body -->

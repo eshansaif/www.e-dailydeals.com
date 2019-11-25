@@ -91,14 +91,14 @@
                         <tfoot>
                         <tr>
                             <td colspan="4" class="clearfix">
-                                <div class="float-left">
-                                    <a href="category.html" class="btn btn-outline-secondary">Continue Shopping</a>
+                                <div class="float-right">
+                                    <a href="{{ route('home') }}" class="btn btn-outline-secondary">Continue Shopping</a>
                                 </div><!-- End .float-left -->
 
-                                <div class="float-right">
+                                {{--<div class="float-right">
                                     <a href="#" class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
                                     <a href="" class="btn btn-outline-secondary btn-update-cart">Update Shopping Cart</a>
-                                </div><!-- End .float-right -->
+                                </div><!-- End .float-right -->--}}
                             </td>
                         </tr>
                         </tfoot>

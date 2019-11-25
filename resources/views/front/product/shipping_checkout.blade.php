@@ -247,19 +247,27 @@
                         <div class="form-group">
                             <input @if(!empty($shippingDetails->phone)) value="{{ $shippingDetails->phone }}" @endif name="shipping_phone" id="shipping_phone"  type="text" placeholder="Shipping Phone" class="form-control" />
                         </div>
-                        <button type="submit" class="btn btn-default">Check Out</button>
+
+
+
+
+
+                        <button type="submit" class="btn btn-primary float-right">NEXT</button>
                     </div><!--/sign up form-->
+
+
                 </div>
             </div>
         </form>
 
-        <div class="row">
+        {{--<div class="row">
             <div class="col-lg-8">
                 <div class="checkout-steps-action">
-                    <a href="#" class="btn btn-primary float-right">NEXT</a>
+                    <button type="submit"  class="btn btn-primary float-right"></button>
                 </div><!-- End .checkout-steps-action -->
             </div><!-- End .col-lg-8 -->
-        </div><!-- End .row -->
+        </div><!-- End .row -->--}}
+
     </div><!-- End .container -->
 
     <div class="mb-6"></div><!-- margin -->

@@ -48,13 +48,15 @@
 
                         </tr>
 
+
+
                     @endforeach
 
 
                     </tbody>
 
                     <tfoot>
-                    <tr>
+                    {{--<tr>
                         <td colspan="4" class="clearfix">
 
 
@@ -63,9 +65,10 @@
                                 <a href="" class="btn btn-outline-secondary btn-update-cart">Update Shopping Cart</a>
                             </div><!-- End .float-right -->
                         </td>
-                    </tr>
+                    </tr>--}}
                     </tfoot>
                 </table>
+                {{ $orders->render() }}
             </div><!-- End .col-lg-9 -->
 
             <aside class="sidebar col-lg-3">

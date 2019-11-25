@@ -54,7 +54,7 @@ $dataPoints = array(
 
 
                     <div class="panel-body">
-                        <div id="chartContainer" style="height: 370px; width: 50%;"></div>
+                        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                     </div>
 
                 </section>
